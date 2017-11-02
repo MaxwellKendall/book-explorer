@@ -116,7 +116,7 @@ button.btn.btn-secondary {
     padding: 0;
 }
 
-ul#book-gallery {
+.books {
     display: flex;
     width: 100%;
     justify-content: center;

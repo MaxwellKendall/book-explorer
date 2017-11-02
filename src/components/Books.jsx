@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import * as utils from '../utils/utils';
-
 import Icon from './common/Icon';
 
-import BookModalContainer from '../containers/BookModalContainer';
-
-export default class BookGallery extends Component {
-
+export default class Books extends Component {
   static propTypes = {
     books: PropTypes.arrayOf(PropTypes.object).isRequired,
     onClickImage: PropTypes.func.isRequired,
     onClickIcon: PropTypes.func.isRequired,
   }
 
-  renderBook = (config) => {
+  renderBooks = (config) => {
     let markup;
 
     if (config.book.imageLinks) {
@@ -39,9 +34,14 @@ export default class BookGallery extends Component {
   render() {
     // returns an array of HTML <li> markup
     const { onClickImage, onClickIcon, books } = this.props;
-    return books.map((book, index) => {
-      const config = { book, index, onClickImage, onClickIcon };
-      return this.renderBook(config);
-    });
+
+    return (
+      <ul className="books">
+        {books.map((book, index) => {
+          const config = { book, index, onClickImage, onClickIcon };
+          return this.renderBooks(config);
+        })}
+      </ul>
+    );
   }
 }

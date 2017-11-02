@@ -46,9 +46,8 @@ export default class BookImage extends Component {
 
   render() {
     const { loading } = this.props;
-    console.log('waatatatata', document.querySelector('#test123'));
     return (
-      <div className="test">{loading ? <Loading /> : null}</div>
+      <div />
     );
   }
 }

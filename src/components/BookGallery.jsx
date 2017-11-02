@@ -5,6 +5,7 @@ import * as utils from '../utils/utils';
 
 import Loading from './common/Loading';
 
+import Books from './Books';
 import BookModalContainer from '../containers/BookModalContainer';
 import FooterContainer from '../containers/FooterContainer';
 
@@ -32,14 +33,6 @@ export default class BookGallery extends Component {
     }
   }
 
-  showModal = () => <BookModalContainer hideModal={this.hideModal} />
-
-  hideModal = () => {
-    this.setState(({
-      modal: false,
-    }));
-  }
-
   handleAddToMyLibrary = (event) => {
     const { searchedBooks, addToMyLibrary, books } = this.props;
     const notification_error = document.querySelector('.notification__library--error');
@@ -57,32 +50,10 @@ export default class BookGallery extends Component {
     }
   }
 
-  parseImage = (book, index) => {
-    let markup;
-    const config = {
-      book,
-      index,
-      onClickImage: this.renderModal,
-      onClickIcon: this.handleAddToMyLibrary,
-    };
-    if (book.imageLinks) {
-      markup = utils.renderBookImage(config);
-    } if (!book.imageLinks) {
-      markup = (
-        <li key={config.index}>
-          <span>Sorry, no Image available!</span>
-          <span>Page Count: {config.book.pageCount}</span>
-          <span>Title: {config.book.title}</span>
-        </li>
-      );
-    }
-    return markup;
-  }
-
-  renderGallery = () => {
-    const { searchedBooks } = this.props;
-    const displayBooks = searchedBooks.map((book, index) => this.parseImage(book, index));
-    return displayBooks;
+  hideModal = () => {
+    this.setState(({
+      modal: false,
+    }));
   }
 
   renderModal = (event, id) => {
@@ -94,16 +65,16 @@ export default class BookGallery extends Component {
   }
 
   render() {
+    const { searchedBooks } = this.props;
+    const { modal } = this.state;
     return (
       <div className="book-gallery-container">
         <span className="notification__library--success hidden">This book was added to your library!</span>
         <span className="notification__library--error hidden">You already got this book in your library, homie!</span>
-        <ul id="book-gallery">
-          {this.props.searchedBooks && !this.state.modal ? this.renderGallery() : null}
-          {!this.props.searchedBooks && !this.state.modal ? <Loading /> : null}
-        </ul>
-        {this.state.modal ? this.showModal() : null}
-        {this.props.searchedBooks && <FooterContainer />}
+        {searchedBooks && !modal ? <Books books={searchedBooks} onClickIcon={this.handleAddToMyLibrary} onClickImage={this.renderModal} /> : null }
+        {!searchedBooks && !modal ? <Loading /> : null}
+        {modal && <BookModalContainer hideModal={this.hideModal} />}
+        {searchedBooks && <FooterContainer />}
       </div>
     );
   }
