@@ -13,7 +13,6 @@ goNext = () => {
   const newIndex = bookIndex + 40;
   const searchTerm = location.pathname.substr(1);
   setBookIndex(newIndex);
-  console.log('goToPrevious/Next', newIndex);
   getSearchedBooks(searchTerm, 40, newIndex);
 }
 
@@ -22,7 +21,6 @@ goPrevious = () => {
   const newIndex = bookIndex !== 1 ? bookIndex - 40 : 1;
   const searchTerm = location.pathname.substr(1);
   setBookIndex(newIndex);
-  console.log('goToPrevious/Next', newIndex);
   getSearchedBooks(searchTerm, 40, newIndex);
 }
 

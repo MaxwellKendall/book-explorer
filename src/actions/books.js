@@ -7,7 +7,6 @@ export const selectBook = createAction('BOOK_SELECTED');
 export const searchBooks = createAction('SEARCH_BOOKS');
 export const addToMyLibrary = createAction('ADD_TO_MY_LIBRARY');
 export const deleteBook = createAction('DELETE_BOOK');
-export const editBook = createAction('EDIT_BOOK');
 export const setBookIndex = createAction('SET_BOOKINDEX');
 
 export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => (

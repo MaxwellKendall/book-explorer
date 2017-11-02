@@ -10,6 +10,8 @@ import rootReducer from './reducers/index';
 
 const gitHubRepoName = 'Book-Project';
 
+require('../less/index.less');
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 

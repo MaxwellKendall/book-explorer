@@ -14,5 +14,5 @@ export default handleActions({
   [actions.selectBook]: (state, action) => ({ ...state, activeBookId: action.payload }),
   [actions.setBookIndex]: (state, action) => ({ ...state, bookIndex: action.payload }),
   [actions.addToMyLibrary]: (state, action) => ({ ...state, books: [action.payload, ...state.books] }),
-  [actions.deleteBook]: (state, action) => ({ ...state, books: [action.payload] }),
+  [actions.deleteBook]: (state, action) => ({ ...state, books: [...action.payload] }),
 }, initialState);

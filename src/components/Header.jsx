@@ -23,21 +23,21 @@ export default class Header extends Component {
           <input
             id="searchBox"
             value={searchTerm}
-            onChange={event => this.setState(({ searchTerm: event.target.value.toLowerCase() }))}
+            onChange={event => this.setState(({ searchTerm: event.target.value }))}
             className="form-control mr-sm-2"
             type="text"
             placeholder="Search for a Book"
           />
           <Link
-            to={`/${searchTerm}`}
-            className="btn btn-outline-success my-2 my-sm-0"
+            to={`/${searchTerm.toLowerCase()}`}
+            className="btn btn-outline-success my-2 my-sm-0 search"
             onClick={() => event.preventDefault()}
           >
             Search
           </Link>
           <Link
             to="/library/mybooks"
-            className="btn btn-outline-success my-2 my-sm-0"
+            className="btn btn-outline-success my-2 my-sm-0 library"
             onClick={() => event.preventDefault()}
           >
             My Library

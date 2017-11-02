@@ -85,10 +85,10 @@ class ModalInside extends Component {
               <Icon icon="times" onClick={this.handleClose} aria-hidden="true" role="button" />
             </span>
             <span className="modal__button--right">
-              <Icon onClick={this.props.goNext} icon="arrow-circle-right" />
+              <Icon onClick={this.props.goNext} icon="arrow-right" />
             </span>
             <span className="modal__button--left">
-              <Icon onClick={this.props.goPrevious} icon="arrow-circle-left" />
+              <Icon onClick={this.props.goPrevious} icon="arrow-left" />
             </span>
           </div>
           <div className="modal__content">

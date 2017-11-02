@@ -30,7 +30,7 @@ export default class BookModal extends Component {
   render() {
     const { activeBookId, activeBook, hideModal, loading, setLoading } = this.props;
     return (
-      <div>
+      <div className="modal">
         {!activeBook.title ? <Loading /> : (
           <Modal
             modal={{

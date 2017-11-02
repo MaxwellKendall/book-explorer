@@ -5,22 +5,17 @@ import * as utils from '../utils/utils';
 
 import Loading from './common/Loading';
 
-import Books from './Books';
+import BooksContainer from '../containers/BooksContainer';
 import BookModalContainer from '../containers/BookModalContainer';
 import FooterContainer from '../containers/FooterContainer';
 
 export default class BookGallery extends Component {
   static propTypes = {
     searchedBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectBook: PropTypes.func.isRequired,
     addToMyLibrary: PropTypes.func.isRequired,
     getSearchedBooks: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
   }
-
-  state = {
-    modal: false,
-  };
 
   componentDidMount() {
     const { getSearchedBooks, location } = this.props;
@@ -50,31 +45,14 @@ export default class BookGallery extends Component {
     }
   }
 
-  hideModal = () => {
-    this.setState(({
-      modal: false,
-    }));
-  }
-
-  renderModal = (event, id) => {
-    event.preventDefault();
-    this.props.selectBook(id);
-    this.setState(({
-      modal: true,
-    }));
-  }
-
   render() {
     const { searchedBooks } = this.props;
-    const { modal } = this.state;
     return (
       <div className="book-gallery-container">
         <span className="notification__library--success hidden">This book was added to your library!</span>
         <span className="notification__library--error hidden">You already got this book in your library, homie!</span>
-        {searchedBooks && !modal ? <Books books={searchedBooks} onClickIcon={this.handleAddToMyLibrary} onClickImage={this.renderModal} /> : null }
-        {!searchedBooks && !modal ? <Loading /> : null}
-        {modal && <BookModalContainer hideModal={this.hideModal} />}
-        {searchedBooks && <FooterContainer />}
+        {searchedBooks && <BooksContainer showBooks={searchedBooks} onClickIcon={this.handleAddToMyLibrary} icon="plus-circle" />}
+        {!searchedBooks && <Loading />}
       </div>
     );
   }
