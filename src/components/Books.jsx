@@ -46,10 +46,15 @@ export default class Books extends Component {
         </a>
       </li>);
     } else {
-      markup = (<li key={config.index}>
-        <span>Sorry, no Image available!</span>
-        <span>Page Count: {config.book.pageCount}</span>
-        <span>Title: {config.book.title}</span>
+      markup = (<li id="book--no-image" key={config.index}>
+        <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
+        <div className="book__no-image">
+          <a href="" onClick={event => this.renderModal(event, config.book.id)}>
+            <span>Image Not Available</span>
+            <span>Page Count: {config.book.pageCount}</span>
+            <span>Title: {config.book.title}</span>
+          </a>
+        </div>
       </li>);
     }
 
