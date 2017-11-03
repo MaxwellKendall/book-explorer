@@ -19,15 +19,9 @@ export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => 
         const totalItems = response.data.totalItems;
         const books = response.data.items;
         const searchedBooks = books.map((book, index) => {
-          const { volumeInfo } = book;
-          const { title, pageCount, imageLinks, industryIdentifiers } = volumeInfo;
-          return {
-            id: index,
-            title,
-            pageCount,
-            imageLinks,
-            industryIdentifiers,
-          };
+          const { volumeInfo, id } = book;
+          const { title, pageCount, imageLinks, industryIdentifiers, description, subtitle, publisher, publishedDate, previewLink } = volumeInfo;
+          return { id: index, googleVolumeId: id, title, subtitle, publisher, publishedDate, description, pageCount, imageLinks, industryIdentifiers, previewLink };
         });
         dispatch(searchBooks({ searchedBooks, totalItems }));
         dispatch(uiActions.setLoading(false));

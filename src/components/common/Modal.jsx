@@ -5,15 +5,17 @@ import Icon from './Icon';
 import ModalInside from './ModalInside';
 
 const Modal = (props) => {
-  console.log(props);
   let markup = null;
 
   if (props.modal) {
     markup = (
       <div className="modal__overlay">
         <ModalInside
+          loading={props.modal.loading}
           goNext={props.goNext}
           goPrevious={props.goPrevious}
+          handleDeleteBook={props.handleDeleteBook}
+          handleAddToMyLibrary={props.handleAddToMyLibrary}
           disableOnClickOutside={props.modal.disableOnClickOutside} {...props} />
       </div>
     );

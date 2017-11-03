@@ -12,8 +12,6 @@ export default class Library extends Component {
   deleteBook = (event) => {
     const { books, deleteBook } = this.props;
     const bookId = Number(event.target.parentElement.getAttribute('value'));
-    // console.log(bookId);
-    // console.log(books[0].id)
     const newBooks = books.filter(book => book.id !== bookId);
     deleteBook(newBooks);
   }

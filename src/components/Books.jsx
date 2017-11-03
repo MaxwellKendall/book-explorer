@@ -67,6 +67,8 @@ export default class Books extends Component {
     const { modal } = this.state;
     return (
       <div className="books">
+        <span className="notification__library--success hidden" />
+        <span className="notification__library--error hidden" />
         {modal && <BookModalContainer hideModal={this.hideModal} />}
         <ul className="books__container">
           {showBooks.map((book, index) => {
