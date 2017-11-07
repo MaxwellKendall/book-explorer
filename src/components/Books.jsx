@@ -102,6 +102,8 @@ export default class Books extends Component {
   }
 
   render() {
+    // TODO: Fix the Modal which needs to know how to delete/add on click; I'm passing a new object to the prop which was formerly just passed
+    // "onClickIcon"
     const { showBooks, activeBook } = this.props;
     return (
       <div className="books">
