@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 
+//TODO: make HMRE work, see bookmarks
+
 module.exports = {
   entry: {
     app: ['babel-polyfill', './src/index.js'],

@@ -16,6 +16,7 @@ export default class Library extends Component {
   handleDeleteBook = (event, googleVolumeId) => {
     const { books, deleteBook } = this.props;
     const bookId = !googleVolumeId ? event.target.parentElement.getAttribute('data') : googleVolumeId;
+    // utilize splice instead of filter based on ID in reducer (one line)
     const newBooks = books.filter(book => book.googleVolumeId !== bookId);
     deleteBook(newBooks);
 

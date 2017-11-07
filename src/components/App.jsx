@@ -5,6 +5,8 @@ import Header from './Header';
 import BookGalleryContainer from '../containers/BookGalleryContainer';
 import LibraryContainer from '../containers/LibraryContainer';
 
+// TODO: see packagemanager setup w/ redux integration itno react router
+
 const App = () => (
   <Router>
     <div className="main">

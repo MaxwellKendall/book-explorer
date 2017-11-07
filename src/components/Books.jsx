@@ -1,3 +1,16 @@
+// TODO: Add modal to index.js/app.js and create actioncreator that shows modal from anywhere
+
+// handleAddDocuments = () => {
+//   const modal = {
+//     title: 'Add Documents to Package',
+//     Content: DocumentsModalContainer,
+//     disableOnClickOutside: true,
+//   };
+//
+//   this.props.showModal(modal);
+// };
+
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 

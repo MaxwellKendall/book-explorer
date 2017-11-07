@@ -19,15 +19,16 @@ export default class BookGallery extends Component {
   }
 
   componentDidMount() {
+    // TODO: Put the API call on the Search Button instead of this
     const { getSearchedBooks, location } = this.props;
     getSearchedBooks(location.pathname.substr(1));
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.props.getSearchedBooks(nextProps.location.pathname.substr(1));
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.location.pathname !== this.props.location.pathname) {
+  //     this.props.getSearchedBooks(nextProps.location.pathname.substr(1));
+  //   }
+  // }
 
   handleAddToMyLibrary = (event, activeBook) => {
     const { searchedBooks, addToMyLibrary, books } = this.props;

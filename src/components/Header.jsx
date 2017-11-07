@@ -16,6 +16,11 @@ export default class Header extends Component {
     searchTerm: '',
   }
 
+  handleChange = (event) => {
+    event.persist();
+    this.setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
+  }
+
   render() {
     const { searchTerm } = this.state;
     const path = this.props.location.pathname;
@@ -26,14 +31,16 @@ export default class Header extends Component {
           <input
             id="searchBox"
             value={searchTerm}
-            onChange={event => this.setState(({ searchTerm: event.target.value }))}
+            onChange={this.handleChange}
             className="form-control mr-sm-2"
             type="text"
             placeholder="Search for a Book"
           />
           <Link
+            // TODO: Put the API call here instead of on componentDidMount in BookGallery.jsx
             to={`/${searchTerm.toLowerCase()}`}
             className="btn btn-outline-success my-2 my-sm-0 search"
+            // extract function from anonomyous to one that has a reference
             onClick={() => event.preventDefault()}
           >
             Search
@@ -41,6 +48,7 @@ export default class Header extends Component {
           <Link
             to="/library/mybooks"
             className="btn btn-outline-success my-2 my-sm-0 library"
+            // extract function from anonomyous to one that has a reference
             onClick={() => event.preventDefault()}
           >
             My Library

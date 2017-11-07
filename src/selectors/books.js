@@ -8,6 +8,7 @@ const getActiveBookId = state => state.books.activeBookId;
 export const getActiveSearchedBook = createSelector(
   [getActiveBookId, getSearchedBooks],
   (activeBookId, books) => {
+    // TODO: use find instead of filter; returns the element instead of the array
     const rtrn = books.filter(el => el.googleVolumeId === activeBookId);
     return rtrn[0];
   },

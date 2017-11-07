@@ -7,8 +7,6 @@ import thunk from 'redux-thunk';
 import App from './components/App';
 import rootReducer from './reducers/index';
 
-const gitHubRepoName = 'Book-Project';
-
 require('../less/index.less');
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,6 +14,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(
   <Provider store={store}>
+    {/* TODO: Add Modal Parent or nest in app */}
     <App />
   </Provider>,
   document.querySelector('.container'),
