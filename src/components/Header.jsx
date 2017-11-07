@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 export default class Header extends Component {
   // This is an example of a controlled component:
   //   (a) the text input value is defined by the state
-  //   (b) a change handler is attached to the input to (1) update the state which consequently (2) updates the inputs value
+  //   (b) a change handler is attached to the input in order to:
+  //     (1) update the state which consequently
+  //     (2) updates the inputs value
   // Controlled components in React are considered a best practice in order to:
   //   (i) maintain the principle of React State being "The Single Source of Truth" for the application
   //   (ii) more easily enfore validation styles on a form by referring to state

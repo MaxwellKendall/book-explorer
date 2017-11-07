@@ -7,10 +7,10 @@ import * as bookSelectors from '../selectors/books';
 import BookModal from '../components/BookModal';
 
 const mapStateToProps = state => ({
-  activeBook: bookSelectors.getActiveBook(state),
   activeBookId: state.books.activeBookId,
   loading: state.ui.loading,
   books: state.books.books,
+  searchedBooks: state.books.searchedBooks,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -30,7 +30,7 @@ class ModalInside extends Component {
     goNext: PropTypes.func.isRequired,
     goPrevious: PropTypes.func.isRequired,
     handleDeleteBook: PropTypes.func.isRequired,
-    handleAddToMyLibrary: PropTypes.func.isRequired,
+    onClickIcon: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -52,12 +52,7 @@ class ModalInside extends Component {
   }
 
   deleteBook = () => {
-    const notification_success = document.querySelector('.notification__library--success');
     this.props.handleDeleteBook(this.props.modal.activeBook);
-    this.props.hideModal();
-    notification_success.innerHTML = `${this.props.modal.activeBook.title} has been deleted`;
-    utils.removeClass(notification_success, 'hidden');
-    setTimeout(() => notification_success.classList.add('hidden'), 3000);
   }
 
   renderTitle = () => {
@@ -86,6 +81,7 @@ class ModalInside extends Component {
 
   renderModal = () => {
     const { modal, loading } = this.props;
+
     let markup = null;
 
     if (modal) {
@@ -95,8 +91,6 @@ class ModalInside extends Component {
         <div id="modal123">
           <div className="modal__header">
             {this.renderTitle()}
-            <span className="notification-modal__library--success hidden">This book was added to your library!</span>
-            <span className="notification-modal__library--error hidden">You already got this book in your library, homie!</span>
             <span className="modal__button--close">
               <Icon icon="times" onClick={this.handleClose} aria-hidden="true" role="button" />
             </span>
@@ -106,8 +100,8 @@ class ModalInside extends Component {
             <span className="modal__button--left">
               <Icon onClick={!loading ? this.props.goPrevious : null} icon="arrow-left" />
             </span>
-            <span className="modal__button--add">
-              <Icon onClick={!loading ? () => this.props.handleAddToMyLibrary(this.props.modal.activeBook) : null} icon="plus-circle" />
+            <span className="modal__button--add" data={modal} >
+              <Icon onClick={!loading ? event => this.props.onClickIcon(event, this.props.modal.activeBook) : null} icon="plus-circle" />
             </span>
             <span className="modal__button--delete">
               <Icon onClick={!loading ? () => this.deleteBook() : null} icon="trash" />

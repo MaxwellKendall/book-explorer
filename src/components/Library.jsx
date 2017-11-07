@@ -4,37 +4,35 @@ import PropTypes from 'prop-types';
 import * as utils from '../utils/utils';
 
 import BooksContainer from '../containers/BooksContainer';
+import FooterContainer from '../containers/FooterContainer';
 
 export default class Library extends Component {
   static propTypes = {
+    books: PropTypes.arrayOf(PropTypes.object).isRequired,
+    activeLibraryBook: PropTypes.object.isRequired,
+    deleteBook: PropTypes.func.isRequired,
   }
 
-  deleteBook = (event) => {
+  handleDeleteBook = (event, googleVolumeId) => {
     const { books, deleteBook } = this.props;
-    const bookId = Number(event.target.parentElement.getAttribute('value'));
-    const newBooks = books.filter(book => book.id !== bookId);
+    const bookId = !googleVolumeId ? event.target.parentElement.getAttribute('data') : googleVolumeId;
+    const newBooks = books.filter(book => book.googleVolumeId !== bookId);
     deleteBook(newBooks);
-  }
 
-  renderBooks = () => {
-    const { books } = this.props;
-    return books.map((book, index) => {
-      const config = {
-        book,
-        index,
-        onClickImage: () => console.log('image clicked'),
-        onClickIcon: () => console.log('icon clicked'),
-      };
-      return utils.renderBookImage(config);
-    });
+    const book = books.filter(el => el.googleVolumeId === bookId)[0];
+    const libraryContainer = document.querySelector('html');
+    const notificationSuccess = utils.createElement('span', 'notification__library--success');
+    libraryContainer.appendChild(notificationSuccess);
+    notificationSuccess.innerHTML = `${book.title} has been deleted!`;
+    setTimeout(() => libraryContainer.removeChild(notificationSuccess), 1000);
   }
 
   render() {
-    const { books } = this.props;
+    const { books, activeLibraryBook } = this.props;
     return (
       <div className="library-container">
-        <h1>My Library</h1>
-        {books && <BooksContainer showBooks={books} onClickIcon={(event) => this.deleteBook(event)} icon="trash" />}
+        {books && <BooksContainer activeBook={activeLibraryBook} showBooks={books} onClickIcon={this.handleDeleteBook} icon="trash" />}
+        {books.length > 40 ? <FooterContainer /> : null}
       </div>
     );
   }

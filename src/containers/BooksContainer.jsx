@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   books: state.books.books,
   searchedBooks: state.books.searchedBooks,
   loading: state.ui.loading,
+  totalSearched: state.books.totalSearched,
 });
 
 const mapDispatchToProps = dispatch => ({

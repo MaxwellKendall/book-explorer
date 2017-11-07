@@ -15,7 +15,7 @@ const Modal = (props) => {
           goNext={props.goNext}
           goPrevious={props.goPrevious}
           handleDeleteBook={props.handleDeleteBook}
-          handleAddToMyLibrary={props.handleAddToMyLibrary}
+          onClickIcon={props.onClickIcon}
           disableOnClickOutside={props.modal.disableOnClickOutside} {...props} />
       </div>
     );

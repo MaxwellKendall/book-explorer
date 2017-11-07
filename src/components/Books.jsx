@@ -9,12 +9,10 @@ import FooterContainer from '../containers/FooterContainer';
 export default class Books extends Component {
   static propTypes = {
     showBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    onClickIcon: PropTypes.func.isRequired,
     books: PropTypes.arrayOf(PropTypes.object).isRequired,
     searchedBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    loading: PropTypes.bool.isRequired,
+    onClickIcon: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
-    setLoading: PropTypes.func.isRequired,
   };
 
   state = {
@@ -39,17 +37,17 @@ export default class Books extends Component {
     let markup;
 
     if (config.book.imageLinks) {
-      markup = (<li key={config.index} value={config.book.id}>
+      markup = (<li key={config.book.googleVolumeId} data={config.book.googleVolumeId}>
         <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
-        <a href="" onClick={event => this.renderModal(event, config.book.id)} >
+        <a href="" onClick={event => this.renderModal(event, config.book.googleVolumeId)} >
           <img src={config.book.imageLinks.thumbnail} alt="whateva" />
         </a>
       </li>);
     } else {
-      markup = (<li id="book--no-image" key={config.index}>
+      markup = (<li id="book--no-image" key={config.book.googleVolumeId}>
         <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
         <div className="book__no-image">
-          <a href="" onClick={event => this.renderModal(event, config.book.id)}>
+          <a href="" onClick={event => this.renderModal(event, config.book.googleVolumeId)}>
             <span>Image Not Available</span>
             <span>Page Count: {config.book.pageCount}</span>
             <span>Title: {config.book.title}</span>
@@ -63,20 +61,18 @@ export default class Books extends Component {
 
   render() {
     // returns an array of HTML <li> markup
-    const { onClickImage, onClickIcon, books, showBooks, searchedBooks, icon } = this.props;
+    // Books takes param bookModal that is passed to BookModal, then onto Modal and InsideModal
+    const { onClickIcon, totalSearched, books, showBooks, searchedBooks, icon, activeBook } = this.props;
     const { modal } = this.state;
     return (
       <div className="books">
-        <span className="notification__library--success hidden" />
-        <span className="notification__library--error hidden" />
-        {modal && <BookModalContainer hideModal={this.hideModal} />}
+        {modal && <BookModalContainer hideModal={this.hideModal} activeBook={activeBook} showBooks={showBooks} onClickIcon={onClickIcon} />}
         <ul className="books__container">
-          {showBooks.map((book, index) => {
-            const config = { book, index, onClickIcon, icon };
+          {showBooks.map((book) => {
+            const config = { book, onClickIcon, icon };
             return this.renderBooks(config);
           })}
         </ul>
-        {searchedBooks || books ? <FooterContainer /> : null}
       </div>
     );
   }

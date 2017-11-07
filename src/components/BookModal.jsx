@@ -12,56 +12,63 @@ export default class BookModal extends Component {
 
   static propTypes = {
     activeBookId: PropTypes.number.isRequired,
+    onClickIcon: PropTypes.func.isRequired,
     activeBook: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
     hideModal: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
-    addToMyLibrary: PropTypes.func.isRequired,
     deleteBook: PropTypes.func.isRequired,
+    showBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   static defaultProps = {};
 
-  handleDeleteBook = () => {
-    const { books, deleteBook, activeBook } = this.props;
-    const newBooks = books.filter(book => book.id !== activeBook.id);
-    deleteBook(newBooks);
+  getNextBookId = (showBooks, activeBookId) => {
+    let nextBookIndex = showBooks.map((el, index) => {
+      if (el.googleVolumeId === activeBookId) {
+        return index + 1;
+      }
+    });
+    nextBookIndex = nextBookIndex.filter(el => el !== undefined);
+    return nextBookIndex[0];
   }
 
-  handleAddToMyLibrary = () => {
-    const { activeBook, books, addToMyLibrary } = this.props;
-    const notification_error = document.querySelector('.notification-modal__library--error');
-    const notification_success = document.querySelector('.notification-modal__library--success');
-    const test = books.length > 0 ? books.some(el => activeBook.industryIdentifiers[0] === el.industryIdentifiers[0]) : false;
-    if (test === true) {
-      utils.removeClass(notification_error, 'hidden');
-      setTimeout(() => notification_error.classList.add('hidden'), 3000);
-    }
-    if (test === false) {
-      addToMyLibrary(activeBook);
-      utils.removeClass(notification_success, 'hidden');
-      setTimeout(() => notification_success.classList.add('hidden'), 3000);
-    }
+  handleDeleteBook = (event, deletedBook) => {
+    const { books, activeBookId, selectBook, onClickIcon } = this.props;
+    const nextBook = this.getNextBookId(books, activeBookId);
+    console.log('nextBook: ', books[nextBook], 'onClickIcon', onClickIcon, 'activeBookId: ', activeBookId);
+    books[nextBook] ? selectBook(books[nextBook].googleVolumeId) : null;
+    onClickIcon(null, activeBookId);
   }
 
   goToNextBook = () => {
-    const { setLoading, selectBook, activeBookId } = this.props;
-    selectBook(activeBookId + 1);
+    const { setLoading, selectBook, activeBookId, showBooks } = this.props;
     setLoading(true);
+    let nextBook = this.getNextBookId(showBooks, activeBookId);
+    nextBook = showBooks[nextBook].googleVolumeId;
+    if (nextBook) {
+      selectBook(nextBook);
+      setLoading(true);
+    }
   };
 
   goToPreviousBook = () => {
-    const { setLoading, selectBook, activeBookId } = this.props;
-    selectBook(activeBookId - 1);
-    setLoading(true);
+    const { setLoading, selectBook, activeBookId, showBooks } = this.props;
+
+    let previousBook = this.getNextBookId(showBooks, activeBookId) - 2;
+    previousBook = showBooks[previousBook].googleVolumeId;
+    if (previousBook) {
+      selectBook(previousBook);
+      setLoading(true);
+    }
   };
 
   render() {
-    const { addToMyLibrary, activeBookId, activeBook, hideModal, loading, setLoading } = this.props;
+    const { activeBookId, activeBook, hideModal, loading, setLoading, onClickIcon } = this.props;
     return (
       <div className="modal">
-        <Modal
+        {activeBook && <Modal
           modal={{
             activeBook,
             loading,
@@ -73,9 +80,9 @@ export default class BookModal extends Component {
           hideModal={hideModal}
           goNext={this.goToNextBook}
           handleDeleteBook={this.handleDeleteBook}
-          handleAddToMyLibrary={this.handleAddToMyLibrary}
+          onClickIcon={onClickIcon}
           goPrevious={activeBookId !== 0 ? this.goToPreviousBook : () => { window.alert('There is no Previous to this book, man. Go forward instead'); }}
-        />
+        />}
       </div>
     );
   }

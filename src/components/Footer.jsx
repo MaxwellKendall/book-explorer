@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Footer extends Component {
+export default class Footer extends Component {
   static propTypes = {
     bookIndex: PropTypes.number.isRequired,
     setBookIndex: PropTypes.func.isRequired,
@@ -29,10 +29,10 @@ renderPagination = () => {
   const pagination = (
     <ul className="footer__container">
       <li>
-        <button onClick={this.goNext}>Next</button>
+        <button onClick={this.goPrevious}>Previous</button>
       </li>
       <li>
-        <button onClick={this.goPrevious}>Previous</button>
+        <button onClick={this.goNext}>Next</button>
       </li>
     </ul>
   );
@@ -47,5 +47,3 @@ render() {
   );
 }
 }
-
-export default Footer;

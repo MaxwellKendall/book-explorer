@@ -71,6 +71,8 @@ export default class BookImage extends Component {
           <h3 className="description">Description: </h3><p className="description">{description}</p>
         </div>}
         {previewLink && <a target="_blank" href={previewLink}>Link for more Details</a>}
+        {!previewLink && !subtitle &&!description && <a target="_blank" href={previewLink}>Link for more Details</a>}
+        {!previewLink && !description && !subtitle && <p>No data available</p>}
       </div>
     );
   }
