@@ -8,7 +8,7 @@ import LibraryContainer from '../containers/LibraryContainer';
 const App = () => (
   <Router>
     <div className="main">
-      <Header />
+      <Route path="/" component={Header} />
       <Route exact path="/:searchTerm" component={BookGalleryContainer} />
       <Route exact path="/library/mybooks" component={LibraryContainer} />
     </div>

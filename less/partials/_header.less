@@ -21,20 +21,26 @@
     }
     .search {
       margin-left: -1rem;
-      background: blue;
+      background: #3F51B5;
       color: white;
       width: 14rem;
-      border: 1px solid blue;
+      border: 1px solid #3F51B5;
     }
     .library {
-      border: 1px solid blue;
       width: 13rem;
-      margin-left: .5rem;
+      margin-left: .25rem;
+      background: #C5CAE9;
+      border: 1px solid #C5CAE9;
+      color: #757575;
     }
   }
   #searchBox {
     flex-direction: row;
     justify-content: flex-start;
+    border: .1rem solid #ccc;
     display: flex;
+    &:focus {
+      background: #C5CAE9;
+    }
   }
 }

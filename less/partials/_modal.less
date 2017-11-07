@@ -24,9 +24,18 @@
     .modal__header {
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-direction: row;
-      padding: 1em 0 1.5em 0;
+      padding: 1rem 0;
+      margin-bottom: 1rem;
+      h1 {
+        margin: auto auto 1rem 2rem;
+        margin-left: 2rem;
+        font-size: 2rem;
+      }
+      .modal__button--add, .modal__button--delete {
+        margin: auto 2rem 1rem auto;
+        font-size: 2rem;
+      }
       .modal__button--close {
         position: absolute;
         top: 2em;
@@ -51,10 +60,6 @@
       }
       .modal__button--left {
         left: 1rem;
-      }
-      .modal__header .fa.fa-plus-circle {
-        font-size: 2.5rem;
-        margin-left: 2rem;
       }
       .notification-modal__library--success,
       .notification-modal__library--error {
@@ -83,6 +88,12 @@
         height: 90%;
         .book-image {
           height: 100%;
+        }
+        .modal-details {
+          border-top: .25rem solid #ccc;
+          padding-top: 1rem;
+          display: flex;
+          flex-direction: column;
         }
         .basic-details {
           display: flex;

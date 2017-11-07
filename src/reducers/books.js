@@ -2,10 +2,10 @@ import { handleActions } from 'redux-actions';
 import * as actions from '../actions/books';
 
 const initialState = {
-  activeBookId: null,
+  activeBookId: '0',
   searchedBooks: [],
   books: [],
-  bookIndex: null,
+  bookIndex: 0,
 };
 
 export default handleActions({
@@ -14,4 +14,5 @@ export default handleActions({
   [actions.selectBook]: (state, action) => ({ ...state, activeBookId: action.payload }),
   [actions.addToMyLibrary]: (state, action) => ({ ...state, books: [action.payload, ...state.books] }),
   [actions.deleteBook]: (state, action) => ({ ...state, books: [...action.payload] }),
+  [actions.setBookIndex]: (state, action) => ({ ...state, bookIndex: action.payload }),
 }, initialState);

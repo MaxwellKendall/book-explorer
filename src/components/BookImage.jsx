@@ -48,11 +48,13 @@ export default class BookImage extends Component {
       viewer.load(`${activeBook.industryIdentifiers[0].type}: ${activeBook.industryIdentifiers[0].identifer}`, () => this.imageFail(bookImage), () => this.imageSuccess());
     }
     const test = setInterval(() => {
+      let ticker;
       console.log('test is executing, please stop');
       if (viewer.isLoaded() === true) {
         this.props.setLoading(false);
+        ticker += ticker + 1;
       }
-      if (this.props.loading === false) {
+      if (this.props.loading === false || ticker > 25) {
         console.log('interval stopped!');
         clearInterval(test);
       }

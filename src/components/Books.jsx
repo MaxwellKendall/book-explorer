@@ -38,19 +38,19 @@ export default class Books extends Component {
 
     if (config.book.imageLinks) {
       markup = (<li key={config.book.googleVolumeId} data={config.book.googleVolumeId}>
-        <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
         <a href="" onClick={event => this.renderModal(event, config.book.googleVolumeId)} >
           <img src={config.book.imageLinks.thumbnail} alt="whateva" />
         </a>
+        <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
       </li>);
     } else {
       markup = (<li id="book--no-image" key={config.book.googleVolumeId}>
-        <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
         <div className="book__no-image">
           <a href="" onClick={event => this.renderModal(event, config.book.googleVolumeId)}>
             <span>Image Not Available</span>
             <span>Page Count: {config.book.pageCount}</span>
             <span>Title: {config.book.title}</span>
+            <Icon icon={config.icon} onClick={event => config.onClickIcon(event)} />
           </a>
         </div>
       </li>);

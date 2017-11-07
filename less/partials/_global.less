@@ -1,7 +1,9 @@
 .hidden {
   display: none;
 }
-
+html {
+  min-height: 100vh;
+}
 * {
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -24,7 +26,7 @@
 
 .notification__library--success,
 .notification__library--error {
-  position: absolute;
+  position: fixed;
   top: 0rem;
   display: block;
   text-align: center;

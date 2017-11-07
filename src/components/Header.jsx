@@ -18,9 +18,10 @@ export default class Header extends Component {
 
   render() {
     const { searchTerm } = this.state;
+    const path = this.props.location.pathname;
     return (
       <div className="header">
-        <h1>My Books</h1>
+        {path === '/library/mybooks' ? <h1>My Library</h1> : <h1>Google Books</h1>}
         <div className="search_bar">
           <input
             id="searchBox"

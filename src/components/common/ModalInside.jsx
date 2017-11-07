@@ -58,9 +58,8 @@ class ModalInside extends Component {
   renderTitle = () => {
     const { modal } = this.props;
     let markup = <h1>Title</h1>;
-
     if (modal) {
-      markup = <h1>{modal.title}</h1>;
+      markup = modal.title.length > 65 ? <h1>{`${modal.title.substr(0, 65)}...`}</h1> : <h1>{`${modal.title}`}</h1>;
     }
 
     return markup;
