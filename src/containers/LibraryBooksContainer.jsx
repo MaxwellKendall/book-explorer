@@ -7,11 +7,8 @@ import * as selectors from '../selectors/books';
 const mapStateToProps = state => ({
   books: state.books.books,
   activeLibraryBook: selectors.getActiveLibraryBook(state),
-  totalSearched: state.books.totalSearched,
 });
 
-const mapDispatchToProps = dispatch => ({
-  deleteBook: book => dispatch(actions.deleteBook(book)),
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Library);

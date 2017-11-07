@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Loading from './common/Loading';
 
-import * as utils from '../utils/utils';
-
 export default class BookImage extends Component {
 
   static propTypes = {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import * as utils from '../utils/utils';
-
 import BooksContainer from '../containers/BooksContainer';
+import BookGalleryContainer from '../containers/BookGalleryContainer';
 import FooterContainer from '../containers/FooterContainer';
 
 export default class Library extends Component {
@@ -12,12 +11,17 @@ export default class Library extends Component {
     activeLibraryBook: PropTypes.object.isRequired,
   }
 
+  state = {};
+
   render() {
     const { books, activeLibraryBook } = this.props;
     return (
-      <div className="library-container">
-        {books && <BooksContainer activeBook={activeLibraryBook} showBooks={books} onClickIcon={this.handleDeleteBook} icon="trash" />}
-        {books.length > 40 ? <FooterContainer /> : null}
+      <div className="library-books__container">
+        {books &&
+          <BookGalleryContainer books={books} activeBook={activeLibraryBook}>
+            <BooksContainer />
+          </BookGalleryContainer>}
+        {books.length > 40 && <FooterContainer />}
       </div>
     );
   }
