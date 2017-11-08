@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import * as utils from '../utils/utils';
 
 export default class Header extends Component {
   // This is an example of a controlled component:
@@ -12,8 +15,18 @@ export default class Header extends Component {
   //   (ii) more easily enfore validation styles on a form by referring to state
   // Source: https://reactjs.org/docs/uncontrolled-components.html and https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/
 
+  static propTypes = {
+    getSearchedBooks: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired,
+  }
+
   state = {
     searchTerm: '',
+  }
+
+  makeAPICall = () => {
+    event.preventDefault();
+    this.props.getSearchedBooks(this.state.searchTerm);
   }
 
   render() {
@@ -31,17 +44,16 @@ export default class Header extends Component {
             type="text"
             placeholder="Search for a Book"
           />
-          <Link
-            to={`/${searchTerm.toLowerCase()}`}
+          <button
             className="btn btn-outline-success my-2 my-sm-0 search"
-            onClick={() => event.preventDefault()}
+            onClick={this.makeAPICall}
           >
             Search
-          </Link>
+          </button>
           <Link
-            to="/library/mybooks"
+            to="/library"
             className="btn btn-outline-success my-2 my-sm-0 library"
-            onClick={() => event.preventDefault()}
+            onClick={utils.preventDefault}
           >
             My Library
           </Link>

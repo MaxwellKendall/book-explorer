@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Header from './Header';
-import BookGalleryContainer from '../containers/BookGalleryContainer';
-import LibraryContainer from '../containers/LibraryContainer';
+import HeaderContainer from '../containers/HeaderContainer';
+import ModalContainer from '../containers/ModalContainer';
+
+import LibraryContainer from '../containers/LibraryBooksContainer';
+import SearchedBooksContainer from '../containers/SearchedBooksContainer';
 
 const App = () => (
   <Router>
     <div className="main">
-      <Route path="/" component={Header} />
-      <Route exact path="/:searchTerm" component={BookGalleryContainer} />
+      <HeaderContainer />
+      <Route path="/" component={SearchedBooksContainer} />
       <Route exact path="/library/mybooks" component={LibraryContainer} />
     </div>
   </Router>

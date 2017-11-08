@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from './common/Icon';
+import Loading from './common/Loading';
 
 import BookModalContainer from '../containers/BookModalContainer';
 import FooterContainer from '../containers/FooterContainer';
@@ -102,24 +103,17 @@ export default class Books extends Component {
   }
 
   render() {
-    // TODO: Fix the Modal which needs to know how to delete/add on click; I'm passing a new object to the prop which was formerly just passed
-    // "onClickIcon"
-    const { showBooks, activeBook } = this.props;
+    // TODO: Render Modal via Action Creator that passes props to modal via state
+    const { showBooks, activeBook, loading, totalItems } = this.props;
     return (
-      <div className="books">
-        {this.state.modal &&
-          <BookModalContainer
-            hideModal={this.hideModal}
-            activeBook={activeBook}
-            showBooks={showBooks}
-            onClickIcon={{
-              delete: this.handleDeleteBook,
-              add: this.handleAddToMyLibrary
-            }}
-          />}
+      <div className="book-gallery-container">
+        {loading && <Loading />}
+        {!loading &&
         <ul className="books__container">
+          Need to Remove the
           {showBooks.map(book => this.renderBooks(book))}
-        </ul>
+        </ul>}
+        {totalItems > 40 && <FooterContainer />}
       </div>
     );
   }

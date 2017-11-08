@@ -17,13 +17,12 @@ export default class SearchedBooks extends Component {
     const { searchedBooks, activeSearchedBook, totalSearched } = this.props;
     return (
       <div className="searched-books__container">
-        <BookGalleryContainer totalItems={totalSearched}>
-          <BooksContainer
-            activeBook={activeSearchedBook}
-            showBooks={searchedBooks}
-            // TODO: Books needs to have all icons and their events; i.e. add/delete book
-          />
-        </BookGalleryContainer>
+        <BooksContainer
+          activeBook={activeSearchedBook}
+          showBooks={searchedBooks}
+          // TODO: Books needs to have all icons and their events; i.e. add/delete book
+          // TODO: Books needs to show modal via action creator this.props.showModal(propsforModal)
+        />
       </div>
     );
   }
