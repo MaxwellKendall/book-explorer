@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Loading from './common/Loading';
+import Icon from './common/Icon';
 
 export default class BookImage extends Component {
-
   static propTypes = {
-    activeBook: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
+    selectBook: PropTypes.func.isRequired,
+    handleDeleteBook: PropTypes.func.isRequired,
+    handleAddToMyLibrary: PropTypes.func.isRequired,
   }
 
   state = {
@@ -16,17 +18,16 @@ export default class BookImage extends Component {
   };
 
   componentDidMount() {
-    this.renderImage(this.props.activeBook);
+    this.renderImage();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.activeBook !== this.props.activeBook) {
-      this.renderImage(nextProps.activeBook);
+    if (nextProps.book.id !== this.props.book.id) {
+      this.renderImage();
     }
   }
 
   imageFail = () => {
-    console.log("imageFail");
     this.props.setLoading(false);
     this.setState({ imageFailed: true });
   }
@@ -35,32 +36,20 @@ export default class BookImage extends Component {
     this.props.setLoading(false);
   }
 
-  renderImage = (activeBook) => {
-    this.props.setLoading(true);
+  renderImage = () => {
+    const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
+    setLoading(true);
+    const activeBook = library ? activeLibraryBook : activeSearchedBook;
+
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
     const viewer = new google.books.DefaultViewer(bookImage);
-    if (activeBook.googleVolumeId) {
-      viewer.load(activeBook.googleVolumeId, () => this.imageFail(bookImage), () => this.imageSuccess());
-    } else if (activeBook.industryIdentifiers[0].type.startsWith('OCLC' || 'LCCN' || 'ISBN')) {
-      viewer.load(`${activeBook.industryIdentifiers[0].type}: ${activeBook.industryIdentifiers[0].identifer}`, () => this.imageFail(bookImage), () => this.imageSuccess());
-    }
-    const test = setInterval(() => {
-      let ticker;
-      console.log('test is executing, please stop');
-      if (viewer.isLoaded() === true) {
-        this.props.setLoading(false);
-        ticker += ticker + 1;
-      }
-      if (this.props.loading === false || ticker > 25) {
-        console.log('interval stopped!');
-        clearInterval(test);
-      }
-    }, 250);
+    viewer.load(activeBook.id, () => this.imageFail(bookImage), () => this.imageSuccess());
   }
 
   renderDetails = () => {
-    const { activeBook, setLoading } = this.props;
+    const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
+    const activeBook = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">
@@ -71,17 +60,41 @@ export default class BookImage extends Component {
           <h3 className="description">Description: </h3><p className="description">{description}</p>
         </div>}
         {previewLink && <a target="_blank" href={previewLink}>Link for more Details</a>}
-        {!previewLink && !subtitle &&!description && <a target="_blank" href={previewLink}>Link for more Details</a>}
+        {!previewLink && !subtitle && !description && <a target="_blank" href={previewLink}>Link for more Details</a>}
         {!previewLink && !description && !subtitle && <p>No data available</p>}
       </div>
     );
   }
 
+  renderModalIcons = () => {
+    const { library, activeLibraryBook, activeSearchedBook } = this.props;
+    const activeBook = library ? activeLibraryBook : activeSearchedBook;
+
+    return (
+      <div className="modal-icons">
+        <span className="modal__button--right">
+          <Icon onClick={() => this.props.goNext(activeBook)} icon="arrow-right" />
+        </span>
+        <span className="modal__button--left">
+          <Icon onClick={() => this.props.goPrevious(activeBook)} icon="arrow-left" />
+        </span>
+        <span className="modal__button--add">
+          <Icon onClick={() => this.props.handleAddToMyLibrary(activeBook)} icon="plus-circle" />
+        </span>
+        <span className="modal__button--delete">
+          <Icon onClick={() => this.props.handleDeleteBook(activeBook, { modal: true })} icon="trash" />
+        </span>
+      </div>
+    );
+  }
+
   render() {
-    const { loading, activeBook } = this.props;
-    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
+    const { loading, library, activeLibraryBook, activeSearchedBook } = this.props;
+    const activeBook = library ? activeLibraryBook : activeSearchedBook;
+    const { pageCount, publishedDate, publisher, subtitle } = activeBook;
     return (
       <div className="book-image__container">
+        {this.renderModalIcons()}
         <div className="book-image">
           {loading && <Loading />}
           {this.state.imageFailed && this.renderDetails()}
@@ -89,7 +102,7 @@ export default class BookImage extends Component {
         <div className="basic-details">
           {subtitle && <p className="subtitle">{`Subtitle: ${subtitle}`}</p>}
           {pageCount && <p className="page-count">{`Page Count: ${pageCount}`}</p>}
-          {publisher && publishedDate &&<p className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</p>}
+          {publisher && publishedDate && <p className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</p>}
         </div>
       </div>
     );

@@ -17,7 +17,6 @@ export default class Header extends Component {
 
   static propTypes = {
     getSearchedBooks: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired,
   }
 
   state = {
@@ -29,32 +28,27 @@ export default class Header extends Component {
     this.props.getSearchedBooks(this.state.searchTerm);
   }
 
+  handleChange = (event) => {
+    event.persist();
+    this.setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
+  }
+
   render() {
     const { searchTerm } = this.state;
-    const path = this.props.location.pathname;
+    const path = window.location.href.match('library');
     return (
       <div className="header">
-        {path === '/library/mybooks' ? <h1>My Library</h1> : <h1>Google Books</h1>}
+        {path === 'library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
         <div className="search_bar">
           <input
             id="searchBox"
             value={searchTerm}
-            onChange={event => this.setState(({ searchTerm: event.target.value }))}
-            className="form-control mr-sm-2"
+            onChange={this.handleChange}
             type="text"
             placeholder="Search for a Book"
           />
-          <button
-            className="btn btn-outline-success my-2 my-sm-0 search"
-            onClick={this.makeAPICall}
-          >
-            Search
-          </button>
-          <Link
-            to="/library"
-            className="btn btn-outline-success my-2 my-sm-0 library"
-            onClick={utils.preventDefault}
-          >
+          <Link className="search" to="/" onClick={this.makeAPICall}>Search</Link>
+          <Link to="/library" className="library" onClick={utils.preventDefault}>
             My Library
           </Link>
         </div>

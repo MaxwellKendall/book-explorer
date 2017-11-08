@@ -1,99 +1,117 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import BookImageContainer from '../containers/BookImageContainer';
+
 import Icon from './common/Icon';
 import Loading from './common/Loading';
 
-import BookModalContainer from '../containers/BookModalContainer';
-import FooterContainer from '../containers/FooterContainer';
+import * as utils from '../utils/utils';
 
 export default class Books extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
-    libraryBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    selectBook: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired,
+    libraryBooks: PropTypes.arrayOf(PropTypes.object),
     deleteBook: PropTypes.func.isRequired,
     addToMyLibrary: PropTypes.func.isRequired,
+    selectBook: PropTypes.func.isRequired,
     activeBook: PropTypes.object.isRequired,
     showBooks: PropTypes.arrayOf(PropTypes.object).isRequired, // not from redux
   };
 
-  state = {
-    modal: false,
-  };
+  static defaultProps = {
+    libraryBooks: [{}],
+  }
 
-  handleAddToMyLibrary = (event, activeBook) => {
-    const { searchedBooks, addToMyLibrary, books } = this.props;
-
-    const googleVolumeId = !activeBook ? event.target.parentElement.getAttribute('data') : activeBook.googleVolumeId;
-    const book = searchedBooks.filter(el => el.googleVolumeId === googleVolumeId)[0] || activeBook;
-
+  displayErrorNotification = (book) => {
     const bookGalleryContainer = document.querySelector('html');
     const notificationError = utils.createElement('span', 'notification__library--error');
+    bookGalleryContainer.appendChild(notificationError);
+    notificationError.innerHTML = `${book.title} is already in your library!`;
+    setTimeout(() => bookGalleryContainer.removeChild(notificationError), 1000);
+  }
+
+  displaySuccessNotification = (book, verbiage) => {
+    const bookGalleryContainer = document.querySelector('html');
     const notificationSuccess = utils.createElement('span', 'notification__library--success');
-    const test = books.length > 0 ? books.some(el => el.googleVolumeId === googleVolumeId) : false;
-    if (test === true) {
-      bookGalleryContainer.appendChild(notificationError);
-      notificationError.innerHTML = `${book.title} is already in your library!`;
-      setTimeout(() => bookGalleryContainer.removeChild(notificationError), 1000);
+    bookGalleryContainer.appendChild(notificationSuccess);
+    notificationSuccess.innerHTML = `${book.title} has been ${verbiage} your library!`;
+    setTimeout(() => bookGalleryContainer.removeChild(notificationSuccess), 1000);
+  }
+
+  handleAddToMyLibrary = (newBook) => {
+    const { addToMyLibrary, libraryBooks } = this.props;
+    if (libraryBooks.some(book => book.id === newBook.id)) {
+      this.displayErrorNotification(newBook);
+    } else {
+      addToMyLibrary(newBook);
+      this.displaySuccessNotification(newBook, 'added to');
     }
-    if (test === false) {
-      addToMyLibrary(book);
-      bookGalleryContainer.appendChild(notificationSuccess);
-      notificationSuccess.innerHTML = `${book.title} has been added to your library!`;
-      setTimeout(() => bookGalleryContainer.removeChild(notificationSuccess), 1000);
+  }
+
+  handleDeleteBook = (book, config) => {
+    const { deleteBook } = this.props;
+    deleteBook(book.id);
+    this.displaySuccessNotification(book, 'deleted from');
+    if (config.modal === true) {
+      this.goNext();
     }
   }
 
-  handleDeleteBook = (event, googleVolumeId) => {
-    const { books, deleteBook } = this.props;
-    const bookId = !googleVolumeId ? event.target.parentElement.getAttribute('data') : googleVolumeId;
-    const newBooks = books.filter(book => book.googleVolumeId !== bookId);
-    deleteBook(newBooks);
-
-    const book = books.filter(el => el.googleVolumeId === bookId)[0];
-    const libraryContainer = document.querySelector('html');
-    const notificationSuccess = utils.createElement('span', 'notification__library--success');
-    libraryContainer.appendChild(notificationSuccess);
-    notificationSuccess.innerHTML = `${book.title} has been deleted!`;
-    setTimeout(() => libraryContainer.removeChild(notificationSuccess), 1000);
+  goNext = (activeBook) => {
+    this.props.selectBook(activeBook.id);
+    const { showBooks, selectBook } = this.props;
+    let nextBookIndex = showBooks.books.indexOf(activeBook) + 1;
+    this.renderModal(null, showBooks.books[nextBookIndex]);
   }
 
-  hideModal = () => {
-    this.setState(({
-      modal: false,
-    }));
-  }
+  goPrevious = () => { console.log('goprevious'); }
 
-  renderModal = (event, id) => {
-    event.preventDefault();
-    this.props.selectBook(id);
-    this.setState(({
-      modal: true,
-    }));
+  renderModal = (event, book) => {
+    // on intital click, active book needs to be se
+    event ? event.preventDefault() : null;
+    this.props.selectBook(book.id);
+
+    const library = this.props.showBooks.library;
+
+    const modal = {
+      book: book ? book : { id: 0 },
+      library,
+      title: book.title,
+      Content: BookImageContainer,
+      disableOnClickOutside: false,
+      setLoading: this.props.setLoading,
+      loading: this.props.loading,
+      handleDeleteBook: this.handleDeleteBook,
+      handleAddToMyLibrary: this.handleAddToMyLibrary,
+      goNext: this.goNext,
+      goPrevious: this.goPrevious,
+    };
+    this.props.showModal(modal);
   }
 
   renderBooks = (book) => {
     let markup;
 
     if (book.imageLinks) {
-      markup = (<li key={book.googleVolumeId} data={book.googleVolumeId}>
-        <a href="" onClick={event => this.renderModal(event, book.googleVolumeId)} >
+      markup = (<li key={book.id} data={book.id}>
+        <a href="" onClick={event => this.renderModal(event, book)} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
-        <Icon icon="plus-circle" onClick={event => this.handleAddToMyLibrary(event)} />
-        <Icon icon="trash" onClick={event => this.handleDeleteBook(event)} />
+        <Icon icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
+        <Icon icon="trash" onClick={() => this.handleDeleteBook(book)} />
       </li>);
     } else {
-      markup = (<li id="book--no-image" key={book.googleVolumeId}>
+      markup = (<li id="book--no-image" key={book.id}>
         <div className="book__no-image">
-          <a href="" onClick={event => this.renderModal(event, book.googleVolumeId)}>
+          <a href="" onClick={event => this.renderModal(event, book.id)}>
             <span>Image Not Available</span>
             <span>Page Count: {book.pageCount}</span>
             <span>Title: {book.title}</span>
-            <Icon icon="plus-circle" onClick={event => this.handleAddToMyLibrary(event)} />
-            <Icon icon="trash" onClick={event => this.handleDeleteBook(event)} />
+            <Icon icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
+            <Icon icon="trash" onClick={() => this.handleDeleteBook(book)} />
           </a>
         </div>
       </li>);
@@ -104,16 +122,14 @@ export default class Books extends Component {
 
   render() {
     // TODO: Render Modal via Action Creator that passes props to modal via state
-    const { showBooks, activeBook, loading, totalItems } = this.props;
+    const { showBooks, loading } = this.props;
     return (
       <div className="book-gallery-container">
         {loading && <Loading />}
         {!loading &&
         <ul className="books__container">
-          Need to Remove the
-          {showBooks.map(book => this.renderBooks(book))}
+          {showBooks.books.map(book => this.renderBooks(book))}
         </ul>}
-        {totalItems > 40 && <FooterContainer />}
       </div>
     );
   }

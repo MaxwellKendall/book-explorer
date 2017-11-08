@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import BooksContainer from '../containers/BooksContainer';
-import BookGalleryContainer from '../containers/BookGalleryContainer';
+import FooterContainer from '../containers/FooterContainer';
 
 export default class SearchedBooks extends Component {
   static propTypes = {
-    activeSearchedBook: PropTypes.object.isRequired,
-    searchedBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    totalSearched: PropTypes.number.isRequired,
+    activeSearchedBook: PropTypes.object,
+    searchedBooks: PropTypes.arrayOf(PropTypes.object),
+  }
+
+  static defaultProps = {
+    searchedBooks: [{}],
+    activeSearchedBook: {},
   }
 
   state = {};
 
   render() {
-    const { searchedBooks, activeSearchedBook, totalSearched } = this.props;
+    const { searchedBooks, activeSearchedBook } = this.props;
     return (
       <div className="searched-books__container">
-        <BooksContainer
-          activeBook={activeSearchedBook}
-          showBooks={searchedBooks}
-          // TODO: Books needs to have all icons and their events; i.e. add/delete book
-          // TODO: Books needs to show modal via action creator this.props.showModal(propsforModal)
-        />
+        <BooksContainer showBooks={{ books: searchedBooks, library: false }} />
+        {searchedBooks.totalSearched > 40 && <FooterContainer />}
       </div>
     );
   }

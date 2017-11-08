@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
-import * as actions from '../actions/books';
-import Library from '../components/Library';
+// import * as actions from '../actions/books';
+
+import LibraryBooks from '../components/LibraryBooks';
 
 import * as selectors from '../selectors/books';
 
 const mapStateToProps = state => ({
-  books: state.books.books,
+  libraryBooks: state.books.libraryBooks,
   activeLibraryBook: selectors.getActiveLibraryBook(state),
 });
 
-const mapDispatchToProps = dispatch => ({});
+// const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Library);
+// export default connect(mapStateToProps, mapDispatchToProps)(LibraryBooks);
+export default connect(mapStateToProps)(LibraryBooks);

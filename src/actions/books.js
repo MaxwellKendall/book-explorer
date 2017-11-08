@@ -22,7 +22,7 @@ export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => 
         const searchedBooks = books.map((book, index) => {
           const { volumeInfo, id } = book;
           const { title, pageCount, imageLinks, industryIdentifiers, description, subtitle, publisher, publishedDate, previewLink } = volumeInfo;
-          return { googleVolumeId: id, title, subtitle, publisher, publishedDate, description, pageCount, imageLinks, industryIdentifiers, previewLink };
+          return { id, title, subtitle, publisher, publishedDate, description, pageCount, imageLinks, industryIdentifiers, previewLink };
         });
         dispatch(searchBooks({ searchedBooks, totalItems }));
         dispatch(uiActions.setLoading(false));
