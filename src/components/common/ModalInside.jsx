@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
+import cx from 'classnames';
 
 import Icon from './Icon';
 
@@ -49,7 +50,7 @@ class ModalInside extends Component {
     let markup = <h1>Title</h1>;
 
     if (modal) {
-      markup = <h1>{modal.title}</h1>;
+      markup = modal.title.length > 55 ? <h1>{`${modal.title.substr(0,50)}...`}</h1> : <h1>{modal.title}</h1>;
     }
 
     return markup;
@@ -68,6 +69,24 @@ class ModalInside extends Component {
     return markup;
   }
 
+  renderModalIcons = () => {
+    const { loading, modal } = this.props;
+    const { handleAddToMyLibrary, handleDeleteBook, activeBook, library } = modal;
+    const hideAddIcon = cx({ 'hidden': library }); // when library is true, hidden is true
+    const hideDeleteIcon = cx({ 'hidden': !library }); // when library is false, hidden is true
+
+    return (
+      <div className="modal__icons">
+        <span className="modal__button--add">
+          <Icon className={hideAddIcon} onClick={!loading ? () => handleAddToMyLibrary(activeBook) : null} icon="plus-circle" />
+        </span>
+        <span className="modal__button--delete">
+          <Icon className={hideDeleteIcon} onClick={!loading ? () => handleDeleteBook(activeBook, { modal: true }) : null} icon="trash" />
+        </span>
+      </div>
+    );
+  }
+
   renderModal = () => {
     const { modal } = this.props;
     let markup = null;
@@ -79,6 +98,7 @@ class ModalInside extends Component {
         <div className="modal">
           <div className="modal__header">
             {this.renderTitle()}
+            {this.renderModalIcons()}
             <span className="modal__button--close">
               <Icon icon="times" onClick={this.handleClose} aria-hidden="true" role="button" />
             </span>

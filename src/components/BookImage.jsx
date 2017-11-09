@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames'
 
 import Loading from './common/Loading';
 import Icon from './common/Icon';
@@ -18,12 +19,12 @@ export default class BookImage extends Component {
   };
 
   componentDidMount() {
-    this.renderImage();
+    this.renderImage(this.props.activeBook);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.book.id !== this.props.book.id) {
-      this.renderImage();
+    if (nextProps.activeBook.id !== this.props.activeBook.id) {
+      this.renderImage(nextProps.activeBook);
     }
   }
 
@@ -36,10 +37,11 @@ export default class BookImage extends Component {
     this.props.setLoading(false);
   }
 
-  renderImage = () => {
-    const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
+  renderImage = (activeBook) => {
+    // const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
+    const { setLoading } = this.props;
     setLoading(true);
-    const activeBook = library ? activeLibraryBook : activeSearchedBook;
+    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
@@ -48,8 +50,9 @@ export default class BookImage extends Component {
   }
 
   renderDetails = () => {
-    const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
-    const activeBook = library ? activeLibraryBook : activeSearchedBook;
+    const { activeBook, setLoading } = this.props;
+    // const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
+    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">
@@ -67,30 +70,23 @@ export default class BookImage extends Component {
   }
 
   renderModalIcons = () => {
-    const { library, activeLibraryBook, activeSearchedBook } = this.props;
-    const activeBook = library ? activeLibraryBook : activeSearchedBook;
-
+    const { loading, activeBook, goNext, goPrevious } = this.props;
     return (
       <div className="modal-icons">
         <span className="modal__button--right">
-          <Icon onClick={() => this.props.goNext(activeBook)} icon="arrow-right" />
+          <Icon onClick={!loading ? () => goNext(activeBook) : null} icon="arrow-right" />
         </span>
         <span className="modal__button--left">
-          <Icon onClick={() => this.props.goPrevious(activeBook)} icon="arrow-left" />
-        </span>
-        <span className="modal__button--add">
-          <Icon onClick={() => this.props.handleAddToMyLibrary(activeBook)} icon="plus-circle" />
-        </span>
-        <span className="modal__button--delete">
-          <Icon onClick={() => this.props.handleDeleteBook(activeBook, { modal: true })} icon="trash" />
+          <Icon onClick={!loading ? () => goPrevious(activeBook) : null} icon="arrow-left" />
         </span>
       </div>
     );
   }
 
   render() {
-    const { loading, library, activeLibraryBook, activeSearchedBook } = this.props;
-    const activeBook = library ? activeLibraryBook : activeSearchedBook;
+    const { loading, activeBook } = this.props;
+    // const { loading, library, activeLibraryBook, activeSearchedBook } = this.props;
+    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, publishedDate, publisher, subtitle } = activeBook;
     return (
       <div className="book-image__container">

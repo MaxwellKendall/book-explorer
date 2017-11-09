@@ -22,7 +22,9 @@
       justify-content: center;
       flex-direction: row;
       padding: 1rem 0;
-      margin-bottom: 1rem;
+      width: 100%;
+      margin: auto 0;
+      border-bottom: .1rem solid #ccc;
       h1 {
         margin: auto auto 1rem 2rem;
         margin-left: 2rem;
@@ -50,7 +52,12 @@
       }
     }
     .modal__content {
-      height: 100%;
+      height: 90%;
+      width: 90%;
+      @media @tablet {
+        height: 100%;
+        width: auto;
+      }
       .book-image__container {
         height: 90%;
         .book-image {
@@ -99,21 +106,4 @@
 }
 .modal__button--left {
   left: 1rem;
-}
-
-
-
-
-.library-container .books .modal__overlay .modal__header .modal__button--add {
-  display: none;
-  &:hover {
-  cursor: pointer;
-  }
-}
-
-.book-gallery-container .books .modal__overlay .modal__header .modal__button--delete {
-  display: none;
-  &:hover {
-  cursor: pointer;
-  }
 }

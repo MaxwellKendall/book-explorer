@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Loading from './common/Loading';
+
 import BooksContainer from '../containers/BooksContainer';
 import FooterContainer from '../containers/FooterContainer';
 
 export default class SearchedBooks extends Component {
   static propTypes = {
     activeSearchedBook: PropTypes.object,
-    searchedBooks: PropTypes.arrayOf(PropTypes.object),
+    searchedBooks: PropTypes.object,
   }
 
   static defaultProps = {
@@ -15,14 +17,13 @@ export default class SearchedBooks extends Component {
     activeSearchedBook: {},
   }
 
-  state = {};
-
   render() {
-    const { searchedBooks, activeSearchedBook } = this.props;
+    const { searchedBooks, totalSearched, loading, modal } = this.props;
     return (
       <div className="searched-books__container">
+        {loading && !modal && <Loading />}
         <BooksContainer showBooks={{ books: searchedBooks, library: false }} />
-        {searchedBooks.totalSearched > 40 && <FooterContainer />}
+        {totalSearched > 40 && <FooterContainer />}
       </div>
     );
   }

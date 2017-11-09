@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import BookImageContainer from '../containers/BookImageContainer';
 
@@ -18,7 +19,7 @@ export default class Books extends Component {
     addToMyLibrary: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
     activeBook: PropTypes.object.isRequired,
-    showBooks: PropTypes.arrayOf(PropTypes.object).isRequired, // not from redux
+    showBooks: PropTypes.object.isRequired, // not from redux
   };
 
   static defaultProps = {
@@ -43,6 +44,7 @@ export default class Books extends Component {
 
   handleAddToMyLibrary = (newBook) => {
     const { addToMyLibrary, libraryBooks } = this.props;
+
     if (libraryBooks.some(book => book.id === newBook.id)) {
       this.displayErrorNotification(newBook);
     } else {
@@ -52,36 +54,49 @@ export default class Books extends Component {
   }
 
   handleDeleteBook = (book, config) => {
-    const { deleteBook } = this.props;
+    const { deleteBook, libraryBooks, hideModal } = this.props;
+    if (config && config.modal === true && libraryBooks.length === 1) {
+      hideModal();
+    } else if (config && config.modal === true) {
+      this.goNext(book);
+    }
     deleteBook(book.id);
     this.displaySuccessNotification(book, 'deleted from');
-    if (config.modal === true) {
-      this.goNext();
-    }
   }
 
   goNext = (activeBook) => {
-    this.props.selectBook(activeBook.id);
-    const { showBooks, selectBook } = this.props;
-    let nextBookIndex = showBooks.books.indexOf(activeBook) + 1;
-    this.renderModal(null, showBooks.books[nextBookIndex]);
+    // handle situation where last item is selected
+    const { showBooks } = this.props;
+    const nextBookIndex = showBooks.books.indexOf(activeBook) + 1;
+    if (nextBookIndex < showBooks.books.length) {
+      this.renderModal(null, showBooks.books[nextBookIndex]);
+    } else if (nextBookIndex >= showBooks.books.length) {
+      this.props.hideModal();
+    }
   }
 
-  goPrevious = () => { console.log('goprevious'); }
+  goPrevious = (activeBook) => {
+    this.props.selectBook(activeBook.id);
+    const { showBooks } = this.props;
+    const previousBookIndex = showBooks.books.indexOf(activeBook) - 1;
+    if (previousBookIndex > -1) {
+      this.renderModal(null, showBooks.books[previousBookIndex]);
+    } else if (previousBookIndex === -1) {
+      this.props.hideModal();
+    }
+  }
 
-  renderModal = (event, book) => {
-    // on intital click, active book needs to be se
+  renderModal = (event, activeBook) => {
     event ? event.preventDefault() : null;
-    this.props.selectBook(book.id);
+    this.props.selectBook(activeBook.id);
 
     const library = this.props.showBooks.library;
 
     const modal = {
-      book: book ? book : { id: 0 },
+      activeBook,
       library,
-      title: book.title,
+      title: activeBook.title,
       Content: BookImageContainer,
-      disableOnClickOutside: false,
       setLoading: this.props.setLoading,
       loading: this.props.loading,
       handleDeleteBook: this.handleDeleteBook,
@@ -93,6 +108,9 @@ export default class Books extends Component {
   }
 
   renderBooks = (book) => {
+    const { showBooks } = this.props;
+    const hideAddIcon = cx({ 'hidden': showBooks.library }); // when library is true, hide the + icon
+    const hideDeleteIcon = cx({ 'hidden': !showBooks.library }); // when library is false, hide the Delete Icon
     let markup;
 
     if (book.imageLinks) {
@@ -100,8 +118,8 @@ export default class Books extends Component {
         <a href="" onClick={event => this.renderModal(event, book)} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
-        <Icon icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
-        <Icon icon="trash" onClick={() => this.handleDeleteBook(book)} />
+        <Icon className={hideAddIcon} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
+        <Icon className={hideDeleteIcon} icon="trash" onClick={() => this.handleDeleteBook(book)} />
       </li>);
     } else {
       markup = (<li id="book--no-image" key={book.id}>
@@ -110,8 +128,8 @@ export default class Books extends Component {
             <span>Image Not Available</span>
             <span>Page Count: {book.pageCount}</span>
             <span>Title: {book.title}</span>
-            <Icon icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
-            <Icon icon="trash" onClick={() => this.handleDeleteBook(book)} />
+            <Icon className={hideAddIcon} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
+            <Icon className={hideDeleteIcon} icon="trash" onClick={() => this.handleDeleteBook(book)} />
           </a>
         </div>
       </li>);
@@ -121,15 +139,12 @@ export default class Books extends Component {
   }
 
   render() {
-    // TODO: Render Modal via Action Creator that passes props to modal via state
     const { showBooks, loading } = this.props;
     return (
       <div className="book-gallery-container">
-        {loading && <Loading />}
-        {!loading &&
         <ul className="books__container">
           {showBooks.books.map(book => this.renderBooks(book))}
-        </ul>}
+        </ul>
       </div>
     );
   }

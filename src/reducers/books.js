@@ -6,6 +6,7 @@ const initialState = {
   searchedBooks: [],
   libraryBooks: [],
   bookIndex: 0,
+  searchTerm: '',
 };
 
 export default handleActions({
@@ -15,4 +16,5 @@ export default handleActions({
   [actions.addToMyLibrary]: (state, action) => ({ ...state, libraryBooks: [action.payload, ...state.libraryBooks] }),
   [actions.deleteBook]: (state, action) => ({ ...state, libraryBooks: [...state.libraryBooks.filter(book => book.id !== action.payload)] }),
   [actions.setBookIndex]: (state, action) => ({ ...state, bookIndex: action.payload }),
+  [actions.setSearchTerm]: (state, action) => ({ ...state, searchTerm: action.payload }),
 }, initialState);

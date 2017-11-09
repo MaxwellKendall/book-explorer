@@ -6,10 +6,12 @@ import Books from '../components/Books';
 
 const mapStateToProps = state => ({
   loading: state.ui.loading,
+  libraryBooks: state.books.libraryBooks,
 });
 
 const mapDispatchToProps = dispatch => ({
   showModal: modal => dispatch(uiActions.showModal(modal)),
+  hideModal: () => dispatch(uiActions.hideModal()),
   setLoading: bool => dispatch(uiActions.setLoading(bool)),
   selectBook: book => dispatch(actions.selectBook(book)),
   deleteBook: book => dispatch(actions.deleteBook(book)),
