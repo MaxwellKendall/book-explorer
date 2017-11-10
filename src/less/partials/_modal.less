@@ -13,9 +13,13 @@
       justify-content: center;
       align-items: center;
       background: white;
-      height: 80%;
-      width: 75%;
+      height: 90%;
+      width: 80%;
       border-radius: 1rem;
+      @media @tablet {
+        height: 80%;
+        width: 75%;
+      }
     }
     .modal__header {
       display: flex;
@@ -34,6 +38,9 @@
           margin-left: 2rem;
           font-size: 2rem;
         }
+      }
+      .modal__icons {
+        text-align: center;
       }
       .notification-modal__library--success,
       .notification-modal__library--error {

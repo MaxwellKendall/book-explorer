@@ -77,11 +77,11 @@ class ModalInside extends Component {
 
     return (
       <div className="modal__icons">
-        <span className="modal__button--add">
-          <Icon className={hideAddIcon} onClick={!loading ? () => handleAddToMyLibrary(activeBook) : null} icon="plus-circle" />
+        <span className={`${hideAddIcon} modal__button--add`}>
+          <Icon onClick={!loading ? () => handleAddToMyLibrary(activeBook) : null} icon="plus-circle" />
         </span>
-        <span className="modal__button--delete">
-          <Icon className={hideDeleteIcon} onClick={!loading ? () => handleDeleteBook(activeBook, { modal: true }) : null} icon="trash" />
+        <span className={`${hideDeleteIcon} modal__button--delete`}>
+          <Icon onClick={!loading ? () => handleDeleteBook(activeBook, { modal: true }) : null} icon="trash" />
         </span>
       </div>
     );

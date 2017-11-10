@@ -19,9 +19,12 @@
     justify-content: flex-start;
     display: flex;
     margin: auto;
-    width: 70%;
+    width: 100%;
     height: 3.25rem;
     margin-left: auto;
+    @media @tablet {
+      width: 70%;
+    }
     .search, .library {
       display: flex;
       justify-content: center;
@@ -29,20 +32,29 @@
       font-size: 1.2rem;
       font-weight: bold;
       outline: none;
+      text-align: center;
+      text-decoration: none;
     }
     .search {
       margin-left: -1rem;
       background: #3F51B5;
       color: white;
-      width: 14rem;
+      width: 11rem;
       border: 1px solid #3F51B5;
+      @media @tablet {
+        width: 14rem;
+      }
     }
     .library {
-      width: 13rem;
-      margin-left: .25rem;
+      width: 10rem;
+      margin-left: .15rem;
       background: #C5CAE9;
       border: 1px solid #C5CAE9;
       color: #757575;
+      @media @tablet {
+        width: 13rem;
+        margin-left: .25rem;
+      }
     }
   }
   #searchBox {
