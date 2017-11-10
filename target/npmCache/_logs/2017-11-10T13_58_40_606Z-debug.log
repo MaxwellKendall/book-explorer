@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'build' ]
+2 info using npm@5.4.2
+3 info using node@v6.9.1
+4 verbose run-script [ 'prebuild', 'build', 'postbuild' ]
+5 info lifecycle redux-simple-starter@1.0.0~prebuild: redux-simple-starter@1.0.0
+6 info lifecycle redux-simple-starter@1.0.0~build: redux-simple-starter@1.0.0
+7 verbose lifecycle redux-simple-starter@1.0.0~build: unsafe-perm in lifecycle true
+8 verbose lifecycle redux-simple-starter@1.0.0~build: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/maxwellkendall/Desktop/BookExplorer/node_modules/.bin:/Users/maxwellkendall/Desktop/BookExplorer/node_modules/.bin:/Users/maxwellkendall/.config/yarn/link/node_modules/.bin:/Users/maxwellkendall/Desktop/BookExplorer/node_modules/.bin:/Users/maxwellkendall/.config/yarn/link/node_modules/.bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/maxwellkendall/dev/apache-maven-3.3.9/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin
+9 verbose lifecycle redux-simple-starter@1.0.0~build: CWD: /Users/maxwellkendall/Desktop/BookExplorer
+10 silly lifecycle redux-simple-starter@1.0.0~build: Args: [ '-c', 'react-scripts build' ]
+11 silly lifecycle redux-simple-starter@1.0.0~build: Returned: code: 1  signal: null
+12 info lifecycle redux-simple-starter@1.0.0~build: Failed to exec build script
+13 verbose stack Error: redux-simple-starter@1.0.0 build: `react-scripts build`
+13 verbose stack Exit status 1
+13 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/index.js:280:16)
+13 verbose stack     at emitTwo (events.js:106:13)
+13 verbose stack     at EventEmitter.emit (events.js:191:7)
+13 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/lib/spawn.js:55:14)
+13 verbose stack     at emitTwo (events.js:106:13)
+13 verbose stack     at ChildProcess.emit (events.js:191:7)
+13 verbose stack     at maybeClose (internal/child_process.js:877:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+14 verbose pkgid redux-simple-starter@1.0.0
+15 verbose cwd /Users/maxwellkendall/Desktop/BookExplorer
+16 verbose Darwin 16.7.0
+17 verbose argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "build"
+18 verbose node v6.9.1
+19 verbose npm  v5.4.2
+20 error code ELIFECYCLE
+21 error errno 1
+22 error redux-simple-starter@1.0.0 build: `react-scripts build`
+22 error Exit status 1
+23 error Failed at the redux-simple-starter@1.0.0 build script.
+23 error This is probably not a problem with npm. There is likely additional logging output above.
+24 verbose exit [ 1, true ]
