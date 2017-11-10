@@ -11,7 +11,8 @@
     "test:watch": "npm run test -- --watch",
     "predeploy": "npm run build",
     "build": "react-scripts build",
-    "deploy": "yarn run build&&gh-pages -d build"
+    "deploy": "gh-pages-deploy",
+    "clean-source": "rimraf README.md src webroot package.json"
   },
   "author": "",
   "license": "ISC",
