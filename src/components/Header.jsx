@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import * as utils from '../utils/utils';
 
 export default class Header extends Component {
   // This is an example of a controlled component:
@@ -12,8 +15,18 @@ export default class Header extends Component {
   //   (ii) more easily enfore validation styles on a form by referring to state
   // Source: https://reactjs.org/docs/uncontrolled-components.html and https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/
 
+  static propTypes = {
+    getSearchedBooks: PropTypes.func.isRequired,
+  }
+
   state = {
     searchTerm: '',
+  }
+
+  makeAPICall = (event) => {
+    event.preventDefault();
+    this.props.getSearchedBooks(this.state.searchTerm);
+    this.props.setSearchTerm(this.state.searchTerm);
   }
 
   handleChange = (event) => {
@@ -23,34 +36,20 @@ export default class Header extends Component {
 
   render() {
     const { searchTerm } = this.state;
-    const path = this.props.location.pathname;
+    const path = window.location.href.match('library');
     return (
       <div className="header">
-        {path === '/library/mybooks' ? <h1>My Library</h1> : <h1>Google Books</h1>}
+        {path === 'library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
         <div className="search_bar">
           <input
             id="searchBox"
             value={searchTerm}
             onChange={this.handleChange}
-            className="form-control mr-sm-2"
             type="text"
             placeholder="Search for a Book"
           />
-          <Link
-            // TODO: Put the API call here instead of on componentDidMount in BookGallery.jsx
-            to={`/${searchTerm.toLowerCase()}`}
-            className="btn btn-outline-success my-2 my-sm-0 search"
-            // extract function from anonomyous to one that has a reference
-            onClick={() => event.preventDefault()}
-          >
-            Search
-          </Link>
-          <Link
-            to="/library/mybooks"
-            className="btn btn-outline-success my-2 my-sm-0 library"
-            // extract function from anonomyous to one that has a reference
-            onClick={() => event.preventDefault()}
-          >
+          <Link className="search" to="/" onClick={this.makeAPICall}>Search</Link>
+          <Link to="/library" className="library" onClick={utils.preventDefault}>
             My Library
           </Link>
         </div>

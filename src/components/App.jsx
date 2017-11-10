@@ -1,20 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 
-import Header from './Header';
-import BookGalleryContainer from '../containers/BookGalleryContainer';
-import LibraryContainer from '../containers/LibraryContainer';
+import HeaderContainer from '../containers/HeaderContainer';
+import ModalContainer from '../containers/ModalContainer';
 
-// TODO: see packagemanager setup w/ redux integration itno react router
+import LibraryBooksContainer from '../containers/LibraryBooksContainer';
+import SearchedBooksContainer from '../containers/SearchedBooksContainer';
 
-const App = () => (
-  <Router>
-    <div className="main">
-      <Route path="/" component={Header} />
-      <Route exact path="/:searchTerm" component={BookGalleryContainer} />
-      <Route exact path="/library/mybooks" component={LibraryContainer} />
-    </div>
-  </Router>
-);
+const history = createBrowserHistory();
+
+const App = () => {
+  return (
+    <Router history={history}>
+      <div className="main">
+        <ModalContainer />
+        <Route path="/" component={HeaderContainer} />
+        <Route exact path="/library" component={LibraryBooksContainer} />
+        <Route exact path="/" component={SearchedBooksContainer} />
+      </div>
+    </Router>
+  );
+}
 
 export default App;

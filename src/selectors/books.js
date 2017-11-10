@@ -1,15 +1,14 @@
 /* eslint-disable import/prefer-default-export */
 import { createSelector } from 'reselect';
 
-const getLibraryBooks = state => state.books.books;
+const getLibraryBooks = state => state.books.libraryBooks;
 const getSearchedBooks = state => state.books.searchedBooks;
 const getActiveBookId = state => state.books.activeBookId;
 
 export const getActiveSearchedBook = createSelector(
   [getActiveBookId, getSearchedBooks],
   (activeBookId, books) => {
-    // TODO: use find instead of filter; returns the element instead of the array
-    const rtrn = books.filter(el => el.googleVolumeId === activeBookId);
+    const rtrn = books.filter(el => el.id === activeBookId);
     return rtrn[0];
   },
 );
@@ -17,7 +16,7 @@ export const getActiveSearchedBook = createSelector(
 export const getActiveLibraryBook = createSelector(
   [getActiveBookId, getLibraryBooks],
   (activeBookId, books) => {
-    const rtrn = books.filter(el => el.googleVolumeId === activeBookId);
+    const rtrn = books.filter(el => el.id === activeBookId);
     return rtrn[0];
   },
 );

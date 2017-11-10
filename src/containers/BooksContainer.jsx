@@ -5,15 +5,17 @@ import * as uiActions from '../actions/ui';
 import Books from '../components/Books';
 
 const mapStateToProps = state => ({
-  books: state.books.books,
-  searchedBooks: state.books.searchedBooks,
   loading: state.ui.loading,
-  totalSearched: state.books.totalSearched,
+  libraryBooks: state.books.libraryBooks,
 });
 
 const mapDispatchToProps = dispatch => ({
+  showModal: modal => dispatch(uiActions.showModal(modal)),
+  hideModal: () => dispatch(uiActions.hideModal()),
   setLoading: bool => dispatch(uiActions.setLoading(bool)),
   selectBook: book => dispatch(actions.selectBook(book)),
+  deleteBook: book => dispatch(actions.deleteBook(book)),
+  addToMyLibrary: book => dispatch(actions.addToMyLibrary(book)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Books);
