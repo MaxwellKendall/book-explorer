@@ -22,8 +22,8 @@ export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => 
         const books = response.data.items;
         const searchedBooks = books.map((book, index) => {
           const { volumeInfo, id } = book;
-          const { title, pageCount, imageLinks, industryIdentifiers, description, subtitle, publisher, publishedDate, previewLink } = volumeInfo;
-          return { id, title, subtitle, publisher, publishedDate, description, pageCount, imageLinks, industryIdentifiers, previewLink };
+          const { title, pageCount, imageLinks, industryIdentifiers, description, subtitle, publisher, publishedDate, previewLink, authors } = volumeInfo;
+          return { id, title, subtitle, publisher, publishedDate, description, pageCount, imageLinks, industryIdentifiers, previewLink, authors };
         });
         dispatch(searchBooks({ searchedBooks, totalItems }));
         dispatch(uiActions.setLoading(false));

@@ -108,14 +108,14 @@ export default class Books extends Component {
   }
 
   renderBooks = (book) => {
-    const { showBooks } = this.props;
+    const { showBooks, modal } = this.props;
     const hideAddIcon = cx({ 'hidden': showBooks.library }); // when library is true, hide the + icon
     const hideDeleteIcon = cx({ 'hidden': !showBooks.library }); // when library is false, hide the Delete Icon
     let markup;
 
     if (book.imageLinks) {
       markup = (<li key={book.id} data={book.id}>
-        <a href="" onClick={event => this.renderModal(event, book)} >
+        <a href="" onClick={event => modal ? null : this.renderModal(event, book)} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
         <Icon className={hideAddIcon} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />

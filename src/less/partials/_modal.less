@@ -26,9 +26,14 @@
       margin: auto 0;
       border-bottom: .1rem solid #ccc;
       h1 {
-        margin: auto auto 1rem 2rem;
-        margin-left: 2rem;
-        font-size: 2rem;
+        margin: 0;
+        margin-right: auto;
+        font-size: 1.2rem;
+        @media @tablet {
+          margin: auto auto 1rem 2rem;
+          margin-left: 2rem;
+          font-size: 2rem;
+        }
       }
       .notification-modal__library--success,
       .notification-modal__library--error {
@@ -56,10 +61,10 @@
       width: 90%;
       @media @tablet {
         height: 100%;
-        width: auto;
+        width: 100%;
       }
       .book-image__container {
-        height: 90%;
+        height: 85%;
         .book-image {
           height: 100%;
         }
@@ -68,9 +73,15 @@
           padding-top: 1rem;
           display: flex;
           flex-direction: column;
+          padding-left: 1.25rem;
         }
         .basic-details {
           display: flex;
+          flex-direction: column;
+          padding: 0 .25rem;
+          p {
+            margin: 0;
+          }
         }
       }
     }
@@ -83,27 +94,30 @@
   font-size: 2rem;
 }
 .modal__button--close {
-  position: absolute;
-  top: 2em;
-  left: 87em;
-  i.fa.fa-times {
-      color: white;
-      font-size: 2.2rem;
-  }
+  display: none;
 }
 .modal__button--right, .modal__button--left {
   position: absolute;
   top: 20rem;
-  font-size: 5rem;
   color: white;
   Z-INDEX: 9999999;
+  font-size: 3rem;
+  @media @tablet {
+    font-size: 5rem;
+  }
   &:hover {
     cursor: pointer;
   }
 }
 .modal__button--right {
-  right: 1rem;
+  right: 0rem;
+  @media @tablet {
+    right: 1rem;
+  }
 }
 .modal__button--left {
-  left: 1rem;
+  left: 0rem;
+  @media @tablet {
+    left: 1rem;
+  }
 }

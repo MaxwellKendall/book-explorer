@@ -47,8 +47,8 @@ export default class Header extends Component {
             type="text"
             placeholder="Search for a Book"
           />
-          <Link className="search" to="/" onClick={this.makeAPICall}>Search</Link>
-          <Link to="/library" className="library">
+          <Link className="search" to="/Book-Explorer" onClick={this.makeAPICall}>Search</Link>
+          <Link to="/Book-Explorer/library" className="library">
             My Library
           </Link>
         </div>

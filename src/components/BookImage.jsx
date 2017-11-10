@@ -38,10 +38,8 @@ export default class BookImage extends Component {
   }
 
   renderImage = (activeBook) => {
-    // const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
     const { setLoading } = this.props;
     setLoading(true);
-    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
@@ -51,8 +49,6 @@ export default class BookImage extends Component {
 
   renderDetails = () => {
     const { activeBook, setLoading } = this.props;
-    // const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
-    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">
@@ -85,9 +81,7 @@ export default class BookImage extends Component {
 
   render() {
     const { loading, activeBook } = this.props;
-    // const { loading, library, activeLibraryBook, activeSearchedBook } = this.props;
-    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
-    const { pageCount, publishedDate, publisher, subtitle } = activeBook;
+    const { authors, subtitle } = activeBook;
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}
@@ -97,8 +91,7 @@ export default class BookImage extends Component {
         </div>
         <div className="basic-details">
           {subtitle && <p className="subtitle">{`Subtitle: ${subtitle}`}</p>}
-          {pageCount && <p className="page-count">{`Page Count: ${pageCount}`}</p>}
-          {publisher && publishedDate && <p className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</p>}
+          {authors && <p className="page-count">{`Author(s):${authors.map(e => ` ${e}`)}`}</p>}
         </div>
       </div>
     );

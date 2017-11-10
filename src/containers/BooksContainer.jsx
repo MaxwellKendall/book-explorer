@@ -6,6 +6,7 @@ import Books from '../components/Books';
 
 const mapStateToProps = state => ({
   loading: state.ui.loading,
+  modal: state.ui.modal,
   libraryBooks: state.books.libraryBooks,
 });
 
