@@ -23,8 +23,7 @@ export default class Header extends Component {
     searchTerm: '',
   }
 
-  makeAPICall = (event) => {
-    event.preventDefault();
+  makeAPICall = () => {
     this.props.getSearchedBooks(this.state.searchTerm);
     this.props.setSearchTerm(this.state.searchTerm);
   }
@@ -49,7 +48,7 @@ export default class Header extends Component {
             placeholder="Search for a Book"
           />
           <Link className="search" to="/" onClick={this.makeAPICall}>Search</Link>
-          <Link to="/library" className="library" onClick={utils.preventDefault}>
+          <Link to="/library" className="library">
             My Library
           </Link>
         </div>
