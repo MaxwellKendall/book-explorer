@@ -63,6 +63,22 @@
         .book-image {
           height: 100%;
         }
+        .basic-details {
+          display: none;
+          @media @tablet {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+          }
+          p {
+            display: none;
+            @media @tablet {
+              padding: 0;
+              margin: 0 .25rem;
+              width: 100%;
+            }
+          }
+        }
         .modal-details {
           border-top: .25rem solid #ccc;
           padding-top: 1rem;

@@ -24,7 +24,6 @@ export default class Header extends Component {
   }
 
   makeAPICall = (event) => {
-    event.preventDefault();
     this.props.getSearchedBooks(this.state.searchTerm);
     this.props.setSearchTerm(this.state.searchTerm);
   }

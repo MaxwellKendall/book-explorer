@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory'
+import { Route } from 'react-router-dom';
+import { Router } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
 
 import HeaderContainer from '../containers/HeaderContainer';
 import ModalContainer from '../containers/ModalContainer';
@@ -8,19 +9,19 @@ import ModalContainer from '../containers/ModalContainer';
 import LibraryBooksContainer from '../containers/LibraryBooksContainer';
 import SearchedBooksContainer from '../containers/SearchedBooksContainer';
 
-const history = createBrowserHistory();
+const customHistory = createBrowserHistory();
 
 const App = () => {
   return (
-    <Router history={history}>
+    <Router history={customHistory}>
       <div className="main">
+        <HeaderContainer />
         <ModalContainer />
-        <Route path="/" component={HeaderContainer} />
         <Route exact path="/library" component={LibraryBooksContainer} />
         <Route exact path="/" component={SearchedBooksContainer} />
       </div>
     </Router>
   );
-}
+};
 
 export default App;

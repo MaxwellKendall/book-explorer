@@ -38,10 +38,8 @@ export default class BookImage extends Component {
   }
 
   renderImage = (activeBook) => {
-    // const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
     const { setLoading } = this.props;
     setLoading(true);
-    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
@@ -51,8 +49,6 @@ export default class BookImage extends Component {
 
   renderDetails = () => {
     const { activeBook, setLoading } = this.props;
-    // const { setLoading, library, activeLibraryBook, activeSearchedBook } = this.props;
-    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">
@@ -85,8 +81,6 @@ export default class BookImage extends Component {
 
   render() {
     const { loading, activeBook } = this.props;
-    // const { loading, library, activeLibraryBook, activeSearchedBook } = this.props;
-    // const activeBook = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, publishedDate, publisher, subtitle } = activeBook;
     return (
       <div className="book-image__container">
