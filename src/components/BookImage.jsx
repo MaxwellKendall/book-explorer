@@ -90,7 +90,7 @@ export default class BookImage extends Component {
           {this.state.imageFailed && this.renderDetails()}
         </div>
         <div className="basic-details">
-          {subtitle && <p className="subtitle">{`Subtitle: ${subtitle}`}</p>}
+          {/* {subtitle && <p className="subtitle">{`Subtitle: ${subtitle}`}</p>} */}
           {authors && <p className="page-count">{`Author(s):${authors.map(e => ` ${e}`)}`}</p>}
         </div>
       </div>

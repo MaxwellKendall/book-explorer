@@ -117,8 +117,8 @@ export default class Books extends Component {
         <a href="" onClick={event => modal !== null ? null : this.renderModal(event, book)} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
-        <Icon className={hideAddIcon} icon="plus-circle" onClick={modal => modal ? null : this.handleAddToMyLibrary(book)} />
-        <Icon className={hideDeleteIcon} icon="trash" onClick={modal => modal ? null : this.handleDeleteBook(book)} />
+        <Icon className={hideAddIcon} icon="plus-circle" onClick={() => modal !== null ? null : this.handleAddToMyLibrary(book)} />
+        <Icon className={hideDeleteIcon} icon="trash" onClick={() => modal !== null ? null : this.handleDeleteBook(book)} />
       </li>);
     } else {
       markup = (<li id="book--no-image" key={book.id}>
@@ -127,8 +127,8 @@ export default class Books extends Component {
             <span>Image Not Available</span>
             <span>Page Count: {book.pageCount}</span>
             <span>Title: {book.title}</span>
-            <Icon className={hideAddIcon} icon="plus-circle" onClick={modal => modal ? null : this.handleAddToMyLibrary(book)} />
-            <Icon className={hideDeleteIcon} icon="trash" onClick={modal => modal ? null : this.handleDeleteBook(book)} />
+            <Icon className={hideAddIcon} icon="plus-circle" onClick={() => modal !== null ? null : this.handleAddToMyLibrary(book)} />
+            <Icon className={hideDeleteIcon} icon="trash" onClick={() => modal !== null ? null : this.handleDeleteBook(book)} />
           </a>
         </div>
       </li>);
