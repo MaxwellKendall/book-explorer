@@ -91,7 +91,6 @@ export default class Books extends Component {
     this.props.selectBook(activeBook.id);
 
     const library = this.props.showBooks.library;
-
     const modal = {
       activeBook,
       library,
@@ -115,21 +114,21 @@ export default class Books extends Component {
 
     if (book.imageLinks) {
       markup = (<li key={book.id} data={book.id}>
-        <a href="" onClick={event => modal ? null : this.renderModal(event, book)} >
+        <a href="" onClick={event => modal !== null ? null : this.renderModal(event, book)} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
-        <Icon className={hideAddIcon} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
-        <Icon className={hideDeleteIcon} icon="trash" onClick={() => this.handleDeleteBook(book)} />
+        <Icon className={hideAddIcon} icon="plus-circle" onClick={modal => modal ? null : this.handleAddToMyLibrary(book)} />
+        <Icon className={hideDeleteIcon} icon="trash" onClick={modal => modal ? null : this.handleDeleteBook(book)} />
       </li>);
     } else {
       markup = (<li id="book--no-image" key={book.id}>
         <div className="book__no-image">
-          <a href="" onClick={event => this.renderModal(event, book.id)}>
+          <a href="" onClick={event => modal !== null ? null : this.renderModal(event, book.id)}>
             <span>Image Not Available</span>
             <span>Page Count: {book.pageCount}</span>
             <span>Title: {book.title}</span>
-            <Icon className={hideAddIcon} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(book)} />
-            <Icon className={hideDeleteIcon} icon="trash" onClick={() => this.handleDeleteBook(book)} />
+            <Icon className={hideAddIcon} icon="plus-circle" onClick={modal => modal ? null : this.handleAddToMyLibrary(book)} />
+            <Icon className={hideDeleteIcon} icon="trash" onClick={modal => modal ? null : this.handleDeleteBook(book)} />
           </a>
         </div>
       </li>);

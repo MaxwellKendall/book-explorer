@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import * as utils from '../utils/utils';
 
@@ -39,18 +39,18 @@ export default class Header extends Component {
     return (
       <div className="header">
         {path === 'library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
-        <div className="search_bar">
+        <div className="search_bar__container">
           <input
-            id="searchBox"
+            id="searchBar"
             value={searchTerm}
             onChange={this.handleChange}
             type="text"
             placeholder="Search for a Book"
           />
-          <Link className="search" to="/Book-Explorer" onClick={this.makeAPICall}>Search</Link>
-          <Link to="/Book-Explorer/library" className="library">
+          <NavLink activeClassName="selected" className="search" to="/Book-Explorer" onClick={this.makeAPICall}>Search</NavLink>
+          <NavLink activeClassName="selected" to="/Book-Explorer/library" className="library">
             My Library
-          </Link>
+          </NavLink>
         </div>
       </div>
     );

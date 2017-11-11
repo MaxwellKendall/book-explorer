@@ -27,10 +27,10 @@ renderPagination = () => {
   const pagination = (
     <ul className="footer__container">
       <li>
-        <button onClick={this.goPrevious}>Previous</button>
+        <a href="" onClick={this.goPrevious}>Previous</a>
       </li>
       <li>
-        <button onClick={this.goNext}>Next</button>
+        <a href="" onClick={this.goNext}>Next</a>
       </li>
     </ul>
   );

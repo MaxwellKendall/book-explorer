@@ -33,7 +33,8 @@ class ModalInside extends Component {
 
   handleClose = () => {
     document.body.classList.remove('modal--open');
-
+    console.log('handleClose!');
+    this.props.setLoading(false);
     this.props.hideModal();
   }
 

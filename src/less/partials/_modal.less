@@ -28,6 +28,7 @@
       padding: 1rem 0;
       width: 100%;
       margin: auto 0;
+      height: auto;
       border-bottom: .1rem solid #ccc;
       h1 {
         margin: 0;
@@ -101,7 +102,15 @@
   font-size: 2rem;
 }
 .modal__button--close {
-  display: none;
+  display: block;
+  position: relative;
+  color: white;
+  bottom: 2.5rem;
+  left: 1.5rem;
+  font-size: 1.2rem;
+  @media @tablet {
+    display: none;
+  }
 }
 .modal__button--right, .modal__button--left {
   position: absolute;

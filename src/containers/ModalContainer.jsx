@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   hideModal: () => dispatch(actions.hideModal()),
+  setLoading: bool => dispatch(actions.setLoading(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);
