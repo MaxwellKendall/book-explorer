@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-// import * as actions from '../actions/books';
 
 import LibraryBooks from '../components/LibraryBooks';
 
@@ -10,7 +9,4 @@ const mapStateToProps = state => ({
   activeLibraryBook: selectors.getActiveLibraryBook(state),
 });
 
-// const mapDispatchToProps = dispatch => ({});
-
-// export default connect(mapStateToProps, mapDispatchToProps)(LibraryBooks);
 export default connect(mapStateToProps)(LibraryBooks);

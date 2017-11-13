@@ -18,4 +18,8 @@ const Modal = (props) => {
 
 Modal.displayName = 'BAHModal';
 
+Modal.propTypes = {
+  modal: PropTypes.object,
+};
+
 export default Modal;

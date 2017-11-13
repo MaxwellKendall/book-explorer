@@ -25,15 +25,17 @@ class ModalInside extends Component {
   static propTypes = {
     modal: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     hideModal: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
   };
 
   static defaultProps = {
     disableOnClickOutside: false,
+    loading: false,
   };
 
   handleClose = () => {
     document.body.classList.remove('modal--open');
-    console.log('handleClose!');
     this.props.setLoading(false);
     this.props.hideModal();
   }
@@ -51,7 +53,7 @@ class ModalInside extends Component {
     let markup = <h1>Title</h1>;
 
     if (modal) {
-      markup = modal.title.length > 55 ? <h1>{`${modal.title.substr(0,50)}...`}</h1> : <h1>{modal.title}</h1>;
+      markup = modal.title.length > 55 ? <h1>{`${modal.title.substr(0, 50)}...`}</h1> : <h1>{modal.title}</h1>;
     }
 
     return markup;

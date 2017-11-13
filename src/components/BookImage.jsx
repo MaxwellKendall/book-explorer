@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import Loading from './common/Loading';
 import Icon from './common/Icon';
@@ -9,9 +8,9 @@ export default class BookImage extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
-    selectBook: PropTypes.func.isRequired,
-    handleDeleteBook: PropTypes.func.isRequired,
-    handleAddToMyLibrary: PropTypes.func.isRequired,
+    activeBook: PropTypes.object.isRequired,
+    goNext: PropTypes.func.isRequired,
+    goPrevious: PropTypes.func.isRequired,
   }
 
   state = {
@@ -48,7 +47,7 @@ export default class BookImage extends Component {
   }
 
   renderDetails = () => {
-    const { activeBook, setLoading } = this.props;
+    const { activeBook } = this.props;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">
@@ -80,8 +79,8 @@ export default class BookImage extends Component {
   }
 
   render() {
-    const { loading, activeBook } = this.props;
-    const { authors, subtitle } = activeBook;
+    const { activeBook, loading } = this.props;
+    const { authors } = activeBook;
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}

@@ -14,10 +14,9 @@ export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => 
   (dispatch) => {
     dispatch(uiActions.setLoading(true));
     const root = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
-    console.log('this is the request configuration: ', `${root}&maxResults=${maxResults}&startIndex=${bookIndex}`);
     return axios.get(`${root}&maxResults=${maxResults}&startIndex=${bookIndex}`)
       .then((response) => {
-        console.log('API Response', response);
+        console.log('API Response', response.data);
         const totalItems = response.data.totalItems;
         const books = response.data.items;
         const searchedBooks = books.map((book, index) => {

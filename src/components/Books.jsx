@@ -5,7 +5,6 @@ import cx from 'classnames';
 import BookImageContainer from '../containers/BookImageContainer';
 
 import Icon from './common/Icon';
-import Loading from './common/Loading';
 
 import * as utils from '../utils/utils';
 
@@ -13,17 +12,19 @@ export default class Books extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
+    modal: PropTypes.object,
     showModal: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired,
     libraryBooks: PropTypes.arrayOf(PropTypes.object),
     deleteBook: PropTypes.func.isRequired,
     addToMyLibrary: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
-    activeBook: PropTypes.object.isRequired,
     showBooks: PropTypes.object.isRequired, // not from redux
   };
 
   static defaultProps = {
     libraryBooks: [{}],
+    modal: {},
   }
 
   displayErrorNotification = (book) => {
@@ -65,7 +66,6 @@ export default class Books extends Component {
   }
 
   goNext = (activeBook) => {
-    // handle situation where last item is selected
     const { showBooks } = this.props;
     const nextBookIndex = showBooks.books.indexOf(activeBook) + 1;
     if (nextBookIndex < showBooks.books.length) {
@@ -138,7 +138,7 @@ export default class Books extends Component {
   }
 
   render() {
-    const { showBooks, loading } = this.props;
+    const { showBooks } = this.props;
     return (
       <div className="book-gallery-container">
         <ul className="books__container">

@@ -8,13 +8,17 @@ import FooterContainer from '../containers/FooterContainer';
 
 export default class SearchedBooks extends Component {
   static propTypes = {
-    activeSearchedBook: PropTypes.object,
-    searchedBooks: PropTypes.object,
+    searchedBooks: PropTypes.arrayOf(PropTypes.object),
+    loading: PropTypes.bool.isRequired,
+    modal: PropTypes.object,
+    totalSearched: PropTypes.number,
   }
 
   static defaultProps = {
     searchedBooks: [{}],
     activeSearchedBook: {},
+    modal: {},
+    totalSearched: 0,
   }
 
   render() {

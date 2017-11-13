@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-
-import * as utils from '../utils/utils';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
   // This is an example of a controlled component:
@@ -17,6 +15,7 @@ export default class Header extends Component {
 
   static propTypes = {
     getSearchedBooks: PropTypes.func.isRequired,
+    setSearchTerm: PropTypes.func.isRequired,
   }
 
   state = {
@@ -25,6 +24,7 @@ export default class Header extends Component {
 
   makeAPICall = () => {
     this.props.getSearchedBooks(this.state.searchTerm);
+
     this.props.setSearchTerm(this.state.searchTerm);
   }
 
@@ -47,10 +47,10 @@ export default class Header extends Component {
             type="text"
             placeholder="Search for a Book"
           />
-          <NavLink activeClassName="selected" className="search" to="/Book-Explorer" onClick={this.makeAPICall}>Search</NavLink>
-          <NavLink activeClassName="selected" to="/Book-Explorer/library" className="library">
+          <Link className="search" to="/Book-Explorer" onClick={this.makeAPICall}>Search</Link>
+          <Link to="/Book-Explorer/library" className="library">
             My Library
-          </NavLink>
+          </Link>
         </div>
       </div>
     );
