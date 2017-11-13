@@ -14,9 +14,9 @@ const App = () => (
   <Router history={history}>
     <div className="main">
       <ModalContainer />
-      <Route path="/Book-Explorer" component={HeaderContainer} />
-      <Route exact path="/Book-Explorer/library" component={LibraryBooksContainer} />
-      <Route exact path="/Book-Explorer" component={SearchedBooksContainer} />
+      <HeaderContainer />
+      <Route exact path="/book-explorer/library" component={LibraryBooksContainer} />
+      <Route exact path="/book-explorer" component={SearchedBooksContainer} />
     </div>
   </Router>
 );

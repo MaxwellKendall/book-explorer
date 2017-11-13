@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import BooksContainer from '../containers/BooksContainer';
+import Books from './Books';
 import FooterContainer from '../containers/FooterContainer';
 
 export default class LibraryBooks extends Component {
@@ -21,7 +21,7 @@ export default class LibraryBooks extends Component {
     return (
       <div className="library-container">
         {libraryBooks &&
-          <BooksContainer showBooks={{ books: libraryBooks, library: true }} />}
+          <Books books={{ list: libraryBooks, library: true }} />}
         {libraryBooks.length > 40 && <FooterContainer />}
       </div>
     );

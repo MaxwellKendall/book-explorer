@@ -8,7 +8,7 @@ export default class BookImage extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
-    activeBook: PropTypes.object.isRequired,
+    book: PropTypes.object.isRequired, //not redux
     goNext: PropTypes.func.isRequired,
     goPrevious: PropTypes.func.isRequired,
   }
@@ -18,12 +18,12 @@ export default class BookImage extends Component {
   };
 
   componentDidMount() {
-    this.renderImage(this.props.activeBook);
+    this.renderImage(this.props.book);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.activeBook.id !== this.props.activeBook.id) {
-      this.renderImage(nextProps.activeBook);
+    if (nextProps.book.id !== this.props.book.id) {
+      this.renderImage(nextProps.book);
     }
   }
 
@@ -36,19 +36,19 @@ export default class BookImage extends Component {
     this.props.setLoading(false);
   }
 
-  renderImage = (activeBook) => {
+  renderImage = (book) => {
     const { setLoading } = this.props;
     setLoading(true);
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
     const viewer = new google.books.DefaultViewer(bookImage);
-    viewer.load(activeBook.id, () => this.imageFail(bookImage), () => this.imageSuccess());
+    viewer.load(book.id, () => this.imageFail(bookImage), () => this.imageSuccess());
   }
 
   renderDetails = () => {
-    const { activeBook } = this.props;
-    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
+    const { book } = this.props;
+    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = book;
     return (
       <div className="modal-details">
         {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
@@ -65,22 +65,22 @@ export default class BookImage extends Component {
   }
 
   renderModalIcons = () => {
-    const { loading, activeBook, goNext, goPrevious } = this.props;
+    const { goNext, goPrevious } = this.props;
     return (
       <div className="modal-icons">
         <span className="modal__button--right">
-          <Icon onClick={!loading ? () => goNext(activeBook) : null} icon="arrow-right" />
+          <Icon onClick={goNext} icon="arrow-right" />
         </span>
         <span className="modal__button--left">
-          <Icon onClick={!loading ? () => goPrevious(activeBook) : null} icon="arrow-left" />
+          <Icon onClick={goPrevious} icon="arrow-left" />
         </span>
       </div>
     );
   }
 
   render() {
-    const { activeBook, loading } = this.props;
-    const { authors } = activeBook;
+    const { book, loading } = this.props;
+    const { authors } = book;
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}
@@ -89,7 +89,6 @@ export default class BookImage extends Component {
           {this.state.imageFailed && this.renderDetails()}
         </div>
         <div className="basic-details">
-          {/* {subtitle && <p className="subtitle">{`Subtitle: ${subtitle}`}</p>} */}
           {authors && <p className="page-count">{`Author(s):${authors.map(e => ` ${e}`)}`}</p>}
         </div>
       </div>

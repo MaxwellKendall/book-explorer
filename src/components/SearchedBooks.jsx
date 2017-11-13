@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Loading from './common/Loading';
 
-import BooksContainer from '../containers/BooksContainer';
+import Books from './Books';
 import FooterContainer from '../containers/FooterContainer';
 
 export default class SearchedBooks extends Component {
@@ -26,7 +26,7 @@ export default class SearchedBooks extends Component {
     return (
       <div className="searched-books__container">
         {loading && !modal && <Loading />}
-        <BooksContainer showBooks={{ books: searchedBooks, library: false }} />
+        <Books books={{ list: searchedBooks, library: false }} />
         {totalSearched > 40 && <FooterContainer />}
       </div>
     );
