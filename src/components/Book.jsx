@@ -8,97 +8,110 @@ import Icon from './common/Icon';
 
 export default class Books extends Component {
   static propTypes = {
-    children: PropTypes.node.isRequired,
-    library: PropTypes.bool.isRequired,
-    loading: PropTypes.bool.isRequired,
-    setLoading: PropTypes.func.isRequired,
-    modal: PropTypes.object,
-    showModal: PropTypes.func.isRequired,
-    hideModal: PropTypes.func.isRequired,
-    deleteBook: PropTypes.func.isRequired,
     addToMyLibrary: PropTypes.func.isRequired,
-    selectBook: PropTypes.func.isRequired,
-    book: PropTypes.object.isRequired, // not from redux
+    deleteBook: PropTypes.func.isRequired,
+    book: PropTypes.object.isRequired, // not redux
+    activeBook: PropTypes.object.isRequired, // not redux
+    books: PropTypes.arrayOf(PropTypes.object).isRequired, // not redux
+    library: PropTypes.bool, // not redux
+    displayError: PropTypes.func.isRequired, // not redux
+    displaySuccess: PropTypes.func.isRequired, // not redux
   };
 
   static defaultProps = {
     modal: {},
+    library: false,
   }
 
-  handleAddToMyLibrary = (newBook) => {
-    const { addToMyLibrary } = this.props;
-    addToMyLibrary(newBook);
-    this.props.displaySuccess(newBook, 'added to');
+  componentDidUpdate(nextProps) {
+    if (nextProps.activeBookId !== this.props.activeBookId) {
+      this.renderModal();
+    }
   }
 
-  handleDeleteBook = (book, config) => {
-    const { deleteBook, libraryBooks, hideModal } = this.props;
-    if (config && config.modal === true && libraryBooks.length === 1) {
+  handleAddToMyLibrary = (e, book = this.props.activeBook) => {
+    e.preventDefault();
+    const { addToMyLibrary, displaySuccess } = this.props;
+    addToMyLibrary(book);
+    displaySuccess(book, 'added to');
+  }
+
+  handleDeleteBook = (e, book = this.props.activeBook) => {
+    e.preventDefault();
+    const { deleteBook, books, hideModal, modal } = this.props;
+    if (modal.title && books.length === 1) {
       hideModal();
-    } else if (config && config.modal === true) {
-      this.goNext(book);
+    } else if (modal.title && books.length > 1) {
+      this.goNext();
     }
     deleteBook(book.id);
     this.props.displaySuccess(book, 'deleted from');
   }
 
   goNext = () => {
-    const { book, books } = this.props;
-    const nextBookIndex = books.indexOf(book) + 1;
+    const { activeBook, selectBook, books } = this.props;
+    const nextBookIndex = books.indexOf(activeBook) + 1;
     if (nextBookIndex < books.length) {
-      this.renderModal(null, books[nextBookIndex]);
-    } else if (nextBookIndex >= books.length) {
-      this.props.hideModal();
+      selectBook(books[nextBookIndex].id);
+    } else if (nextBookIndex >= books.length - 1) {
+      this.closeModal();
     }
   }
 
-  goPrevious = (activeBook) => {
-    this.props.selectBook(activeBook.id);
-    const { showBooks } = this.props;
-    const previousBookIndex = showBooks.books.indexOf(activeBook) - 1;
+  goPrevious = () => {
+    const { selectBook, books, activeBook } = this.props;
+    const previousBookIndex = books.indexOf(activeBook) - 1;
+
     if (previousBookIndex > -1) {
-      this.renderModal(null, showBooks.books[previousBookIndex]);
+      selectBook(books[previousBookIndex].id);
     } else if (previousBookIndex === -1) {
-      this.props.hideModal();
+      this.closeModal();
     }
   }
 
-  renderModal = (e) => {
+  closeModal = () => {
+    this.props.hideModal();
+    this.props.selectBook('0');
+  }
+
+  handleClick = (e) => {
     e.preventDefault();
-    const { book, selectBook, library } = this.props;
+    const { book, selectBook } = this.props;
 
     selectBook(book.id);
+  }
 
-    const modal = {
-      book,
-      library,
-      title: book.title,
-      Content: BookImageContainer,
-      setLoading: this.props.setLoading,
-      loading: this.props.loading,
-      handleDeleteBook: this.handleDeleteBook,
-      handleAddToMyLibrary: this.handleAddToMyLibrary,
-      goNext: this.goNext,
-      goPrevious: this.goPrevious,
-    };
-
-    this.props.showModal(modal);
+  renderModal = () => {
+    const { activeBook, showModal } = this.props;
+    if (activeBook.title) {
+      const modal = {
+        Content: BookImageContainer,
+        title: activeBook.title,
+        setLoading: this.props.setLoading,
+        loading: this.props.loading,
+        handleDeleteBook: this.handleDeleteBook,
+        handleAddToMyLibrary: this.handleAddToMyLibrary,
+        goNext: this.goNext,
+        goPrevious: this.goPrevious,
+      };
+      showModal(modal);
+    }
   }
 
   renderBooks = () => {
-    const { book, modal } = this.props;
-    const hideAddIcon = cx({ 'hidden': this.props.library }); /* eslint-disable-quote-props */
-    const hideDeleteIcon = cx({ 'hidden': !this.props.library }); // when library is false, hide the Delete Icon
+    const { book } = this.props;
+    const library = cx({ 'hidden': window.location.href.substr(35) === '/library' });
+    const searchedBooks = cx({ 'hidden': window.location.href.substr(21) ===  '/book-explorer' });
 
     let markup;
 
     if (book.imageLinks) {
       markup = (<li key={book.id} data={book.id}>
-        <a href="" onClick={this.renderModal} >
+        <a href="" onClick={this.handleClick} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
-        <Icon className={hideAddIcon} icon="plus-circle" onClick={this.handleAddToMyLibrary} />
-        <Icon className={hideDeleteIcon} icon="trash" onClick={this.handleDeleteBook} />
+        <Icon className={library} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(event, book)} />
+        <Icon className={searchedBooks} icon="trash" onClick={() => this.handleDeleteBook(event, book)} />
       </li>);
     } else {
       markup = (<li id="book--no-image" key={book.id}>
@@ -108,8 +121,8 @@ export default class Books extends Component {
             <span>Page Count: {book.pageCount}</span>
             <span>Title: {book.title}</span>
           </a>
-          <Icon className={hideAddIcon} icon="plus-circle" onClick={this.handleAddToMyLibrary} />
-          <Icon className={hideDeleteIcon} icon="trash" onClick={this.handleDeleteBook} />
+          <Icon className={library} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(event, book)} />
+          <Icon className={searchedBooks} icon="trash" onClick={() => this.handleDeleteBook(event, book)} />
         </div>
       </li>);
     }

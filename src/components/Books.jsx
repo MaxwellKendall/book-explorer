@@ -7,13 +7,15 @@ import * as utils from '../utils/utils';
 
 export default class Books extends Component {
   static propTypes = {
-    loading: PropTypes.bool.isRequired,
-    books: PropTypes.object.isRequired, // not from redux
-  };
+    activeBook: PropTypes.object,
+    books: PropTypes.arrayOf(PropTypes.object),
+    library: PropTypes.bool,
+  }
 
   static defaultProps = {
-    libraryBooks: [{}],
-    modal: {},
+    books: [{}],
+    library: false,
+    activeBook: {},
   }
 
   displayError = (book) => {
@@ -35,18 +37,19 @@ export default class Books extends Component {
   renderBooks = book => (
     <BookContainer
       book={book}
-      books={this.props.books.list}
+      activeBook={this.props.activeBook}
+      books={this.props.books}
       displayError={this.displayError}
       displaySuccess={this.displaySuccess}
     />
   )
 
   render() {
-    const { books, loading } = this.props;
+    const { books } = this.props;
     return (
       <div className="book-gallery-container">
         <ul className="books__container">
-          {books.list.map(book => this.renderBooks(book))}
+          {books.map(book => this.renderBooks(book))}
         </ul>
       </div>
     );

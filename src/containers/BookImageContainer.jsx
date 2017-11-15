@@ -8,7 +8,7 @@ import BookImage from '../components/BookImage';
 
 const mapStateToProps = state => ({
   loading: state.ui.loading,
-  activeId: state.books.activeBookId,
+  activeBookId: state.books.activeBookId,
   activeLibraryBook: selectors.getActiveLibraryBook(state),
   activeSearchedBook: selectors.getActiveSearchedBook(state),
 });

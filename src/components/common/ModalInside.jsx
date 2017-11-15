@@ -27,6 +27,7 @@ class ModalInside extends Component {
     hideModal: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
     loading: PropTypes.bool,
+    selectBook: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -38,6 +39,7 @@ class ModalInside extends Component {
     document.body.classList.remove('modal--open');
     this.props.setLoading(false);
     this.props.hideModal();
+    this.props.selectBook('0');
   }
 
   handleClickOutside = () => {
@@ -74,17 +76,17 @@ class ModalInside extends Component {
 
   renderModalIcons = () => {
     const { loading, modal } = this.props;
-    const { handleAddToMyLibrary, handleDeleteBook, activeBook, library } = modal;
-    const hideAddIcon = cx({ 'hidden': library }); // when library is true, hidden is true
-    const hideDeleteIcon = cx({ 'hidden': !library }); // when library is false, hidden is true
+    const { handleAddToMyLibrary, handleDeleteBook, activeBook } = modal;
+    const library = cx({ 'hidden': window.location.href.substr(35) === '/library' });
+    const searchedBooks = cx({ 'hidden': window.location.href.substr(21) ===  '/book-explorer' });
 
     return (
       <div className="modal__icons">
-        <span className={`${hideAddIcon} modal__button--add`}>
-          <Icon onClick={!loading ? () => handleAddToMyLibrary(activeBook) : null} icon="plus-circle" />
+        <span className={`${library} modal__button--add`}>
+          <Icon onClick={!loading ? handleAddToMyLibrary : null} icon="plus-circle" />
         </span>
-        <span className={`${hideDeleteIcon} modal__button--delete`}>
-          <Icon onClick={!loading ? () => handleDeleteBook(activeBook, { modal: true }) : null} icon="trash" />
+        <span className={`${searchedBooks} modal__button--delete`}>
+          <Icon onClick={!loading ? handleDeleteBook : null} icon="trash" />
         </span>
       </div>
     );

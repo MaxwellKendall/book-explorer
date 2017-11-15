@@ -8,9 +8,9 @@ export default class BookImage extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
-    book: PropTypes.object.isRequired, //not redux
-    goNext: PropTypes.func.isRequired,
-    goPrevious: PropTypes.func.isRequired,
+    activeBookId: PropTypes.string.isRequired,
+    goNext: PropTypes.func.isRequired, // not redux
+    goPrevious: PropTypes.func.isRequired, // not redux
   }
 
   state = {
@@ -18,12 +18,12 @@ export default class BookImage extends Component {
   };
 
   componentDidMount() {
-    this.renderImage(this.props.book);
+    this.renderImage();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.book.id !== this.props.book.id) {
-      this.renderImage(nextProps.book);
+  componentDidUpdate(nextProps) {
+    if (nextProps.activeBookId !== this.props.activeBookId) {
+      this.renderImage();
     }
   }
 
@@ -36,18 +36,19 @@ export default class BookImage extends Component {
     this.props.setLoading(false);
   }
 
-  renderImage = (book) => {
-    const { setLoading } = this.props;
+  renderImage = () => {
+    const { setLoading, activeBookId } = this.props;
     setLoading(true);
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
     const viewer = new google.books.DefaultViewer(bookImage);
-    viewer.load(book.id, () => this.imageFail(bookImage), () => this.imageSuccess());
+    viewer.load(activeBookId, () => this.imageFail(bookImage), () => this.imageSuccess());
   }
 
   renderDetails = () => {
-    const { book } = this.props;
+    const { library, activeLibraryBook, activeSearchedBook } = this.props;
+    const book = library ? activeLibraryBook : activeSearchedBook;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = book;
     return (
       <div className="modal-details">
@@ -79,7 +80,8 @@ export default class BookImage extends Component {
   }
 
   render() {
-    const { book, loading } = this.props;
+    const { library, activeLibraryBook, activeSearchedBook, loading } = this.props;
+    const book = library ? activeLibraryBook : activeSearchedBook;
     const { authors } = book;
     return (
       <div className="book-image__container">

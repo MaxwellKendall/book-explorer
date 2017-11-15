@@ -12,6 +12,7 @@ export default class SearchedBooks extends Component {
     loading: PropTypes.bool.isRequired,
     modal: PropTypes.object,
     totalSearched: PropTypes.number,
+    activeSearchedBook: PropTypes.object,
   }
 
   static defaultProps = {
@@ -22,11 +23,14 @@ export default class SearchedBooks extends Component {
   }
 
   render() {
-    const { searchedBooks, totalSearched, loading, modal } = this.props;
+    const { searchedBooks, totalSearched, loading, modal, activeSearchedBook } = this.props;
     return (
       <div className="searched-books__container">
         {loading && !modal && <Loading />}
-        <Books books={{ list: searchedBooks, library: false }} />
+        <Books
+          books={searchedBooks}
+          activeBook={activeSearchedBook}
+        />
         {totalSearched > 40 && <FooterContainer />}
       </div>
     );
