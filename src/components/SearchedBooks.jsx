@@ -8,17 +8,14 @@ import FooterContainer from '../containers/FooterContainer';
 
 export default class SearchedBooks extends Component {
   static propTypes = {
-    searchedBooks: PropTypes.arrayOf(PropTypes.object),
     loading: PropTypes.bool.isRequired,
-    modal: PropTypes.object,
+    modal: PropTypes.object.isRequired,
+    activeSearchedBook: PropTypes.object.isRequired,
+    searchedBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
     totalSearched: PropTypes.number,
-    activeSearchedBook: PropTypes.object,
   }
 
   static defaultProps = {
-    searchedBooks: [{}],
-    activeSearchedBook: {},
-    modal: {},
     totalSearched: 0,
   }
 
@@ -27,10 +24,7 @@ export default class SearchedBooks extends Component {
     return (
       <div className="searched-books__container">
         {loading && !modal && <Loading />}
-        <Books
-          books={searchedBooks}
-          activeBook={activeSearchedBook}
-        />
+        <Books books={searchedBooks} activeBook={activeSearchedBook} />
         {totalSearched > 40 && <FooterContainer />}
       </div>
     );
