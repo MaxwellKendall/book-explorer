@@ -23,6 +23,7 @@ export default class Header extends Component {
   }
 
   makeAPICall = () => {
+    // this.props.searchBooks('null');
     this.props.getSearchedBooks(this.state.searchTerm);
 
     this.props.setSearchTerm(this.state.searchTerm);

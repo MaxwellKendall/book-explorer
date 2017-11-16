@@ -23,6 +23,10 @@ export default class Books extends Component {
     library: false,
   }
 
+  state = {
+    id: this.props.book.id,
+  };
+
   componentDidUpdate(nextProps) {
     if (nextProps.activeBookId !== this.props.activeBookId) {
       this.renderModal();
