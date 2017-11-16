@@ -9,12 +9,17 @@ import FooterContainer from '../containers/FooterContainer';
 export default class LibraryBooks extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    modal: PropTypes.object.isRequired,
-    libraryBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-    activeLibraryBook: PropTypes.object.isRequired,
+    modal: PropTypes.object,
+    libraryBooks: PropTypes.arrayOf(PropTypes.object),
+    activeLibraryBook: PropTypes.object,
   }
 
-  state = {};
+  static defaultProps = {
+    activeLibraryBook: {},
+    libraryBooks: [{}],
+    totalSearched: 0,
+    modal: {},
+  }
 
   render() {
     const { libraryBooks, activeLibraryBook, loading, modal } = this.props;

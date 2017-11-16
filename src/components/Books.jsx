@@ -6,29 +6,31 @@ import BookContainer from '../containers/BookContainer';
 import * as utils from '../utils/utils';
 
 const Books = (props) => {
-  const displayError = (book) => {
-    const bookGalleryContainer = document.querySelector('html');
-    const notificationError = utils.createElement('span', 'notification__library--error');
-    bookGalleryContainer.appendChild(notificationError);
-    notificationError.innerHTML = `${book.title} is already in your library!`;
-    setTimeout(() => bookGalleryContainer.removeChild(notificationError), 1000);
+  const addLibraryStyles = (node) => {
+    console.log('addLibraryStyles');
+    node.classList.add('added');
   };
 
-  const displaySuccess = (book, verbiage) => {
+  const displayNotification = (book, verbiage, bool, node) => {
+    console.log(event);
+    const action = bool ? 'add' : 'delete';
     const bookGalleryContainer = document.querySelector('html');
-    const notificationSuccess = utils.createElement('span', 'notification__library--success');
+    const notificationSuccess = utils.createElement('span', `notification__library--${action}`);
     bookGalleryContainer.appendChild(notificationSuccess);
     notificationSuccess.innerHTML = `${book.title} has been ${verbiage} your library!`;
     setTimeout(() => bookGalleryContainer.removeChild(notificationSuccess), 1000);
+    if (action === 'add') {
+      addLibraryStyles(node);
+    }
   };
 
   const renderBooks = book => (
     <BookContainer
+      key={book.id}
       book={book}
       activeBook={props.activeBook}
       books={props.books}
-      displayError={displayError}
-      displaySuccess={displaySuccess}
+      displayNotification={displayNotification}
     />
   );
 

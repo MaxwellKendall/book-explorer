@@ -1,0 +1,5 @@
+Props:
+
+Books and activeBook
+
+ActiveBook is used to determine which property in state a Modal should display

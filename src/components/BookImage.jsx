@@ -6,9 +6,10 @@ import Icon from './common/Icon';
 
 export default class BookImage extends Component {
   static propTypes = {
+    activeBook: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
-    setLoading: PropTypes.func.isRequired,
     activeBookId: PropTypes.string.isRequired,
+    setLoading: PropTypes.func.isRequired,
     goNext: PropTypes.func.isRequired, // not redux
     goPrevious: PropTypes.func.isRequired, // not redux
   }
@@ -43,13 +44,12 @@ export default class BookImage extends Component {
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
     const viewer = new google.books.DefaultViewer(bookImage);
-    viewer.load(activeBookId, () => this.imageFail(bookImage), () => this.imageSuccess());
+    viewer.load(activeBookId, () => this.imageFail(), () => this.imageSuccess());
   }
 
   renderDetails = () => {
-    const { library, activeLibraryBook, activeSearchedBook } = this.props;
-    const book = library ? activeLibraryBook : activeSearchedBook;
-    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = book;
+    const { activeBook } = this.props
+    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">
         {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
@@ -80,9 +80,8 @@ export default class BookImage extends Component {
   }
 
   render() {
-    const { library, activeLibraryBook, activeSearchedBook, loading } = this.props;
-    const book = library ? activeLibraryBook : activeSearchedBook;
-    const { authors } = book;
+    const { activeBook, loading } = this.props;
+    const { authors } = activeBook;
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}

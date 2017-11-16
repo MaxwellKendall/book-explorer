@@ -76,9 +76,9 @@ class ModalInside extends Component {
 
   renderModalIcons = () => {
     const { loading, modal } = this.props;
-    const { handleAddToMyLibrary, handleDeleteBook, activeBook } = modal;
-    const library = cx({ 'hidden': window.location.href.substr(35) === '/library' });
-    const searchedBooks = cx({ 'hidden': window.location.href.substr(21) ===  '/book-explorer' });
+    const { handleAddToMyLibrary, handleDeleteBook } = modal;
+    const library = cx({ hidden: window.location.href.substr(35) === '/library' });
+    const searchedBooks = cx({ hidden: window.location.href.substr(21) === '/book-explorer' });
 
     return (
       <div className="modal__icons">

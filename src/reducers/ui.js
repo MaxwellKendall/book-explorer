@@ -4,6 +4,7 @@ import * as actions from '../actions/ui';
 const initialState = {
   loading: false,
   modal: null,
+  error: false,
 };
 
 export default handleActions({
@@ -11,4 +12,5 @@ export default handleActions({
   [actions.setLoading]: (state, action) => ({ ...state, loading: action.payload }),
   [actions.showModal]: (state, action) => ({ ...state, modal: action.payload }),
   [actions.hideModal]: state => ({ ...state, modal: null }),
+  [actions.setError]: (state, action) => ({ ...state, error: action.payload }),
 }, initialState);
