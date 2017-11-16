@@ -2,7 +2,11 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', './src/index.js'],
+    app: [
+      'babel-polyfill',
+      'react-hot-loader/patch',
+      './src/index.js',
+    ],
   },
   output: {
     path: __dirname,
@@ -26,6 +30,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
+    hot: true,
     historyApiFallback: true,
     contentBase: './',
   },

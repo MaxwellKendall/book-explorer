@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import BooksContainer from '../containers/BooksContainer';
+import Loading from './common/Loading';
+
+import Books from './Books';
 import FooterContainer from '../containers/FooterContainer';
 
 export default class LibraryBooks extends Component {
   static propTypes = {
     libraryBooks: PropTypes.arrayOf(PropTypes.object),
+    activeLibraryBook: PropTypes.object,
   }
 
   static defaultProps = {
@@ -17,11 +20,15 @@ export default class LibraryBooks extends Component {
   state = {};
 
   render() {
-    const { libraryBooks } = this.props;
+    const { libraryBooks, activeLibraryBook, loading, modal } = this.props;
     return (
       <div className="library-container">
-        {libraryBooks &&
-          <BooksContainer showBooks={{ books: libraryBooks, library: true }} />}
+        {loading && !modal && <Loading />}
+        <Books
+          books={libraryBooks}
+          activeBook={activeLibraryBook}
+          library={!false}
+        />
         {libraryBooks.length > 40 && <FooterContainer />}
       </div>
     );

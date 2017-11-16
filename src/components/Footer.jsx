@@ -3,34 +3,42 @@ import PropTypes from 'prop-types';
 
 export default class Footer extends Component {
   static propTypes = {
+    searchTerm: PropTypes.string.isRequired,
     bookIndex: PropTypes.number.isRequired,
     setBookIndex: PropTypes.func.isRequired,
     getSearchedBooks: PropTypes.func.isRequired,
   };
 
-goNext = () => {
-  const { bookIndex, setBookIndex, getSearchedBooks, searchTerm } = this.props;
-  const newIndex = bookIndex + 40;
+goNext = (e) => {
+  e.preventDefault();
+  const { bookIndex, setBookIndex, getSearchedBooks, searchTerm, totalSearched } = this.props;
+  let newIndex = bookIndex + 40;
+  if (newIndex >= totalSearched) {
+    newIndex = totalSearched - 40;
+  }
   setBookIndex(newIndex);
   getSearchedBooks(searchTerm, 40, newIndex);
 }
 
-goPrevious = () => {
+goPrevious = (e) => {
+  e.preventDefault();
   const { bookIndex, setBookIndex, getSearchedBooks, searchTerm } = this.props;
-  const newIndex = bookIndex !== 1 ? bookIndex - 40 : 1;
+  let newIndex = bookIndex - 40;
+  if (newIndex <= 0) {
+    newIndex = 0;
+  }
   setBookIndex(newIndex);
   getSearchedBooks(searchTerm, 40, newIndex);
 }
 
 renderPagination = () => {
-  const { setBookIndex, bookIndex } = this.props;
   const pagination = (
     <ul className="footer__container">
       <li>
-        <button onClick={this.goPrevious}>Previous</button>
+        <a href="" onClick={this.goPrevious}>Previous</a>
       </li>
       <li>
-        <button onClick={this.goNext}>Next</button>
+        <a href="" onClick={this.goNext}>Next</a>
       </li>
     </ul>
   );

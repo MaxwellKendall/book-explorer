@@ -25,16 +25,21 @@ class ModalInside extends Component {
   static propTypes = {
     modal: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     hideModal: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    selectBook: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     disableOnClickOutside: false,
+    loading: false,
   };
 
   handleClose = () => {
     document.body.classList.remove('modal--open');
-
+    this.props.setLoading(false);
     this.props.hideModal();
+    this.props.selectBook('0');
   }
 
   handleClickOutside = () => {
@@ -50,7 +55,7 @@ class ModalInside extends Component {
     let markup = <h1>Title</h1>;
 
     if (modal) {
-      markup = modal.title.length > 55 ? <h1>{`${modal.title.substr(0,50)}...`}</h1> : <h1>{modal.title}</h1>;
+      markup = modal.title.length > 55 ? <h1>{`${modal.title.substr(0, 50)}...`}</h1> : <h1>{modal.title}</h1>;
     }
 
     return markup;
@@ -71,17 +76,17 @@ class ModalInside extends Component {
 
   renderModalIcons = () => {
     const { loading, modal } = this.props;
-    const { handleAddToMyLibrary, handleDeleteBook, activeBook, library } = modal;
-    const hideAddIcon = cx({ 'hidden': library }); // when library is true, hidden is true
-    const hideDeleteIcon = cx({ 'hidden': !library }); // when library is false, hidden is true
+    const { handleAddToMyLibrary, handleDeleteBook, activeBook } = modal;
+    const library = cx({ 'hidden': window.location.href.substr(35) === '/library' });
+    const searchedBooks = cx({ 'hidden': window.location.href.substr(21) ===  '/book-explorer' });
 
     return (
       <div className="modal__icons">
-        <span className="modal__button--add">
-          <Icon className={hideAddIcon} onClick={!loading ? () => handleAddToMyLibrary(activeBook) : null} icon="plus-circle" />
+        <span className={`${library} modal__button--add`}>
+          <Icon onClick={!loading ? handleAddToMyLibrary : null} icon="plus-circle" />
         </span>
-        <span className="modal__button--delete">
-          <Icon className={hideDeleteIcon} onClick={!loading ? () => handleDeleteBook(activeBook, { modal: true }) : null} icon="trash" />
+        <span className={`${searchedBooks} modal__button--delete`}>
+          <Icon onClick={!loading ? handleDeleteBook : null} icon="trash" />
         </span>
       </div>
     );

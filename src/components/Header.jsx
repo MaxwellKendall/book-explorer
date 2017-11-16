@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import * as utils from '../utils/utils';
-
 export default class Header extends Component {
   // This is an example of a controlled component:
   //   (a) the text input value is defined by the state
@@ -17,14 +15,16 @@ export default class Header extends Component {
 
   static propTypes = {
     getSearchedBooks: PropTypes.func.isRequired,
+    setSearchTerm: PropTypes.func.isRequired,
   }
 
   state = {
     searchTerm: '',
   }
 
-  makeAPICall = (event) => {
+  makeAPICall = () => {
     this.props.getSearchedBooks(this.state.searchTerm);
+
     this.props.setSearchTerm(this.state.searchTerm);
   }
 
@@ -39,16 +39,16 @@ export default class Header extends Component {
     return (
       <div className="header">
         {path === 'library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
-        <div className="search_bar">
+        <div className="search_bar__container">
           <input
-            id="searchBox"
+            id="searchBar"
             value={searchTerm}
             onChange={this.handleChange}
             type="text"
             placeholder="Search for a Book"
           />
-          <Link className="search" to="/" onClick={this.makeAPICall}>Search</Link>
-          <Link to="/library" className="library" onClick={utils.preventDefault}>
+          <Link className="search" to="/book-explorer" onClick={this.makeAPICall}>Search</Link>
+          <Link to="/book-explorer/library" className="library">
             My Library
           </Link>
         </div>

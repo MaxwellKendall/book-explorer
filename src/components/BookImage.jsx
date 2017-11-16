@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames'
 
 import Loading from './common/Loading';
 import Icon from './common/Icon';
@@ -9,9 +8,9 @@ export default class BookImage extends Component {
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
-    selectBook: PropTypes.func.isRequired,
-    handleDeleteBook: PropTypes.func.isRequired,
-    handleAddToMyLibrary: PropTypes.func.isRequired,
+    activeBookId: PropTypes.string.isRequired,
+    goNext: PropTypes.func.isRequired, // not redux
+    goPrevious: PropTypes.func.isRequired, // not redux
   }
 
   state = {
@@ -19,12 +18,12 @@ export default class BookImage extends Component {
   };
 
   componentDidMount() {
-    this.renderImage(this.props.activeBook);
+    this.renderImage();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.activeBook.id !== this.props.activeBook.id) {
-      this.renderImage(nextProps.activeBook);
+  componentDidUpdate(nextProps) {
+    if (nextProps.activeBookId !== this.props.activeBookId) {
+      this.renderImage();
     }
   }
 
@@ -37,19 +36,20 @@ export default class BookImage extends Component {
     this.props.setLoading(false);
   }
 
-  renderImage = (activeBook) => {
-    const { setLoading } = this.props;
+  renderImage = () => {
+    const { setLoading, activeBookId } = this.props;
     setLoading(true);
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
     const viewer = new google.books.DefaultViewer(bookImage);
-    viewer.load(activeBook.id, () => this.imageFail(bookImage), () => this.imageSuccess());
+    viewer.load(activeBookId, () => this.imageFail(bookImage), () => this.imageSuccess());
   }
 
   renderDetails = () => {
-    const { activeBook, setLoading } = this.props;
-    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
+    const { library, activeLibraryBook, activeSearchedBook } = this.props;
+    const book = library ? activeLibraryBook : activeSearchedBook;
+    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = book;
     return (
       <div className="modal-details">
         {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
@@ -66,22 +66,23 @@ export default class BookImage extends Component {
   }
 
   renderModalIcons = () => {
-    const { loading, activeBook, goNext, goPrevious } = this.props;
+    const { goNext, goPrevious } = this.props;
     return (
       <div className="modal-icons">
         <span className="modal__button--right">
-          <Icon onClick={!loading ? () => goNext(activeBook) : null} icon="arrow-right" />
+          <Icon onClick={goNext} icon="arrow-right" />
         </span>
         <span className="modal__button--left">
-          <Icon onClick={!loading ? () => goPrevious(activeBook) : null} icon="arrow-left" />
+          <Icon onClick={goPrevious} icon="arrow-left" />
         </span>
       </div>
     );
   }
 
   render() {
-    const { loading, activeBook } = this.props;
-    const { pageCount, publishedDate, publisher, subtitle } = activeBook;
+    const { library, activeLibraryBook, activeSearchedBook, loading } = this.props;
+    const book = library ? activeLibraryBook : activeSearchedBook;
+    const { authors } = book;
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}
@@ -90,9 +91,7 @@ export default class BookImage extends Component {
           {this.state.imageFailed && this.renderDetails()}
         </div>
         <div className="basic-details">
-          {subtitle && <p className="subtitle">{`Subtitle: ${subtitle}`}</p>}
-          {pageCount && <p className="page-count">{`Page Count: ${pageCount}`}</p>}
-          {publisher && publishedDate && <p className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</p>}
+          {authors && <p className="page-count">{`Author(s):${authors.map(e => ` ${e}`)}`}</p>}
         </div>
       </div>
     );

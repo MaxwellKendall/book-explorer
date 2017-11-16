@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 const mapStateToProps = state => ({
   bookIndex: state.books.bookIndex,
   searchTerm: state.books.searchTerm,
+  totalSearched: state.books.totalSearched,
 });
 
 const mapDispatchToProps = dispatch => ({

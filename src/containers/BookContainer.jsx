@@ -1,21 +1,26 @@
 import { connect } from 'react-redux';
+
 import * as actions from '../actions/books';
 import * as uiActions from '../actions/ui';
+import * as selectors from '../selectors/books';
 
-import Books from '../components/Books';
+import Book from '../components/Book';
 
 const mapStateToProps = state => ({
   loading: state.ui.loading,
-  libraryBooks: state.books.libraryBooks,
+  modal: state.ui.modal,
+  activeBookId: state.books.activeBookId,
+  activeLibraryBook: selectors.getActiveLibraryBook(state),
+  activeSearchedBook: selectors.getActiveSearchedBook(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   showModal: modal => dispatch(uiActions.showModal(modal)),
   hideModal: () => dispatch(uiActions.hideModal()),
   setLoading: bool => dispatch(uiActions.setLoading(bool)),
-  selectBook: book => dispatch(actions.selectBook(book)),
-  deleteBook: book => dispatch(actions.deleteBook(book)),
+  selectBook: id => dispatch(actions.selectBook(id)),
   addToMyLibrary: book => dispatch(actions.addToMyLibrary(book)),
+  deleteBook: id => dispatch(actions.deleteBook(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Books);
+export default connect(mapStateToProps, mapDispatchToProps)(Book);
