@@ -39,9 +39,9 @@ export default class Books extends Component {
   handleDeleteBook = (e, book = this.props.activeBook) => {
     e.preventDefault();
     const { deleteBook, books, hideModal, modal } = this.props;
-    if (modal.title && books.length === 1) {
+    if (modal && books.length === 1) {
       hideModal();
-    } else if (modal.title && books.length > 1) {
+    } else if (modal && books.length > 1) {
       this.goNext();
     }
     deleteBook(book.id);
@@ -110,8 +110,8 @@ export default class Books extends Component {
         <a href="" onClick={this.handleClick} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>
-        <Icon className={library} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(event, book)} />
-        <Icon className={searchedBooks} icon="trash" onClick={() => this.handleDeleteBook(event, book)} />
+        <Icon className={library} icon="plus-circle" onClick={event => this.handleAddToMyLibrary(event, book)} />
+        <Icon className={searchedBooks} icon="trash" onClick={event => this.handleDeleteBook(event, book)} />
       </li>);
     } else {
       markup = (<li id="book--no-image" key={book.id}>
@@ -121,8 +121,8 @@ export default class Books extends Component {
             <span>Page Count: {book.pageCount}</span>
             <span>Title: {book.title}</span>
           </a>
-          <Icon className={library} icon="plus-circle" onClick={() => this.handleAddToMyLibrary(event, book)} />
-          <Icon className={searchedBooks} icon="trash" onClick={() => this.handleDeleteBook(event, book)} />
+          <Icon className={library} icon="plus-circle" onClick={event => this.handleAddToMyLibrary(event, book)} />
+          <Icon className={searchedBooks} icon="trash" onClick={event => this.handleDeleteBook(event, book)} />
         </div>
       </li>);
     }
