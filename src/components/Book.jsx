@@ -8,8 +8,8 @@ import Icon from './common/Icon';
 
 export default class Book extends Component {
   static propTypes = {
+    loading: PropTypes.bool.isRequired,
     modal: PropTypes.object,
-    activeBookId: PropTypes.string.isRequired,
     activeBook: PropTypes.object.isRequired, // not redux
     books: PropTypes.arrayOf(PropTypes.object).isRequired, // not redux
     book: PropTypes.object.isRequired, // not redux
@@ -55,10 +55,9 @@ export default class Book extends Component {
 
   goNext = () => {
     // not successfully updating the activeBook
-    const { activeBook, selectBook, books } = this.props;
+    const { activeBook, selectBook, books, loading } = this.props;
     const nextBookIndex = books.indexOf(activeBook) + 1;
-    console.log(books[nextBookIndex]);
-    if (nextBookIndex < books.length) {
+    if (nextBookIndex < books.length && !loading) {
       selectBook(books[nextBookIndex].id);
     } else if (nextBookIndex >= books.length - 1) {
       this.closeModal();
@@ -66,10 +65,10 @@ export default class Book extends Component {
   }
 
   goPrevious = () => {
-    const { selectBook, books, activeBook } = this.props;
+    const { selectBook, books, activeBook, loading } = this.props;
     const previousBookIndex = books.indexOf(activeBook) - 1;
 
-    if (previousBookIndex > -1) {
+    if (previousBookIndex > -1 && !loading) {
       selectBook(books[previousBookIndex].id);
     } else if (previousBookIndex === -1) {
       this.closeModal();

@@ -8,7 +8,6 @@ export default class BookImage extends Component {
   static propTypes = {
     activeBook: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
-    activeBookId: PropTypes.string.isRequired,
     setLoading: PropTypes.func.isRequired,
     goNext: PropTypes.func.isRequired, // not redux
     goPrevious: PropTypes.func.isRequired, // not redux
@@ -48,7 +47,7 @@ export default class BookImage extends Component {
   }
 
   renderDetails = () => {
-    const { activeBook } = this.props
+    const { activeBook } = this.props;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     return (
       <div className="modal-details">

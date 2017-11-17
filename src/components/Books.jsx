@@ -7,7 +7,6 @@ import * as utils from '../utils/utils';
 
 const Books = (props) => {
   const addLibraryStyles = (node, modal) => {
-    console.log('addLibraryStyles', !modal);
     if (!modal) {
       node.classList.add('added');
     }
