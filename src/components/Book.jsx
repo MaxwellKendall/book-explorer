@@ -54,7 +54,6 @@ export default class Book extends Component {
   }
 
   goNext = () => {
-    // not successfully updating the activeBook
     const { activeBook, selectBook, books, loading } = this.props;
     const nextBookIndex = books.indexOf(activeBook) + 1;
     if (nextBookIndex < books.length && !loading) {
