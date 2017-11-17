@@ -9,6 +9,7 @@ import Icon from './common/Icon';
 export default class Book extends Component {
   static propTypes = {
     modal: PropTypes.object,
+    activeBookId: PropTypes.string.isRequired,
     activeBook: PropTypes.object.isRequired, // not redux
     books: PropTypes.arrayOf(PropTypes.object).isRequired, // not redux
     book: PropTypes.object.isRequired, // not redux
@@ -27,7 +28,7 @@ export default class Book extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    if (nextProps.activeBook !== this.props.activeBook) {
+    if (nextProps.activeBook.id !== this.props.activeBook.id) {
       this.renderModal();
     }
   }
@@ -35,9 +36,9 @@ export default class Book extends Component {
   handleAddToMyLibrary = (e, book = this.props.activeBook) => {
     e.preventDefault();
     const node = (e.target.parentElement);
-    const { addToMyLibrary, displayNotification } = this.props;
+    const { addToMyLibrary, displayNotification, modal } = this.props;
     addToMyLibrary(book);
-    displayNotification(book, 'added to', true, node);
+    displayNotification(book, 'added to', true, node, modal);
   }
 
   handleDeleteBook = (e, book = this.props.activeBook) => {
@@ -49,12 +50,14 @@ export default class Book extends Component {
       this.goNext();
     }
     deleteBook(book.id);
-    displayNotification(book, 'deleted from', false);
+    displayNotification(book, 'deleted from', false, modal);
   }
 
   goNext = () => {
+    // not successfully updating the activeBook
     const { activeBook, selectBook, books } = this.props;
     const nextBookIndex = books.indexOf(activeBook) + 1;
+    console.log(books[nextBookIndex]);
     if (nextBookIndex < books.length) {
       selectBook(books[nextBookIndex].id);
     } else if (nextBookIndex >= books.length - 1) {
@@ -97,6 +100,7 @@ export default class Book extends Component {
         goNext: this.goNext,
         goPrevious: this.goPrevious,
       };
+
       showModal(modal);
     }
   }

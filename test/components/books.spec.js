@@ -16,14 +16,16 @@ describe('getSearchedBooks Async Action Creator: ', () => {
     moxios.uninstall();
   });
 
-  it('getSearchedBooks dispatches 3 actions', () => {
+  it('getSearchedBooks dispatches 4 actions', () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: [
-          { test: 'test' },
-        ],
+        response: [{
+          data: {
+            items: [{ volumeInfo: {} }],
+          },
+        }],
       });
     });
 
@@ -31,8 +33,7 @@ describe('getSearchedBooks Async Action Creator: ', () => {
 
     return store.dispatch(actions.getSearchedBooks())
       .then(() => {
-        console.log(store.getActions());
-        expect(store.getActions().length).to.equal(3);
+        expect(store.getActions().length).to.equal(4);
         // perhaps its just returns one because .... it is only dispatching one books action?
       });
   });

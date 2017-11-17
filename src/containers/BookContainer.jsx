@@ -8,6 +8,7 @@ import Book from '../components/Book';
 const mapStateToProps = state => ({
   loading: state.ui.loading,
   modal: state.ui.modal,
+  activeBookId: state.books.activeBookId,
 });
 
 const mapDispatchToProps = dispatch => ({

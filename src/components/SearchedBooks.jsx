@@ -29,7 +29,8 @@ export default class SearchedBooks extends Component {
     return (
       <div className="searched-books__container">
         {loading && !modal && <Loading />}
-        {!error && !modal && !loading && <Books books={searchedBooks} activeBook={activeSearchedBook} />}
+        <Books books={searchedBooks} activeBook={activeSearchedBook} />
+        {/* {!error && !modal && !loading && <Books books={searchedBooks} activeBook={activeSearchedBook} />} */}
         {error && !loading && <ErrorMessage
           classNames="error"
           icon="exclamation-circle"

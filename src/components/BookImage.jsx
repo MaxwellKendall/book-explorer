@@ -23,7 +23,7 @@ export default class BookImage extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    if (nextProps.activeBookId !== this.props.activeBookId) {
+    if (nextProps.activeBook.id !== this.props.activeBook.id) {
       this.renderImage();
     }
   }
@@ -38,13 +38,13 @@ export default class BookImage extends Component {
   }
 
   renderImage = () => {
-    const { setLoading, activeBookId } = this.props;
+    const { setLoading, activeBook } = this.props;
     setLoading(true);
 
     const google = window.google;
     const bookImage = document.getElementsByClassName('book-image')[0];
     const viewer = new google.books.DefaultViewer(bookImage);
-    viewer.load(activeBookId, () => this.imageFail(), () => this.imageSuccess());
+    viewer.load(activeBook.id, () => this.imageFail(), () => this.imageSuccess());
   }
 
   renderDetails = () => {
