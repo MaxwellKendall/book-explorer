@@ -10,6 +10,8 @@ import SearchedBooksContainer from '../containers/SearchedBooksContainer';
 
 const history = createBrowserHistory();
 
+// TODO: Add ReduxRouter to put location in state (see packman)
+
 const App = () => (
   <Router history={history}>
     <div className="main">

@@ -34,6 +34,7 @@ export default class Book extends Component {
   }
 
   handleAddToMyLibrary = (e, book = this.props.activeBook) => {
+    // TODO: move to book image
     e.preventDefault();
     const node = (e.target.parentElement);
     const { addToMyLibrary, displayNotification, modal } = this.props;
@@ -42,6 +43,7 @@ export default class Book extends Component {
   }
 
   handleDeleteBook = (e, book = this.props.activeBook) => {
+    // TODO: move to book image
     e.preventDefault();
     const { deleteBook, books, hideModal, modal, displayNotification } = this.props;
     if (modal && books.length === 1) {
@@ -54,6 +56,7 @@ export default class Book extends Component {
   }
 
   goNext = () => {
+    // TODO: move to book image
     const { activeBook, selectBook, books, loading } = this.props;
     const nextBookIndex = books.indexOf(activeBook) + 1;
     if (nextBookIndex < books.length && !loading) {
@@ -64,6 +67,7 @@ export default class Book extends Component {
   }
 
   goPrevious = () => {
+    // TODO: move to book image
     const { selectBook, books, activeBook, loading } = this.props;
     const previousBookIndex = books.indexOf(activeBook) - 1;
 
@@ -104,6 +108,7 @@ export default class Book extends Component {
   }
 
   renderBooks = () => {
+    // TODO: Move this all to be inside the render method
     const { book, key } = this.props;
     // const library = cx({ hidden: window.location.href.substr(35) === '/library' });
     // const searchedBooks = cx({ hidden: window.location.href.substr(21) === '/book-explorer' });

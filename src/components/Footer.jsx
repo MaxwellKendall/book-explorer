@@ -33,6 +33,7 @@ goPrevious = (e) => {
 }
 
 renderPagination = () => {
+  // TODO: Move this to the render method
   const pagination = (
     <ul className="footer__container">
       <li>
