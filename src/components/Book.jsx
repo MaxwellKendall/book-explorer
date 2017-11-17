@@ -105,9 +105,10 @@ export default class Book extends Component {
 
   renderBooks = () => {
     const { book, key } = this.props;
-    const library = cx({ hidden: window.location.href.substr(35) === '/library' });
-    const searchedBooks = cx({ hidden: window.location.href.substr(21) === '/book-explorer' });
-
+    // const library = cx({ hidden: window.location.href.substr(35) === '/library' });
+    // const searchedBooks = cx({ hidden: window.location.href.substr(21) === '/book-explorer' });
+    const library = cx({ hidden: window.location.href.substr(46) === '/library' });
+    const searchedBooks = cx({ hidden: window.location.href.substr(32) === '/book-explorer' });
     let markup;
 
     if (book.imageLinks) {
