@@ -448,7 +448,6 @@ body {
   -webkit-box-shadow: 4px 2px 13px 3px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 4px 2px 13px 3px rgba(0, 0, 0, 0.75);
   box-shadow: 4px 2px 13px 3px rgba(0, 0, 0, 0.75);
-  flex-grow: 2;
 }
 .searched-books__container li .hidden,
 .library-container li .hidden,
