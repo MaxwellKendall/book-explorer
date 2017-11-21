@@ -1,4 +1,5 @@
-.modal__overlay {
+.modal--open {
+  .modal__overlay {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +7,8 @@
     width: 100%;
     position: fixed;
     z-index: 10000;
-    background: rgba(0,0,0, .7);
+    background: rgba(0, 0, 0, 0.7);
+    top: 0;
     .modal {
       display: flex;
       flex-direction: column;
@@ -94,47 +96,48 @@
         }
       }
     }
-}
+  }
 
-// Modal Icons:
+  // Modal Icons:
 
-.modal__button--add, .modal__button--delete {
-  margin: auto 2rem 1rem auto;
-  font-size: 2rem;
-}
-.modal__button--close {
-  display: block;
-  position: relative;
-  color: white;
-  bottom: 2.5rem;
-  left: 1.5rem;
-  font-size: 1.2rem;
+  .modal__button--add, .modal__button--delete {
+    margin: auto 2rem 1rem auto;
+    font-size: 2rem;
+  }
+  .modal__button--close {
+    display: block;
+    position: relative;
+    color: white;
+    bottom: 2.5rem;
+    left: 1.5rem;
+    font-size: 1.2rem;
   @media @tablet {
     display: none;
   }
-}
-.modal__button--right, .modal__button--left {
-  position: absolute;
-  top: 20rem;
-  color: white;
-  Z-INDEX: 9999999;
-  font-size: 3rem;
-  @media @tablet {
-    font-size: 5rem;
   }
+  .modal__button--right, .modal__button--left {
+    position: absolute;
+    top: 20rem;
+    color: white;
+    Z-INDEX: 9999999;
+    font-size: 3rem;
+    @media @tablet {
+      font-size: 5rem;
+    }
   &:hover {
     cursor: pointer;
+    }
   }
-}
-.modal__button--right {
-  right: 0rem;
-  @media @tablet {
-    right: 1rem;
+  .modal__button--right {
+    right: 0rem;
+    @media @tablet {
+      right: 1rem;
+    }
   }
-}
-.modal__button--left {
-  left: 0rem;
-  @media @tablet {
-    left: 1rem;
-  }
+  .modal__button--left {
+    left: 0rem;
+    @media @tablet {
+      left: 1rem;
+    }
+  }  
 }

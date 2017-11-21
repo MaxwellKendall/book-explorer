@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
   static propTypes = {
+    error: PropTypes.bool.isRequired,
+    location: PropTypes.string.isRequired,
+    setError: PropTypes.func.isRequired,
     getSearchedBooks: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
   }
@@ -13,8 +16,10 @@ export default class Header extends Component {
   }
 
   makeAPICall = () => {
-    this.props.getSearchedBooks(this.state.searchTerm);
-    this.props.setSearchTerm(this.state.searchTerm);
+    const { getSearchedBooks, setSearchTerm, setError, error } = this.props;
+    if (error) setError(false);
+    getSearchedBooks(this.state.searchTerm);
+    setSearchTerm(this.state.searchTerm);
   }
 
   handleChange = (event) => {
@@ -23,11 +28,10 @@ export default class Header extends Component {
   }
 
   render() {
-    const { searchTerm } = this.state;
-    const path = window.location.href.match('library');
+    const { searchTerm, location } = this.state;
     return (
       <div className="header">
-        {path === 'library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
+        {location === '/book-explorer/library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
         <div className="search_bar__container">
           <input
             id="searchBar"

@@ -28,12 +28,12 @@ export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => 
         dispatch(searchBooks(searchedBooks));
         dispatch(setTotalSearched(totalItems));
         dispatch(uiActions.setLoading(false));
-        dispatch(uiActions.setError(false));
       })
       .catch((err) => {
         console.warn('API Error:', err); // eslint-disable-line no-console
         dispatch(uiActions.setLoading(false));
         dispatch(setTotalSearched(0));
+        dispatch(searchBooks([{}]));
         dispatch(uiActions.setError(true));
       });
   }
