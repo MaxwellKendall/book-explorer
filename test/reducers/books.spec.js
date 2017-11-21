@@ -34,18 +34,17 @@ describe('Books Reducers: Individual Action Creators update specified state', ()
     expect(reducer(undefined, {})).to.eql(initialState);
   });
 
-  it('searchBooks Action Creator changes the searchedBooks & totalSearched properties ', () => {
+  it('searchBooks Action Creator changes the searchedBooks property', () => {
     const expectedState = {
       activeBookId: '0',
       searchedBooks: [{ title: 'test' }],
-      totalSearched: 1,
+      totalSearched: 0,
       libraryBooks: [],
       bookIndex: 0,
       searchTerm: '',
     };
 
-    expect(reducer(initialState, actions.searchBooks({
-      searchedBooks: [{ title: 'test' }], totalItems: 1 }))).to.eql(expectedState);
+    expect(reducer(initialState, actions.searchBooks([{ title: 'test' }]))).to.eql(expectedState);
   });
 
   it('selectBook Action Creator changes the activeBookId property ', () => {
@@ -100,7 +99,7 @@ describe('Books Reducers: Individual Action Creators update specified state', ()
     expect(reducer(initialState, actions.setBookIndex(123))).to.eql(expectedState);
   });
 
-  it('setSearchTerm Action Creator changes the  property', () => {
+  it('setSearchTerm Action Creator changes the searchTerm property', () => {
     const expectedState = {
       activeBookId: '0',
       searchedBooks: [],
@@ -111,5 +110,18 @@ describe('Books Reducers: Individual Action Creators update specified state', ()
     };
 
     expect(reducer(initialState, actions.setSearchTerm('test'))).to.eql(expectedState);
+  });
+
+  it('setTotalSearched Action Creator changes the totalSearched property', () => {
+    const expectedState = {
+      activeBookId: '0',
+      searchedBooks: [],
+      totalSearched: 1,
+      libraryBooks: [],
+      bookIndex: 0,
+      searchTerm: '',
+    };
+
+    expect(reducer(initialState, actions.setTotalSearched(1))).to.eql(expectedState);
   });
 });

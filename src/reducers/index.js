@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+
 import books from './books';
 import ui from './ui';
 
@@ -8,6 +10,7 @@ const rootReducer = combineReducers({
   // Value is reducer that returns state
   ui,
   books,
+  router: routerReducer,
 });
 
 export default rootReducer;

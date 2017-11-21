@@ -6,7 +6,7 @@ import * as selectors from '../selectors/books';
 const mapStateToProps = state => ({
   loading: state.ui.loading,
   modal: state.ui.modal,
-  activeSearchedBook: selectors.getActiveSearchedBook(state),
+  error: state.ui.error,
   searchedBooks: state.books.searchedBooks,
   totalSearched: state.books.totalSearched,
 });

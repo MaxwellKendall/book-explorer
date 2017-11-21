@@ -10,6 +10,23 @@
     font-size: 4rem;
   }
 }
+.error {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  align-items: center;
+  padding: 2rem 4rem;
+  border-radius: 1rem;
+  margin: auto;
+  justify-content: center;
+  background: #F2DEDE;
+  color: #A74544;
+}
+.error i {
+  margin-right: 1rem;
+  font-size: 2rem;
+  color: #A74544;
+}
 .hidden {
   display: none;
 }
@@ -42,8 +59,8 @@ body {
 .main li:hover {
   cursor: pointer;
 }
-.notification__library--success,
-.notification__library--error {
+.notification__library--add,
+.notification__library--delete {
   position: fixed;
   top: 0rem;
   display: block;
@@ -57,11 +74,11 @@ body {
   text-indent: 1rem;
   z-index: 1000000;
 }
-.notification__library--success {
+.notification__library--add {
   color: #3E753F;
   background: #E0F0D9;
 }
-.notification__library--error {
+.notification__library--delete {
   background: #F2DEDE;
   color: #A74544;
 }
@@ -198,6 +215,7 @@ body {
 .footer .footer__container li a {
   color: white;
   text-decoration: none;
+  padding: 1rem 2rem;
 }
 .modal__overlay {
   display: flex;
@@ -371,17 +389,28 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 }
-.searched-books__container .books__container #book--no-image,
-.library-container .books__container #book--no-image {
+.searched-books__container .books__container li,
+.library-container .books__container li,
+.searched-books__container .books__container .book--no-image,
+.library-container .books__container .book--no-image {
+  width: auto;
   display: flex;
-  width: 13rem;
   flex-direction: column;
-  padding: 0 .75rem;
+  margin: 1rem;
+  border-radius: 0 0 .25rem .25rem;
 }
-.searched-books__container .books__container .fa.fa-plus-circle,
-.library-container .books__container .fa.fa-plus-circle,
-.searched-books__container .books__container .fa.fa-trash,
-.library-container .books__container .fa.fa-trash {
+.searched-books__container .books__container li .book__no-image i,
+.library-container .books__container li .book__no-image i,
+.searched-books__container .books__container .book--no-image .book__no-image i,
+.library-container .books__container .book--no-image .book__no-image i,
+.searched-books__container .books__container li .fa.fa-plus-circle,
+.library-container .books__container li .fa.fa-plus-circle,
+.searched-books__container .books__container .book--no-image .fa.fa-plus-circle,
+.library-container .books__container .book--no-image .fa.fa-plus-circle,
+.searched-books__container .books__container li .fa.fa-trash,
+.library-container .books__container li .fa.fa-trash,
+.searched-books__container .books__container .book--no-image .fa.fa-trash,
+.library-container .books__container .book--no-image .fa.fa-trash {
   background: #C7CAE9;
   padding: .25rem;
   color: white;
@@ -390,14 +419,35 @@ body {
   border-radius: 0 0 .25rem .25rem;
   position: relative;
   top: 0px;
-  width: 100%;
-}
-.searched-books__container li,
-.library-container li {
   width: auto;
-  display: flex;
-  flex-direction: column;
-  margin: 1rem;
+}
+.searched-books__container .books__container li a,
+.library-container .books__container li a,
+.searched-books__container .books__container .book--no-image a,
+.library-container .books__container .book--no-image a,
+.searched-books__container .books__container li .book__no-image,
+.library-container .books__container li .book__no-image,
+.searched-books__container .books__container .book--no-image .book__no-image,
+.library-container .books__container .book--no-image .book__no-image {
+  height: 12.25rem;
+  width: 8rem;
+}
+.searched-books__container .books__container li a img,
+.library-container .books__container li a img,
+.searched-books__container .books__container .book--no-image a img,
+.library-container .books__container .book--no-image a img,
+.searched-books__container .books__container li .book__no-image img,
+.library-container .books__container li .book__no-image img,
+.searched-books__container .books__container .book--no-image .book__no-image img,
+.library-container .books__container .book--no-image .book__no-image img {
+  width: auto;
+  height: auto;
+}
+.searched-books__container .books__container .added,
+.library-container .books__container .added {
+  -webkit-box-shadow: 4px 2px 13px 3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 2px 13px 3px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 2px 13px 3px rgba(0, 0, 0, 0.75);
 }
 .searched-books__container li .hidden,
 .library-container li .hidden,

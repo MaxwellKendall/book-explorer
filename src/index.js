@@ -1,25 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
+import { ConnectedRouter } from 'react-router-redux';
+
+import configureStore from './store/configureStore';
+import configureHistory from './history/configureHistory';
 
 import App from './components/App';
-import rootReducer from './reducers/index';
 
 require('./less/index.less');
 // require('./less/output.css'); // for production
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const store = configureStore();
+const history = configureHistory();
 
 const render = (Component) => {
   ReactDOM.render(
     <Provider store={store}>
-      <AppContainer>
-        <Component />
-      </AppContainer>
+      <ConnectedRouter history={history}>
+        <AppContainer>
+          <Component />
+        </AppContainer>
+      </ConnectedRouter>
     </Provider>,
     document.querySelector('.container'),
   );

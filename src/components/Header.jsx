@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
-  // This is an example of a controlled component:
-  //   (a) the text input value is defined by the state
-  //   (b) a change handler is attached to the input in order to:
-  //     (1) update the state which consequently
-  //     (2) updates the inputs value
-  // Controlled components in React are considered a best practice in order to:
-  //   (i) maintain the principle of React State being "The Single Source of Truth" for the application
-  //   (ii) more easily enfore validation styles on a form by referring to state
-  // Source: https://reactjs.org/docs/uncontrolled-components.html and https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/
-
   static propTypes = {
+    error: PropTypes.bool.isRequired,
+    location: PropTypes.string.isRequired,
+    setError: PropTypes.func.isRequired,
     getSearchedBooks: PropTypes.func.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
   }
@@ -23,10 +16,10 @@ export default class Header extends Component {
   }
 
   makeAPICall = () => {
-    // this.props.searchBooks('null');
-    this.props.getSearchedBooks(this.state.searchTerm);
-
-    this.props.setSearchTerm(this.state.searchTerm);
+    const { getSearchedBooks, setSearchTerm, setError, error } = this.props;
+    if (error) setError(false);
+    getSearchedBooks(this.state.searchTerm);
+    setSearchTerm(this.state.searchTerm);
   }
 
   handleChange = (event) => {
@@ -35,18 +28,17 @@ export default class Header extends Component {
   }
 
   render() {
-    const { searchTerm } = this.state;
-    const path = window.location.href.match('library');
+    const { searchTerm, location } = this.state;
     return (
       <div className="header">
-        {path === 'library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
+        {location === '/book-explorer/library' ? <h1>My Library</h1> : <h1>Google Books</h1>}
         <div className="search_bar__container">
           <input
             id="searchBar"
             value={searchTerm}
             onChange={this.handleChange}
             type="text"
-            placeholder="Search for a Book"
+            placeholder="Search by Title or Author"
           />
           <Link className="search" to="/book-explorer" onClick={this.makeAPICall}>Search</Link>
           <Link to="/book-explorer/library" className="library">

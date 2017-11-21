@@ -8,27 +8,22 @@ import FooterContainer from '../containers/FooterContainer';
 
 export default class LibraryBooks extends Component {
   static propTypes = {
+    loading: PropTypes.bool.isRequired,
+    modal: PropTypes.bool.isRequired,
     libraryBooks: PropTypes.arrayOf(PropTypes.object),
-    activeLibraryBook: PropTypes.object,
   }
 
   static defaultProps = {
     libraryBooks: [{}],
-    activeLibraryBook: {},
+    totalSearched: 0,
   }
 
-  state = {};
-
   render() {
-    const { libraryBooks, activeLibraryBook, loading, modal } = this.props;
+    const { libraryBooks, modal, loading } = this.props;
     return (
       <div className="library-container">
         {loading && !modal && <Loading />}
-        <Books
-          books={libraryBooks}
-          activeBook={activeLibraryBook}
-          library={!false}
-        />
+        <Books books={libraryBooks} />
         {libraryBooks.length > 40 && <FooterContainer />}
       </div>
     );

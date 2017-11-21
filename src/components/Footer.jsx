@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 export default class Footer extends Component {
   static propTypes = {
     searchTerm: PropTypes.string.isRequired,
+    totalSearched: PropTypes.number.isRequired,
     bookIndex: PropTypes.number.isRequired,
     setBookIndex: PropTypes.func.isRequired,
     getSearchedBooks: PropTypes.func.isRequired,
@@ -32,6 +33,7 @@ goPrevious = (e) => {
 }
 
 renderPagination = () => {
+  // TODO: Move this to the render method
   const pagination = (
     <ul className="footer__container">
       <li>
