@@ -16,8 +16,7 @@ const mapDispatchToProps = dispatch => ({
   setModal: bool => dispatch(uiActions.setModal(bool)),
   setLoading: bool => dispatch(uiActions.setLoading(bool)),
   selectBook: id => dispatch(actions.selectBook(id)),
-  addToMyLibrary: book => dispatch(actions.addToMyLibrary(book)),
-  deleteBook: id => dispatch(actions.deleteBook(id)),
+  updateLibrary: (book, type) => dispatch(actions.updateLibrary(book, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookImage);

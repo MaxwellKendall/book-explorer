@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   loading: state.ui.loading,
   modal: state.ui.modal,
   error: state.ui.error,
+  notification: state.ui.notification,
   searchedBooks: state.books.searchedBooks,
   totalSearched: state.books.totalSearched,
 });

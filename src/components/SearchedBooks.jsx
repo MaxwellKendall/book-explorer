@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Loading from './common/Loading';
-import ErrorMessage from './common/ErrorMessage';
+import Notification from './common/Notification';
 
 import Books from './Books';
 import FooterContainer from '../containers/FooterContainer';
@@ -32,9 +32,9 @@ export default class SearchedBooks extends Component {
     } else if (!loading && modal && !error) {
       markup = <Books books={searchedBooks} />;
     } else if (loading && !modal) {
-      markup = <Loading />
+      markup = <Loading />;
     } else if (error && !loading && !modal) {
-      markup = (<ErrorMessage
+      markup = (<Notification
         classNames="error"
         icon="exclamation-circle"
         message="No Items Returned for your search. Please try again."
@@ -45,9 +45,14 @@ export default class SearchedBooks extends Component {
   }
 
   render() {
-    const { loading, error, searchedBooks, totalSearched, modal } = this.props;
+    const { loading, notification, searchedBooks, totalSearched, modal } = this.props;
     return (
       <div className="searched-books__container">
+        {notification.show && <Notification
+          classNames="notification__added"
+          icon="check"
+          message={`${notification.info.title} was added to your library, homie`}
+        />}
         {searchedBooks ? this.renderBooks() : null}
         {totalSearched > 40 && !modal && !loading && <FooterContainer />}
       </div>

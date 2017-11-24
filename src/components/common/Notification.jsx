@@ -4,14 +4,13 @@ import cx from 'classnames';
 
 import Icon from './Icon';
 
-export default class ErrorMessage extends Component {
+export default class Notification extends Component {
   static displayName = 'Error Message';
 
   static propTypes = {
     classNames: PropTypes.string,
     icon: PropTypes.string.isRequired,
     message: PropTypes.string,
-    element: PropTypes.string,
   };
 
   static defaultProps = {
@@ -20,7 +19,7 @@ export default class ErrorMessage extends Component {
   };
 
   render() {
-    const { element, classNames, message, icon } = this.props;
+    const { classNames, message, icon } = this.props;
     const classes = cx(classNames);
 
     return (

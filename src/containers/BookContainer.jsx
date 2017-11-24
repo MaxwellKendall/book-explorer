@@ -10,13 +10,13 @@ const mapStateToProps = state => ({
   location: state.router.location.pathname,
   loading: state.ui.loading,
   activeBook: selectors.getActiveBook(state),
+  libraryBooks: state.books.libraryBooks,
 });
 
 const mapDispatchToProps = dispatch => ({
   setModal: bool => dispatch(uiActions.setModal(bool)),
   selectBook: id => dispatch(actions.selectBook(id)),
-  addToMyLibrary: book => dispatch(actions.addToMyLibrary(book)),
-  deleteBook: id => dispatch(actions.deleteBook(id)),
+  updateLibrary: (book, type) => dispatch(actions.updateLibrary(book, type)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Book);

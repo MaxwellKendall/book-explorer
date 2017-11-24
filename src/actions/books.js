@@ -11,16 +11,29 @@ export const setBookIndex = createAction('SET_BOOKINDEX');
 export const setSearchTerm = createAction('SET_SEARCHTERM');
 export const setTotalSearched = createAction('SET_TOTAL_SEARCHED');
 
+export const updateLibrary = (book, type) => (
+  (dispatch) => {
+    if (type === 'add') {
+      const newBook = { ...book, added: true };
+      dispatch(addToMyLibrary(newBook));
+    } else if (type === 'remove') {
+      dispatch(deleteBook(book.id));
+    }
+    dispatch(uiActions.showNotification({ show: true, info: book }));
+    setTimeout(() => dispatch(uiActions.showNotification({ show: false, info: '' })), 2000);
+  }
+);
+
 export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => (
   (dispatch) => {
     dispatch(uiActions.setLoading(true));
-    const root = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`
+    const root = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
     return axios.get(`${root}&maxResults=${maxResults}&startIndex=${bookIndex}`)
       .then((response) => {
         console.log('API Response', response);
         const totalItems = response.data.totalItems;
         const books = response.data.items;
-        const searchedBooks = books.map((book, index) => {
+        const searchedBooks = books.map((book) => {
           const { volumeInfo, id } = book;
           const { title, pageCount, imageLinks, industryIdentifiers, description, subtitle, publisher, publishedDate, previewLink, authors } = volumeInfo;
           return { id, title, subtitle, publisher, publishedDate, description, pageCount, imageLinks, industryIdentifiers, previewLink, authors };

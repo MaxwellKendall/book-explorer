@@ -11,10 +11,10 @@ export default class BookImage extends Component {
     loading: PropTypes.bool.isRequired,
     setLoading: PropTypes.func.isRequired,
     setModal: PropTypes.func.isRequired,
+    modal: PropTypes.object,
     books: PropTypes.arrayOf(PropTypes.object).isRequired,
     activeBook: PropTypes.object.isRequired,
-    addToMyLibrary: PropTypes.func.isRequired,
-    deleteBook: PropTypes.func.isRequired,
+    updateLibrary: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
   }
 
@@ -31,10 +31,21 @@ export default class BookImage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // // solution 2
     if (nextProps.activeBook.id !== this.props.activeBook.id && nextProps.activeBook) {
       this.renderImage(nextProps.activeBook);
     }
   }
+
+  // shouldComponentUpdate(nextProps) {
+  //   // // solution 1
+  //   let rtrn = false;
+  //   if (nextProps.activeBook.id !== this.props.activeBook.id && nextProps.activeBook) {
+  //     rtrn = true;
+  //   }
+  //
+  //   return rtrn;
+  // }
 
   componentWillUnmount() {
     this.props.setLoading(false);
@@ -49,19 +60,18 @@ export default class BookImage extends Component {
 
   handleAddToMyLibrary = (e, book = this.props.activeBook) => {
     e.preventDefault();
-    const { addToMyLibrary } = this.props;
-    addToMyLibrary(book);
+    this.props.updateLibrary(book, 'add');
   }
 
   handleDeleteBook = (e, book = this.props.activeBook) => {
     e.preventDefault();
-    const { deleteBook, books, modal } = this.props;
+    const { updateLibrary, books, modal } = this.props;
     if (modal && books.length === 1) {
       this.closeModal();
     } else if (modal && books.length > 1) {
       this.goNext();
     }
-    deleteBook(book.id);
+    updateLibrary(book, 'remove');
   }
 
   goNext = () => {
@@ -69,7 +79,6 @@ export default class BookImage extends Component {
     const nextBookIndex = books.indexOf(activeBook) + 1;
     if (nextBookIndex < books.length && !loading) {
       selectBook(books[nextBookIndex].id);
-      this.renderImage();
     } else if (nextBookIndex >= books.length - 1) {
       this.closeModal();
     }
@@ -81,7 +90,6 @@ export default class BookImage extends Component {
 
     if (previousBookIndex > -1 && !loading) {
       selectBook(books[previousBookIndex].id);
-      this.renderImage();
     } else if (previousBookIndex === -1) {
       this.closeModal();
     }
@@ -97,6 +105,7 @@ export default class BookImage extends Component {
   }
 
   renderImage = (book = this.props.activeBook) => {
+    // // solution 2
     const { setLoading } = this.props;
 
     setLoading(true);
@@ -105,6 +114,18 @@ export default class BookImage extends Component {
     const viewer = new google.books.DefaultViewer(bookImage);
     viewer.load(book.id, () => this.imageFail(), () => this.imageSuccess());
   }
+
+  // renderImage = () => {
+  // // solution 1
+  //   const { setLoading, activeBook } = this.props;
+  //   setLoading(true);
+  //   if (document.querySelector('.book-image')) {
+  //     const google = window.google;
+  //     const bookImage = document.querySelector('.book-image');
+  //     const viewer = new google.books.DefaultViewer(bookImage);
+  //     viewer.load(activeBook.id, this.imageFail, this.imageSuccess);
+  //   }
+  // }
 
   renderDetails = () => {
     const { activeBook } = this.props;
@@ -154,6 +175,8 @@ export default class BookImage extends Component {
         {this.renderModalIcons()}
         <div className="book-image">
           {loading && <Loading />}
+          {/* Solution 1 */}
+          {/* {this.renderImage()} */}
           {this.state.imageFailed && !loading && this.renderDetails()}
         </div>
         <div className="basic-details">
