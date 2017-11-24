@@ -106,8 +106,10 @@ export default class BookImage extends Component {
 
   renderImage = (book = this.props.activeBook) => {
     // // solution 2
+    if (this.state.imageFailed === true) {
+      this.setState(prevState => ({ ...prevState, imageFailed: false }));
+    }
     const { setLoading } = this.props;
-
     setLoading(true);
     const google = window.google;
     const bookImage = document.querySelector('.book-image');
@@ -126,24 +128,6 @@ export default class BookImage extends Component {
   //     viewer.load(activeBook.id, this.imageFail, this.imageSuccess);
   //   }
   // }
-
-  renderDetails = () => {
-    const { activeBook } = this.props;
-    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
-    return (
-      <div className="modal-details">
-        {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
-        {pageCount && <h3 className="page-count">{`Page Count: ${pageCount}`}</h3>}
-        {publisher && publishedDate && <h3 className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</h3>}
-        {description && <div className="description">
-          <h3 className="description">Description: </h3><p className="description">{description}</p>
-        </div>}
-        {previewLink && <a target="_blank" href={previewLink}>Link for more Details</a>}
-        {!previewLink && !subtitle && !description && <a target="_blank" href={previewLink}>Link for more Details</a>}
-        {!previewLink && !description && !subtitle && <p>No data available</p>}
-      </div>
-    );
-  }
 
   renderModalIcons = () => {
     const { loading } = this.props;
@@ -170,15 +154,28 @@ export default class BookImage extends Component {
 
   render() {
     const { activeBook, loading } = this.props;
+    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
+    const hidden = cx({ hidden: this.state.imageFailed });
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}
-        <div className="book-image">
+        <div className={`book-image ${hidden}`}>
           {loading && <Loading />}
           {/* Solution 1 */}
           {/* {this.renderImage()} */}
-          {this.state.imageFailed && !loading && this.renderDetails()}
+          {/* {this.state.imageFailed && !loading && this.renderDetails()} */}
         </div>
+        {this.state.imageFailed && <div className="modal-details">
+          {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
+          {pageCount && <h3 className="page-count">{`Page Count: ${pageCount}`}</h3>}
+          {publisher && publishedDate && <h3 className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</h3>}
+          {description && <div className="description">
+            <h3 className="description">Description: </h3><p className="description">{description}</p>
+          </div>}
+          {previewLink && <a target="_blank" href={previewLink}>Link for more Details</a>}
+          {!previewLink && !subtitle && !description && <a target="_blank" href={previewLink}>Link for more Details</a>}
+          {!previewLink && !description && !subtitle && <p>No data available</p>}
+        </div>}
         <div className="basic-details">
           {activeBook.authors ? <p className="page-count">{`Author(s):${activeBook.authors.map(e => ` ${e}`)}`}</p> : null}
         </div>
