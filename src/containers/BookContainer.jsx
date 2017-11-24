@@ -9,6 +9,7 @@ import Book from '../components/Book';
 const mapStateToProps = state => ({
   location: state.router.location.pathname,
   loading: state.ui.loading,
+  modal: state.ui.modal,
   activeBook: selectors.getActiveBook(state),
   libraryBooks: state.books.libraryBooks,
 });

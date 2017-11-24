@@ -12,6 +12,7 @@ export default class Book extends Component {
     book: PropTypes.object.isRequired, // not redux
     key: PropTypes.string, // not redux
     setModal: PropTypes.func.isRequired,
+    modal: PropTypes.bool.isRequired,
     activeBook: PropTypes.object,
     updateLibrary: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
@@ -22,7 +23,6 @@ export default class Book extends Component {
   static defaultProps = {
     libraryBooks: [{}],
     activeBook: {},
-    modal: {},
     key: '',
   }
 
@@ -30,59 +30,30 @@ export default class Book extends Component {
     store: PropTypes.object,
   };
 
-  state = {
-    modal: false,
-  }
-
   componentWillReceiveProps(nextProps) {
-    // // solution 2
-    if (nextProps.activeBook.id !== this.props.activeBook.id && nextProps.activeBook) {
+    if (this.props.book.id === nextProps.activeBook.id) {
       this.renderModal(nextProps.activeBook);
     }
   }
-
-  // shouldComponentUpdate(nextProps) {
-  // // solution 1
-  //   let rtrn = false;
-  //   if (nextProps.activeBook.id !== this.props.activeBook.id && nextProps.activeBook) {
-  //     rtrn = true;
-  //   }
-  //   return rtrn;
-  // }
 
   handleClick = (e) => {
     e.preventDefault();
     const { book, selectBook } = this.props;
     selectBook(book.id);
-    // // solution 1
-    // this.setState(prevState => ({ ...prevState, modal: true }), this.renderModal);
   }
 
   renderModal = (book = this.props.activeBook) => {
-    // // solution 2
-    const { setModal } = this.props;
+    const { setModal, modal } = this.props;
     const Content = <BookImageContainer store={this.context.store} />;
-    const modal = {
+    const config = {
       Content,
       title: book.title,
     };
-    Modal.showModal(modal);
-    setModal(true);
+    Modal.showModal(config);
+    if (!modal) {
+      setModal(true);
+    }
   }
-
-  // renderModal = () => {
-  // // Solution 1
-  //   const { setModal, activeBook } = this.props;
-  //   const Content = <BookImageContainer store={this.context.store} />;
-  //   const modal = {
-  //     Content,
-  //     title: activeBook.title,
-  //   };
-  //   if (this.state.modal) {
-  //     Modal.showModal(modal);
-  //     setModal(true);
-  //   }
-  // }
 
   render() {
     const { book, key, updateLibrary, libraryBooks, location } = this.props;
@@ -94,8 +65,6 @@ export default class Book extends Component {
         {book.imageLinks && <a href="" onClick={this.handleClick} >
           <img src={book.imageLinks.thumbnail} alt="whateva" />
         </a>}
-        {/* Solution 1 */}
-        {/* {this.renderModal()} */}
         {!book.imageLinks && <div className="book__no-image">
           <a href="" onClick={this.handleClick}>
             <span>Image Not Available</span>
