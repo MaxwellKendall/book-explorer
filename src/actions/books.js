@@ -11,16 +11,23 @@ export const setBookIndex = createAction('SET_BOOKINDEX');
 export const setSearchTerm = createAction('SET_SEARCHTERM');
 export const setTotalSearched = createAction('SET_TOTAL_SEARCHED');
 
-export const updateLibrary = (book, type) => (
+export const updateLibrary = (book, type, bool, books = [], closeModal = () => {}) => (
   (dispatch) => {
+    console.log('test?', bool);
     if (type === 'add') {
-      const newBook = { ...book, added: true };
-      dispatch(addToMyLibrary(newBook));
-    } else if (type === 'remove') {
+      dispatch(addToMyLibrary(book));
+    } else if (type === 'remove' && !bool) {
+      dispatch(deleteBook(book.id));
+    } else if (type === 'remove' && bool && books.length > 1) {
+      const previousBook = books.indexOf(book) - 1;
+      dispatch(selectBook(books[previousBook].id));
+      dispatch(deleteBook(book.id));
+    } else if (type === 'remove' && bool && books.length === 1) {
+      closeModal();
       dispatch(deleteBook(book.id));
     }
     dispatch(uiActions.showNotification({ show: true, info: book }));
-    setTimeout(() => dispatch(uiActions.showNotification({ show: false, info: '' })), 2000);
+    setTimeout(() => dispatch(uiActions.showNotification({ show: false, info: '' })), 1000);
   }
 );
 
@@ -42,7 +49,7 @@ export const nextBook = (activeBook, books, loading, closeModal) => (
     if (nextBookIndex < books.length && !loading) {
       dispatch(selectBook(books[nextBookIndex].id));
     }
-    if (nextBookIndex >= books.length - 1) {
+    if (nextBookIndex > books.length - 1) {
       closeModal();
     }
   }

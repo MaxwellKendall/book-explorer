@@ -16,6 +16,8 @@ export default class BookImage extends Component {
     activeBook: PropTypes.object.isRequired,
     updateLibrary: PropTypes.func.isRequired,
     selectBook: PropTypes.func.isRequired,
+    previousBook: PropTypes.func.isRequired,
+    nextBook: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -73,7 +75,6 @@ export default class BookImage extends Component {
   }
 
   renderImage = (book = this.props.activeBook) => {
-    // // solution 2
     if (this.state.imageFailed === true) {
       this.setState(prevState => ({ ...prevState, imageFailed: false }));
     }
@@ -86,32 +87,33 @@ export default class BookImage extends Component {
   }
 
   renderModalIcons = () => {
-    const { loading, previousBook, nextBook, activeBook, books } = this.props;
-    const library = cx({ hidden: window.location.href.substr(46) === '/library' });
-    const searchedBooks = cx({ hidden: window.location.href.substr(32) === '/book-explorer' });
+    const { loading, previousBook, nextBook, activeBook, location, books, updateLibrary } = this.props;
+    const library = cx({ hidden: location === '/book-explorer/library' });
+    const searchedBooks = cx({ hidden: location === '/book-explorer' });
 
     return (
       <div className="modal-icons">
         <span className="modal__button--right">
-          <Icon icon="arrow-right" onClick={() => nextBook(activeBook, books, loading, this.closeModal)} />
+          <Icon icon="arrow-right" onClick={!loading ? () => nextBook(activeBook, books, loading, this.closeModal) : null} />
         </span>
         <span className="modal__button--left">
-          <Icon icon="arrow-left" onClick={() => previousBook(activeBook, books, loading, this.closeModal)} />
+          <Icon icon="arrow-left" onClick={!loading ? () => previousBook(activeBook, books, loading, this.closeModal) : null} />
         </span>
         <span className={`${library} modal__button--add`}>
-          <Icon icon="plus-circle" onClick={!loading ? this.handleAddToMyLibrary : null} />
+          <Icon icon="plus-circle" onClick={!loading ? () => updateLibrary(activeBook, 'add') : null} />
         </span>
         <span className={`${searchedBooks} modal__button--delete`}>
-          <Icon icon="trash" onClick={!loading ? this.handleDeleteBook : null} />
+          <Icon icon="trash" onClick={!loading ? () => updateLibrary(activeBook, 'remove', true, books, this.closeModal) : null} />
         </span>
       </div>
     );
   }
 
   render() {
-    const { activeBook, loading } = this.props;
+    const { activeBook, loading, books } = this.props;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     const hidden = cx({ hidden: this.state.imageFailed });
+    console.log(books);
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}
