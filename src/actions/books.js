@@ -24,6 +24,30 @@ export const updateLibrary = (book, type) => (
   }
 );
 
+export const previousBook = (activeBook, books, loading, closeModal) => (
+  (dispatch) => {
+    const previousBookIndex = books.indexOf(activeBook) - 1;
+
+    if (previousBookIndex > -1 && !loading) {
+      dispatch(selectBook(books[previousBookIndex].id));
+    } else if (previousBookIndex === -1) {
+      closeModal();
+    }
+  }
+);
+
+export const nextBook = (activeBook, books, loading, closeModal) => (
+  (dispatch) => {
+    const nextBookIndex = books.indexOf(activeBook) + 1;
+    if (nextBookIndex < books.length && !loading) {
+      dispatch(selectBook(books[nextBookIndex].id));
+    }
+    if (nextBookIndex >= books.length - 1) {
+      closeModal();
+    }
+  }
+);
+
 export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => (
   (dispatch) => {
     dispatch(uiActions.setLoading(true));

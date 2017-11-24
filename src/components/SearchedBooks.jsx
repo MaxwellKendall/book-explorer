@@ -12,7 +12,7 @@ export default class SearchedBooks extends Component {
     loading: PropTypes.bool.isRequired,
     modal: PropTypes.bool.isRequired,
     error: PropTypes.bool.isRequired,
-    notification: PropTypes.bool.isRequired,
+    notification: PropTypes.object.isRequired,
     searchedBooks: PropTypes.arrayOf(PropTypes.object),
     totalSearched: PropTypes.number,
   }

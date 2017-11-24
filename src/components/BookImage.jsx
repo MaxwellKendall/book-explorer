@@ -31,21 +31,10 @@ export default class BookImage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // // solution 2
     if (nextProps.activeBook.id !== this.props.activeBook.id && nextProps.activeBook) {
       this.renderImage(nextProps.activeBook);
     }
   }
-
-  // shouldComponentUpdate(nextProps) {
-  //   // // solution 1
-  //   let rtrn = false;
-  //   if (nextProps.activeBook.id !== this.props.activeBook.id && nextProps.activeBook) {
-  //     rtrn = true;
-  //   }
-  //
-  //   return rtrn;
-  // }
 
   componentWillUnmount() {
     this.props.setLoading(false);
@@ -74,27 +63,6 @@ export default class BookImage extends Component {
     updateLibrary(book, 'remove');
   }
 
-  goNext = () => {
-    const { activeBook, selectBook, books, loading } = this.props;
-    const nextBookIndex = books.indexOf(activeBook) + 1;
-    if (nextBookIndex < books.length && !loading) {
-      selectBook(books[nextBookIndex].id);
-    } else if (nextBookIndex >= books.length - 1) {
-      this.closeModal();
-    }
-  }
-
-  goPrevious = () => {
-    const { selectBook, books, activeBook, loading } = this.props;
-    const previousBookIndex = books.indexOf(activeBook) - 1;
-
-    if (previousBookIndex > -1 && !loading) {
-      selectBook(books[previousBookIndex].id);
-    } else if (previousBookIndex === -1) {
-      this.closeModal();
-    }
-  }
-
   imageFail = () => {
     this.props.setLoading(false);
     this.setState({ imageFailed: true });
@@ -117,30 +85,18 @@ export default class BookImage extends Component {
     viewer.load(book.id, () => this.imageFail(), () => this.imageSuccess());
   }
 
-  // renderImage = () => {
-  // // solution 1
-  //   const { setLoading, activeBook } = this.props;
-  //   setLoading(true);
-  //   if (document.querySelector('.book-image')) {
-  //     const google = window.google;
-  //     const bookImage = document.querySelector('.book-image');
-  //     const viewer = new google.books.DefaultViewer(bookImage);
-  //     viewer.load(activeBook.id, this.imageFail, this.imageSuccess);
-  //   }
-  // }
-
   renderModalIcons = () => {
-    const { loading } = this.props;
+    const { loading, previousBook, nextBook, activeBook, books } = this.props;
     const library = cx({ hidden: window.location.href.substr(46) === '/library' });
     const searchedBooks = cx({ hidden: window.location.href.substr(32) === '/book-explorer' });
 
     return (
       <div className="modal-icons">
         <span className="modal__button--right">
-          <Icon icon="arrow-right" onClick={this.goNext} />
+          <Icon icon="arrow-right" onClick={() => nextBook(activeBook, books, loading, this.closeModal)} />
         </span>
         <span className="modal__button--left">
-          <Icon icon="arrow-left" onClick={this.goPrevious} />
+          <Icon icon="arrow-left" onClick={() => previousBook(activeBook, books, loading, this.closeModal)} />
         </span>
         <span className={`${library} modal__button--add`}>
           <Icon icon="plus-circle" onClick={!loading ? this.handleAddToMyLibrary : null} />
@@ -161,9 +117,6 @@ export default class BookImage extends Component {
         {this.renderModalIcons()}
         <div className={`book-image ${hidden}`}>
           {loading && <Loading />}
-          {/* Solution 1 */}
-          {/* {this.renderImage()} */}
-          {/* {this.state.imageFailed && !loading && this.renderDetails()} */}
         </div>
         {this.state.imageFailed && <div className="modal-details">
           {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
