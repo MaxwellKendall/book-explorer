@@ -20,6 +20,12 @@ export default class LibraryBooks extends Component {
     totalSearched: 0,
   }
 
+  // renderNotification = () => (<Notification
+  //   classNames="notification__deleted"
+  //   icon="minus"
+  //   message={`${this.props.notification.info.title} was delted from your library, homie`}
+  // />);
+
   render() {
     const { notification, libraryBooks, modal, loading } = this.props;
     return (
@@ -28,7 +34,7 @@ export default class LibraryBooks extends Component {
         {notification.show && <Notification
           classNames="notification__deleted"
           icon="minus"
-          message={`${notification.info.title} was delted from your library, homie`}
+          message={`${this.props.notification.info.title} was delted from your library, homie`}
         />}
         <Books books={libraryBooks} />
         {libraryBooks.length > 40 && <FooterContainer />}

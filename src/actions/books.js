@@ -13,7 +13,6 @@ export const setTotalSearched = createAction('SET_TOTAL_SEARCHED');
 
 export const updateLibrary = (book, type, bool, books = [], closeModal = () => {}) => (
   (dispatch) => {
-    console.log('test?', bool);
     if (type === 'add') {
       dispatch(addToMyLibrary(book));
     } else if (type === 'remove' && !bool) {
@@ -77,7 +76,7 @@ export const getSearchedBooks = (searchTerm, maxResults = 40, bookIndex = 1) => 
         console.warn('API Error:', err); // eslint-disable-line no-console
         dispatch(uiActions.setLoading(false));
         dispatch(setTotalSearched(0));
-        dispatch(searchBooks([{}]));
+        dispatch(searchBooks([]));
         dispatch(uiActions.setError(true));
       });
   }
