@@ -13,44 +13,36 @@ export default class Footer extends Component {
 goNext = (e) => {
   e.preventDefault();
   const { bookIndex, setBookIndex, getSearchedBooks, searchTerm, totalSearched } = this.props;
-  let newIndex = bookIndex + 40;
+  const newIndex = bookIndex + 40;
   if (newIndex >= totalSearched) {
-    newIndex = totalSearched - 40;
+    return true;
+  } else if (newIndex < totalSearched) {
+    setBookIndex(newIndex);
+    getSearchedBooks(searchTerm, 40, newIndex);
   }
-  setBookIndex(newIndex);
-  getSearchedBooks(searchTerm, 40, newIndex);
 }
 
 goPrevious = (e) => {
   e.preventDefault();
   const { bookIndex, setBookIndex, getSearchedBooks, searchTerm } = this.props;
-  let newIndex = bookIndex - 40;
-  if (newIndex <= 0) {
-    newIndex = 0;
+  const newIndex = bookIndex - 40;
+  if (newIndex >= 0) {
+    getSearchedBooks(searchTerm, 40, newIndex);
+    setBookIndex(newIndex);
   }
-  setBookIndex(newIndex);
-  getSearchedBooks(searchTerm, 40, newIndex);
-}
-
-renderPagination = () => {
-  // TODO: Move this to the render method
-  const pagination = (
-    <ul className="footer__container">
-      <li>
-        <a href="" onClick={this.goPrevious}>Previous</a>
-      </li>
-      <li>
-        <a href="" onClick={this.goNext}>Next</a>
-      </li>
-    </ul>
-  );
-  return pagination;
 }
 
 render() {
   return (
     <div className="footer">
-      {this.renderPagination()}
+      <ul className="footer__container">
+        <li>
+          <a href="" onClick={this.goPrevious}>Previous</a>
+        </li>
+        <li>
+          <a href="" onClick={this.goNext}>Next</a>
+        </li>
+      </ul>
     </div>
   );
 }

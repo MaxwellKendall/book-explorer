@@ -28,7 +28,8 @@ export default class Header extends Component {
   }
 
   render() {
-    const { searchTerm, location } = this.state;
+    const { searchTerm } = this.state;
+    const { location } = this.props;
     return (
       <div className="header">
         {location === '/book-explorer/library' ? <h1>My Library</h1> : <h1>Google Books</h1>}

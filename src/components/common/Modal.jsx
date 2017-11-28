@@ -27,11 +27,11 @@ class Modal extends Component {
   static propTypes = {
     modal: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     closeModal: PropTypes.func.isRequired,
-    // disableOnClickOutside: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+    disableOnClickOutside: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   };
 
   static defaultProps = {
-    // disableOnClickOutside: false,
+    disableOnClickOutside: false,
   };
 
   handleClose = () => {

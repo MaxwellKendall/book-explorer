@@ -9,8 +9,8 @@ import * as Modal from './common/ModalWrapper';
 
 export default class Book extends Component {
   static propTypes = {
-    book: PropTypes.object.isRequired, // not redux
-    key: PropTypes.string, // not redux
+    book: PropTypes.object.isRequired,
+    key: PropTypes.string,
     setModal: PropTypes.func.isRequired,
     modal: PropTypes.bool.isRequired,
     activeBook: PropTypes.object,
@@ -31,7 +31,7 @@ export default class Book extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.book.id === nextProps.activeBook.id) {
+    if (this.props.book.id === nextProps.activeBook.id && this.props.activeBook.id !== nextProps.activeBook.id) {
       this.renderModal(nextProps.activeBook);
     }
   }
@@ -48,6 +48,7 @@ export default class Book extends Component {
     const config = {
       Content,
       title: book.title,
+      disableOnClickOutside: true,
     };
     Modal.showModal(config);
     if (!modal) {

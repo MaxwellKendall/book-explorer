@@ -6,7 +6,7 @@
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 10000;
+    z-index: 10;
     background: rgba(0, 0, 0, 0.7);
     top: 0;
     .modal {
@@ -18,142 +18,158 @@
       height: 90%;
       width: 80%;
       border-radius: 1rem;
+      overflow-y: scroll;
       @media @tablet {
         height: 80%;
-        width: 75%;
+        width: 80%;
       }
-    }
-    .modal__header {
-      display: flex;
-      justify-content: center;
-      flex-direction: row;
-      padding: 1rem 0;
-      width: 100%;
-      margin: auto 0;
-      height: auto;
-      border-bottom: .1rem solid #ccc;
-      h1 {
-        margin: 0;
-        margin-right: auto;
-        font-size: 1.2rem;
-        margin-left: .25rem;
-        @media @tablet {
-          margin: auto auto 1rem 2rem;
-          margin-left: 2rem;
-          font-size: 2rem;
-        }
-      }
-      .modal__icons {
-        text-align: center;
-      }
-      .notification-modal__library--success,
-      .notification-modal__library--error {
-        font-size: 1.2rem;
-        font-weight: bold;
-        padding: .5rem;
-        border: none;
-        margin-bottom: 1rem;
-        position: absolute;
-        text-indent: 1rem;
-        top: 0rem;
-        width: 100%;
-      }
-      .notification-modal__library--success {
-        color: #3E753F;
-        background: #E0F0D9;
-      }
-      .notification-modal__library--error {
-        background: #F2DEDE;
-        color: #A74544;
-      }
-    }
-    .modal__content {
-      height: 90%;
-      width: 90%;
-      @media @tablet {
-        height: 100%;
-        width: 100%;
-      }
-      .book-image__container {
-        height: 85%;
-        .book-image {
-          height: 100%;
-        }
-        .basic-details {
-          display: none;
-          @media @tablet {
-            display: flex;
-            flex-wrap: wrap;
+        .modal__header {
+          display: flex;
+          justify-content: center;
+          flex-direction: row;
+          padding: 1rem 0;
+          width: 100%;
+          margin: auto 0;
+          height: auto;
+          border-bottom: .1rem solid #ccc;
+          h1 {
+            margin: 0;
+            margin-right: 2rem;
+            font-size: 1.2rem;
+            margin-left: .25rem;
+            text-overflow: ellipsis;
+            @media @tablet {
+              margin: auto auto 1rem 2rem;
+              margin-left: 2rem;
+              font-size: 2rem;
+            }
+          }
+          .modal__button--close {
+            display: block;
+            position: absolute;
+            color: white;
+            font-size: 2rem;
+            top: 0;
+            right: .5rem;
+            @media @tablet {
+              top: 1.5rem;
+              right: 3.5rem;
+              font-size: 3rem;
+            }
+          }
+          .notification-modal__library--success,
+          .notification-modal__library--error {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: .5rem;
+            border: none;
+            margin-bottom: 1rem;
+            position: absolute;
+            text-indent: 1rem;
+            top: 0rem;
             width: 100%;
           }
-          p {
+          .notification-modal__library--success {
+            color: #3E753F;
+            background: #E0F0D9;
+          }
+          .notification-modal__library--error {
+            background: #F2DEDE;
+            color: #A74544;
+          }
+        }
+        .modal__content {
+          height: 90%;
+          width: 90%;
+          @media @tablet {
+            height: 100%;
+            width: 100%;
+          }
+        }
+        .book-image__container {
+          height: 85%;
+          .modal-icons {
+            text-align: center;
+            height: 0;
+            .modal__button--add,
+            .modal__button--delete {
+              margin: auto 2rem 1rem auto;
+              font-size: 1.2rem;
+              right: 0.25rem;
+              top: 3rem;
+              position: absolute;
+              @media @tablet {
+                right: 9rem;
+                font-size: 2rem;
+                top: 6.25rem;
+              }
+            }
+            .modal__button--right,
+            .modal__button--left {
+              position: absolute;
+              top: 20rem;
+              color: black;
+              z-index: 11;
+              font-size: 3rem;
+              @media @tablet {
+                font-size: 5rem;
+              }
+              &:hover {
+                cursor: pointer;
+                }
+              }
+            .modal__button--right {
+              right: 0rem;
+              @media @tablet {
+                right: 5rem;
+              }
+              @media @desktop {
+                right: 9rem;
+              }
+            }
+            .modal__button--left {
+              left: 0rem;
+              @media @tablet {
+                left: 5rem;
+              }
+              @media @desktop {
+                left: 9rem;
+              }
+            }
+          }
+          .book-image {
+            height: 100%;
+          }
+          .basic-details {
             display: none;
             @media @tablet {
-              padding: 0;
-              margin: 0 .25rem;
+              display: flex;
+              flex-wrap: wrap;
               width: 100%;
+              flex-direction: column;
+              padding: 0 5rem;
+            }
+            p {
+              display: none;
+              @media @tablet {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                display: block;
+              }
+            }
+          }
+          .modal-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            @media @tablet {
+              border-top: .25rem solid #ccc;
+              padding-top: 1rem;
+              padding: 0 5rem;
             }
           }
         }
-        .modal-details {
-          border-top: .25rem solid #ccc;
-          padding-top: 1rem;
-          display: flex;
-          flex-direction: column;
-          padding-left: 1.25rem;
-        }
-        .basic-details {
-          display: flex;
-          flex-direction: column;
-          padding: 0 .25rem;
-          p {
-            margin: 0;
-          }
-        }
       }
     }
   }
-
-  // Modal Icons:
-
-  .modal__button--add, .modal__button--delete {
-    margin: auto 2rem 1rem auto;
-    font-size: 2rem;
-  }
-  .modal__button--close {
-    display: block;
-    position: relative;
-    color: white;
-    bottom: 2.5rem;
-    left: 1.5rem;
-    font-size: 1.2rem;
-  @media @tablet {
-    display: none;
-  }
-  }
-  .modal__button--right, .modal__button--left {
-    position: absolute;
-    top: 20rem;
-    color: white;
-    Z-INDEX: 9999999;
-    font-size: 3rem;
-    @media @tablet {
-      font-size: 5rem;
-    }
-  &:hover {
-    cursor: pointer;
-    }
-  }
-  .modal__button--right {
-    right: 0rem;
-    @media @tablet {
-      right: 1rem;
-    }
-  }
-  .modal__button--left {
-    left: 0rem;
-    @media @tablet {
-      left: 1rem;
-    }
-  }  
-}

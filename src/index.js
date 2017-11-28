@@ -11,7 +11,6 @@ import configureHistory from './history/configureHistory';
 import App from './components/App';
 
 require('./less/index.less');
-// require('./less/output.css'); // for production
 
 const store = configureStore();
 const history = configureHistory();

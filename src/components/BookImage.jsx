@@ -12,6 +12,7 @@ export default class BookImage extends Component {
     setLoading: PropTypes.func.isRequired,
     setModal: PropTypes.func.isRequired,
     modal: PropTypes.object,
+    location: PropTypes.string.isRequired,
     books: PropTypes.arrayOf(PropTypes.object).isRequired,
     activeBook: PropTypes.object.isRequired,
     updateLibrary: PropTypes.func.isRequired,
@@ -94,10 +95,10 @@ export default class BookImage extends Component {
     return (
       <div className="modal-icons">
         <span className="modal__button--right">
-          <Icon icon="arrow-right" onClick={!loading ? () => nextBook(activeBook, books, loading, this.closeModal) : null} />
+          <Icon icon="chevron-right" onClick={!loading ? () => nextBook(activeBook, books, loading, this.closeModal) : null} />
         </span>
         <span className="modal__button--left">
-          <Icon icon="arrow-left" onClick={!loading ? () => previousBook(activeBook, books, loading, this.closeModal) : null} />
+          <Icon icon="chevron-left" onClick={!loading ? () => previousBook(activeBook, books, loading, this.closeModal) : null} />
         </span>
         <span className={`${library} modal__button--add`}>
           <Icon icon="plus-circle" onClick={!loading ? () => updateLibrary(activeBook, 'add') : null} />
@@ -110,10 +111,9 @@ export default class BookImage extends Component {
   }
 
   render() {
-    const { activeBook, loading, books } = this.props;
+    const { activeBook, loading } = this.props;
     const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
     const hidden = cx({ hidden: this.state.imageFailed });
-    console.log(books);
     return (
       <div className="book-image__container">
         {this.renderModalIcons()}

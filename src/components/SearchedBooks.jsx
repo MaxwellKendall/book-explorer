@@ -46,7 +46,7 @@ export default class SearchedBooks extends Component {
   }
 
   render() {
-    const { loading, notification, searchedBooks, totalSearched, modal } = this.props;
+    const { loading, notification, searchedBooks, totalSearched } = this.props;
     return (
       <div className="searched-books__container">
         {notification.show && <Notification
@@ -55,7 +55,7 @@ export default class SearchedBooks extends Component {
           message={`${notification.info.title} was added to your library, homie`}
         />}
         {searchedBooks ? this.renderBooks() : null}
-        {totalSearched > 40 && !modal && !loading && <FooterContainer />}
+        {totalSearched > 40 && !loading && <FooterContainer />}
       </div>
     );
   }
