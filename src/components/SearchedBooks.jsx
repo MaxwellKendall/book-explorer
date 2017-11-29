@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Loading from './common/Loading';
-import Notification from './common/Notification';
+import * as notification from './common/Notification';
+import Icon from './common/Icon';
 
 import Books from './Books';
 import FooterContainer from '../containers/FooterContainer';
@@ -12,7 +13,6 @@ export default class SearchedBooks extends Component {
     loading: PropTypes.bool.isRequired,
     modal: PropTypes.bool.isRequired,
     error: PropTypes.bool.isRequired,
-    notification: PropTypes.object.isRequired,
     searchedBooks: PropTypes.arrayOf(PropTypes.object),
     totalSearched: PropTypes.number,
   }
@@ -35,25 +35,26 @@ export default class SearchedBooks extends Component {
     } else if (loading && !modal) {
       markup = <Loading />;
     } else if (error && !loading && !modal) {
-      markup = (<Notification
-        classNames="error"
-        icon="exclamation-circle"
-        message="No Items Returned for your search. Please try again."
-      />);
+      // markup = notification.showNotification({
+      //   classes: 'error',
+      //   icon: 'exclamation-circle',
+      //   message: 'blabhalbalblablablablalbalba',
+      // });
+      markup = (
+        <div className="error">
+          <Icon className="exclamation-circle" />
+          <h2>No items returned for your search. Please try again.</h2>
+        </div>
+      );
     }
 
     return markup;
   }
 
   render() {
-    const { loading, notification, searchedBooks, totalSearched } = this.props;
+    const { loading, searchedBooks, totalSearched } = this.props;
     return (
       <div className="searched-books__container">
-        {notification.show && <Notification
-          classNames="notification__added"
-          icon="check"
-          message={`${notification.info.title} was added to your library, homie`}
-        />}
         {searchedBooks ? this.renderBooks() : null}
         {totalSearched > 40 && !loading && <FooterContainer />}
       </div>

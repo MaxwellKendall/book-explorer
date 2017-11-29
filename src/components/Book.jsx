@@ -42,6 +42,14 @@ export default class Book extends Component {
     selectBook(book.id);
   }
 
+  handleAdd = () => {
+    this.props.updateLibrary(this.props.book, 'add');
+  }
+
+  handleDelete = () => {
+    this.props.updateLibrary(this.props.book, 'remove');
+  }
+
   renderModal = (book = this.props.activeBook) => {
     const { setModal, modal } = this.props;
     const Content = <BookImageContainer store={this.context.store} />;
@@ -57,7 +65,7 @@ export default class Book extends Component {
   }
 
   render() {
-    const { book, key, updateLibrary, libraryBooks, location } = this.props;
+    const { book, key, libraryBooks, location } = this.props;
     const library = cx({ hidden: location === '/book-explorer/library' });
     const searchedBooks = cx({ hidden: location === '/book-explorer' });
     const added = cx({ added: libraryBooks.some(libraryBook => libraryBook.id === book.id) });
@@ -73,8 +81,8 @@ export default class Book extends Component {
             <span>Title: {book.title}</span>
           </a>
         </div>}
-        <Icon className={library} icon="plus-circle" onClick={() => updateLibrary(book, 'add')} />
-        <Icon className={searchedBooks} icon="trash" onClick={() => updateLibrary(book, 'remove')} />
+        <Icon className={library} icon="plus-circle" onClick={this.handleAdd} />
+        <Icon className={searchedBooks} icon="trash" onClick={this.handleDelete} />
       </li>
     );
   }

@@ -1,6 +1,8 @@
 import { createAction } from 'redux-actions';
 import axios from 'axios';
 
+import * as notification from '../components/common/Notification';
+
 import * as uiActions from './ui';
 
 export const selectBook = createAction('BOOK_SELECTED');
@@ -11,22 +13,51 @@ export const setBookIndex = createAction('SET_BOOKINDEX');
 export const setSearchTerm = createAction('SET_SEARCHTERM');
 export const setTotalSearched = createAction('SET_TOTAL_SEARCHED');
 
+// const hideNotification = (id) => {
+//   console.log('hideNotification triggered');
+//   const parent = document.getElementById('js-notification-container');
+//   setTimeout(() => {
+//     const child = parent.querySelector(`.js-${id}`);
+//     parent.removeChild(child);
+//   }, 2000);
+// };
+
+const showNotification = (type, book) => {
+  if (type === 'add') {
+    notification.showNotification({
+      icon: 'check',
+      message: `${book.title} has been added to your library!`,
+      id: `${book.id}`,
+      type: 'added',
+    });
+  } else if (type === 'remove') {
+    notification.showNotification({
+      icon: 'trash',
+      message: `${book.title} has been deleted from your library!`,
+      id: `${book.id}`,
+      type: 'deleted',
+    });
+  }
+};
+
 export const updateLibrary = (book, type, bool, books = [], closeModal = () => {}) => (
   (dispatch) => {
     if (type === 'add') {
       dispatch(addToMyLibrary(book));
+      showNotification('add', book);
     } else if (type === 'remove' && !bool) {
       dispatch(deleteBook(book.id));
+      showNotification('remove', book);
     } else if (type === 'remove' && bool && books.length > 1) {
       const previousBook = books.indexOf(book) - 1;
       dispatch(selectBook(books[previousBook].id));
       dispatch(deleteBook(book.id));
+      showNotification('remove', book);
     } else if (type === 'remove' && bool && books.length === 1) {
       closeModal();
       dispatch(deleteBook(book.id));
+      showNotification('remove', book);
     }
-    dispatch(uiActions.showNotification({ show: true, info: book }));
-    setTimeout(() => dispatch(uiActions.showNotification({ show: false, info: '' })), 1000);
   }
 );
 

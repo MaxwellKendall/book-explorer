@@ -116,7 +116,6 @@ export default class BookImage extends Component {
     const hidden = cx({ hidden: this.state.imageFailed });
     return (
       <div className="book-image__container">
-        {this.renderModalIcons()}
         <div className={`book-image ${hidden}`}>
           {loading && <Loading />}
         </div>
@@ -134,6 +133,7 @@ export default class BookImage extends Component {
         <div className="basic-details">
           {activeBook.authors ? <p className="page-count">{`Author(s):${activeBook.authors.map(e => ` ${e}`)}`}</p> : null}
         </div>
+        {this.renderModalIcons()}
       </div>
     );
   }
