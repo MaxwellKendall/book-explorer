@@ -18,24 +18,38 @@ class Notification extends Component {
   }
 
   componentWillMount() {
+    // this initiates the component with all the right classes
+    this.notification.className = '';
     this.notification.classList.add(`js-${this.props.id}`);
     this.notification.classList.add(`notification__${this.props.type}`);
     this.notificationContainer.appendChild(this.notification);
   }
 
   componentDidMount() {
+    // once everything is mounted, begin to remove the notification
     this.removeNotification();
   }
 
-  componentWillReceiveProps(nextProps, prevProps) {
+  componentWillReceiveProps(nextProps) {
+    /*
+     * if another item is added, lets either
+     *   (a) put the notification markup back on the dom or
+     *   (b) change the markup already there
+     */
     if (this.props.id !== nextProps.id) {
-      this.notificationContainer.appendChild(this.notification);
-      this.notification.classList.remove(`js-${prevProps.id}`);
-      this.notification.classList.add(`js-${this.props.id}`);
+      // updateNotifiaction deals with either (a) or (b)
+      console.log(nextProps);
+      this.updateNotification({
+        oldId: this.props.id,
+        newId: nextProps.id,
+        oldType: this.props.type,
+        newType: nextProps.type,
+      });
     }
   }
 
   componentDidUpdate() {
+    // whenever the component is successfully updated, begin to remove/unmount
     this.removeNotification();
   }
 
@@ -43,10 +57,24 @@ class Notification extends Component {
     this.notificationContainer.removeChild(this.notification);
   }
 
-  removeNotification() {
-    setTimeout(() => {
+  updateNotification = (props) => {
+    this.clearTimeout();
+    this.notification.classList.replace(`js-${props.oldId}`, `js-${props.newId}`);
+    this.notification.classList.replace(`notification__${props.oldType}`, `notification__${props.newType}`);
+    this.notificationContainer.appendChild(this.notification);
+    // if (document.getElementById('js-notification-container').children.length === 0) {
+    //   this.notificationContainer.appendChild(this.notification);
+    // }
+  }
+
+  clearTimeout = () => {
+    clearTimeout(window.timeout);
+  }
+
+  removeNotification = () => {
+    window.timeout = setTimeout(() => {
       this.notificationContainer.removeChild(this.notification);
-    }, 1000);
+    }, 1750);
   }
 
   render() {
@@ -72,7 +100,7 @@ export const showNotification = (content) => {
       <h2>{content.message}</h2>
     </Notification>, $el);
   } else {
-    ReactDOM.render(<Notification id={content.id}>
+    ReactDOM.render(<Notification id={content.id} type={content.type}>
       <Icon icon={content.icon} />
       <h2>{content.message}</h2>
     </Notification>, $el);

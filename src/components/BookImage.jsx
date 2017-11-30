@@ -132,8 +132,8 @@ export default class BookImage extends Component {
         </div>}
         <div className="basic-details">
           {activeBook.authors ? <p className="page-count">{`Author(s):${activeBook.authors.map(e => ` ${e}`)}`}</p> : null}
+          {this.renderModalIcons()}
         </div>
-        {this.renderModalIcons()}
       </div>
     );
   }

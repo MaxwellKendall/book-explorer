@@ -46,15 +46,15 @@
           }
           .modal__button--close {
             display: block;
-            position: absolute;
-            color: white;
+            position: relative;
+            color: black;
             font-size: 2rem;
             top: 0;
             right: .5rem;
             @media @tablet {
-              top: 1.5rem;
-              right: 3.5rem;
-              font-size: 3rem;
+              top: -1rem;
+              right: .75rem;
+              font-size: 2.5rem;
             }
           }
           .notification-modal__library--success,
@@ -101,7 +101,7 @@
               @media @tablet {
                 right: 9rem;
                 font-size: 2rem;
-                top: 6.25rem;
+                top: 39.5rem;
               }
             }
             .modal__button--right,
@@ -147,7 +147,9 @@
               flex-wrap: wrap;
               width: 100%;
               flex-direction: column;
-              padding: 0 5rem;
+              align-items: center;
+              height: 18%;
+              justify-content: center;
             }
             p {
               display: none;
@@ -155,7 +157,10 @@
                 padding: 0;
                 margin: 0;
                 width: 100%;
-                display: block;
+                display: flex;
+                justify-content: center;
+                height: 100%;
+                align-items: center;
               }
             }
           }

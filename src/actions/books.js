@@ -13,16 +13,7 @@ export const setBookIndex = createAction('SET_BOOKINDEX');
 export const setSearchTerm = createAction('SET_SEARCHTERM');
 export const setTotalSearched = createAction('SET_TOTAL_SEARCHED');
 
-// const hideNotification = (id) => {
-//   console.log('hideNotification triggered');
-//   const parent = document.getElementById('js-notification-container');
-//   setTimeout(() => {
-//     const child = parent.querySelector(`.js-${id}`);
-//     parent.removeChild(child);
-//   }, 2000);
-// };
-
-const showNotification = (type, book) => {
+const showNotification = (book, type) => {
   if (type === 'add') {
     notification.showNotification({
       icon: 'check',
@@ -31,6 +22,7 @@ const showNotification = (type, book) => {
       type: 'added',
     });
   } else if (type === 'remove') {
+    console.log('type is: ', type);
     notification.showNotification({
       icon: 'trash',
       message: `${book.title} has been deleted from your library!`,
@@ -44,19 +36,19 @@ export const updateLibrary = (book, type, bool, books = [], closeModal = () => {
   (dispatch) => {
     if (type === 'add') {
       dispatch(addToMyLibrary(book));
-      showNotification('add', book);
+      showNotification(book, type);
     } else if (type === 'remove' && !bool) {
       dispatch(deleteBook(book.id));
-      showNotification('remove', book);
+      showNotification(book, type);
     } else if (type === 'remove' && bool && books.length > 1) {
       const previousBook = books.indexOf(book) - 1;
       dispatch(selectBook(books[previousBook].id));
       dispatch(deleteBook(book.id));
-      showNotification('remove', book);
+      showNotification(book, type);
     } else if (type === 'remove' && bool && books.length === 1) {
       closeModal();
       dispatch(deleteBook(book.id));
-      showNotification('remove', book);
+      showNotification(book, type);
     }
   }
 );
