@@ -22,7 +22,6 @@ const showNotification = (book, type) => {
       type: 'added',
     });
   } else if (type === 'remove') {
-    console.log('type is: ', type);
     notification.showNotification({
       icon: 'trash',
       message: `${book.title} has been deleted from your library!`,
