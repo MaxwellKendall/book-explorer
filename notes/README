@@ -1,0 +1,11 @@
+Please review the files in this project in the following order:
+
+Index.js
+components/App.jsx
+  Header.jsx & containers/HeaderContainer.jsx
+  SearchedBooks.jsx & containers/SearchedBooksContainer.jsx
+  Books.jsx
+  Book.jsx & containers/BookContainer.jsx
+  BookImage.jsx & containers/BookImageContainer.jsx
+  Footer.jsx & containers/FooterContainer.jsx
+  

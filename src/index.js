@@ -17,6 +17,12 @@ const history = configureHistory();
 
 const render = (Component) => {
   ReactDOM.render(
+    /**
+     * Provider:
+     * Redux component that exposes children to store
+     * AppContainer:
+     * Used for enabling react-hot-loader
+     */
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <AppContainer>

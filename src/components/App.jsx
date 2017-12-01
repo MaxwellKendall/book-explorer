@@ -5,17 +5,8 @@ import HeaderContainer from '../containers/HeaderContainer';
 import LibraryBooksContainer from '../containers/LibraryBooksContainer';
 import SearchedBooksContainer from '../containers/SearchedBooksContainer';
 
-/*
- * This is a stateless functional component (SFC)
- * If a component has no use for state, you can simply make it a function that returns some UI
- * rather than a JS Class
- * reference: https://tylermcginnis.com/functional-components-vs-stateless-functional-components-vs-stateless-components/
-*/
-
 const App = () => (
-  // SFC expose props @ props.xyz !this.props.xyz
   <div className="main">
-    {/* Common error I have is accidentally rendering the component instead of the container */}
     <HeaderContainer />
     <Route exact path="/book-explorer/library" component={LibraryBooksContainer} />
     <Route exact path="/book-explorer" component={SearchedBooksContainer} />
@@ -23,3 +14,12 @@ const App = () => (
 );
 
 export default App;
+
+/**
+ * I. App: Line 8
+ *   App is a Stateless Functional Component
+ *     - these make props avaialbe @ props.xyz instead of a stateful component which would be this.props.xyz
+ * II. HeaderContainer: Line 10
+ *   Common error:
+ *   - rendering the <Component /> instead of <ComponentContainer/>
+ */

@@ -4,13 +4,16 @@ import { routerReducer } from 'react-router-redux';
 import books from './books';
 import ui from './ui';
 
+/**
+ * rootReducer:
+ *   - creates initial state
+ *   - key is state
+ *   - Value is reducer that returns state
+ */
 const rootReducer = combineReducers({
-  // creates initial state;
-  // key is state.
-  // Value is reducer that returns state
   ui,
   books,
-  router: routerReducer,
+  router: routerReducer, // from reduxRouter
 });
 
 export default rootReducer;

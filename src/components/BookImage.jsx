@@ -40,19 +40,19 @@ export default class BookImage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setLoading(false);
+    this.props.setLoading(false); // actionCreator
   }
 
   closeModal = () => {
     document.body.classList.remove('modal--open');
     Modal.closeModal();
-    this.props.selectBook('0');
-    this.props.setModal(false);
+    this.props.selectBook('0'); // actionCreator
+    this.props.setModal(false); // actionCreator
   }
 
   handleAddToMyLibrary = (e, book = this.props.activeBook) => {
     e.preventDefault();
-    this.props.updateLibrary(book, 'add');
+    this.props.updateLibrary(book, 'add'); // actionCreator
   }
 
   handleDeleteBook = (e, book = this.props.activeBook) => {
@@ -63,16 +63,16 @@ export default class BookImage extends Component {
     } else if (modal && books.length > 1) {
       this.goNext();
     }
-    updateLibrary(book, 'remove');
+    updateLibrary(book, 'remove'); // actionCreator
   }
 
   imageFail = () => {
     this.props.setLoading(false);
-    this.setState({ imageFailed: true });
+    this.setState(prevState => ({ ...prevState, imageFailed: true }));
   }
 
   imageSuccess = () => {
-    this.props.setLoading(false);
+    this.props.setLoading(false); // actionCreator
   }
 
   renderImage = (book = this.props.activeBook) => {
@@ -82,8 +82,7 @@ export default class BookImage extends Component {
     const { setLoading } = this.props;
     setLoading(true);
     const google = window.google;
-    const bookImage = document.querySelector('.book-image');
-    const viewer = new google.books.DefaultViewer(bookImage);
+    const viewer = new google.books.DefaultViewer(this.bookImage);
     viewer.load(book.id, () => this.imageFail(), () => this.imageSuccess());
   }
 
@@ -111,12 +110,12 @@ export default class BookImage extends Component {
   }
 
   render() {
-    const { activeBook, loading } = this.props;
-    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook;
-    const hidden = cx({ hidden: this.state.imageFailed });
+    const { activeBook, loading } = this.props; // ES6 object deconstruction
+    const { pageCount, previewLink, publishedDate, publisher, subtitle, description } = activeBook; // ES6 object deconstruction
+    const hidden = cx({ hidden: this.state.imageFailed }); // if true, hidden will be true
     return (
       <div className="book-image__container">
-        <div className={`book-image ${hidden}`}>
+        <div ref={(bookImage) => { this.bookImage = bookImage; }} className={`book-image ${hidden}`}>
           {loading && <Loading />}
         </div>
         {this.state.imageFailed && <div className="modal-details">
@@ -138,3 +137,16 @@ export default class BookImage extends Component {
     );
   }
 }
+/**
+ * I. The 'ref' attribute: Line 125
+ *   - a reference marker to the virtual DOM
+ *   - the benefit of refering to the virtual DOM rather than the actual DOM via document.*('selector') is that the latter will
+ *     return undefined unless the selected element is mounted, but with react mounting/updating/unmounting the more certain method
+ *     for selectin elements is by utilizing the ref attribute
+ *   - documentation: https://reactjs.org/docs/refs-and-the-dom.html
+ *
+ * II. defaultProps: Line 78
+ *   renderImage utilizes default props
+ *     - this.props.activeBook will be used as props unless explicitly instructed otherwise during
+ *     invocation
+ */

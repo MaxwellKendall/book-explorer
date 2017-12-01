@@ -39,15 +39,15 @@ export default class Book extends Component {
   handleClick = (e) => {
     e.preventDefault();
     const { book, selectBook } = this.props;
-    selectBook(book.id);
+    selectBook(book.id); // executes action creator
   }
 
   handleAdd = () => {
-    this.props.updateLibrary(this.props.book, 'add');
+    this.props.updateLibrary(this.props.book, 'add'); // executes action creator
   }
 
   handleDelete = () => {
-    this.props.updateLibrary(this.props.book, 'remove');
+    this.props.updateLibrary(this.props.book, 'remove'); // executes action creator
   }
 
   renderModal = (book = this.props.activeBook) => {
@@ -58,9 +58,9 @@ export default class Book extends Component {
       title: book.title,
       disableOnClickOutside: true,
     };
-    Modal.showModal(config);
+    Modal.showModal(config); // function that displays portal (See common/ModaWrapper.jsx)
     if (!modal) {
-      setModal(true);
+      setModal(true); // executes action creator
     }
   }
 
@@ -87,3 +87,14 @@ export default class Book extends Component {
     );
   }
 }
+
+/**
+ * I. componentWillReceiveProps: Line 33
+ *   React is telling us when newProps from Redux come in
+ *     - At this point, we tell the component to execute the renderModal function when newProps come in from Redux as parameters
+ * II. cx(): Lines 72, 73, & 74
+ *   - Allows for passing classes upon certain conditions
+ *   - documentation: https://www.npmjs.com/package/classnames
+ * III. Conditional Rendering via interpolation: Lines 77 & 80
+ *   - if props.xyz === X, show Y
+ */

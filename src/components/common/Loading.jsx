@@ -19,6 +19,11 @@ export default class Loading extends Component {
     speed: this.props.speed,
   }
 
+  /**
+   * componentDidMount:
+   * Executed after component is placed into the DOM
+   */
+
   componentDidMount = () => {
     const stopper = `${this.props.text}...`;
     this.interval = window.setInterval(() => {

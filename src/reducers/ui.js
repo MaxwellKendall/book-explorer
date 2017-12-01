@@ -1,6 +1,10 @@
 import { handleActions } from 'redux-actions';
 import * as actions from '../actions/ui';
 
+/**
+ * initialState will be the first thing passed to the reducers and is therefore what you state * * will be by default until any actions are executed
+ */
+
 const initialState = {
   loading: false,
   modal: false,

@@ -81,10 +81,6 @@ class Notification extends Component {
   render() {
     return (
       ReactDOM.createPortal(
-        /*
-         *  https://reactjs.org/docs/portals.html
-         *  Use a portal when you want to render an element outside the typical flow of the DOM; Modals, Notifications, etc
-        */
         this.props.children,
         this.notification,
       )
@@ -111,3 +107,13 @@ export const showNotification = (content) => {
     </Notification>, $el);
   }
 }
+
+/**
+ * I. componentWillReceiveProps: Line 33
+ *   Whenever props for the component update, this method executes
+ *     - nextProps param is available for use
+ *     - see notes/components/summary for more info on reactlifecycle methods
+ * II. createPortal: Line 83
+ *   documentation: https://reactjs.org/docs/portals.html
+ *     - Use a portal when you want to render an element outside the typical flow of the DOM; Modals, Notifications, etc
+ */

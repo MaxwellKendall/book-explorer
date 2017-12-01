@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Loading from './common/Loading';
-import * as notification from './common/Notification';
 import Icon from './common/Icon';
 
 import Books from './Books';
@@ -47,7 +46,7 @@ export default class SearchedBooks extends Component {
   }
 
   render() {
-    const { loading, searchedBooks, totalSearched } = this.props;
+    const { loading, searchedBooks, totalSearched } = this.props; // ES6 Object Destructuring
     return (
       <div className="searched-books__container">
         {searchedBooks ? this.renderBooks() : null}
@@ -56,3 +55,11 @@ export default class SearchedBooks extends Component {
     );
   }
 }
+
+/**
+ * I. Render: Line 48
+ *   React method that returns JSX
+ *     - should only have one return statement
+ *     - if necessary, use {} (hereafter, {} inside render(){ return } will be referred to as 'interpolation') to invoke methods that
+ *     return JSX, use conditional rendering, or refer to variables
+ */
