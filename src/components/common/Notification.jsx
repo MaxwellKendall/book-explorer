@@ -32,13 +32,16 @@ class Notification extends Component {
 
   componentWillReceiveProps(nextProps) {
     /*
-     * if another item is added, lets either
-     *   (a) put the notification markup back on the dom or
-     *   (b) change the markup already there
+     * if Library is updated more we:
+     *   (a) clear any existing Timeouts
+     *   (b) decipher if
+     *     (1) <Notification /> has been unmounted
+     *        (i) add the notification to the DOM
+     *     (2) <Notification /> is still unmounted
+     *        (ii) update to show the right info
      */
     if (this.props.id !== nextProps.id) {
-      // updateNotifiaction deals with either (a) or (b)
-      console.log(nextProps);
+      // updateNotifiaction deals with either (a) & (b) above
       this.updateNotification({
         oldId: this.props.id,
         newId: nextProps.id,
@@ -58,20 +61,18 @@ class Notification extends Component {
   }
 
   updateNotification = (props) => {
-    this.clearTimeout();
-    this.notification.classList.replace(`js-${props.oldId}`, `js-${props.newId}`);
-    this.notification.classList.replace(`notification__${props.oldType}`, `notification__${props.newType}`);
-    this.notificationContainer.appendChild(this.notification);
-    // if (document.getElementById('js-notification-container').children.length === 0) {
-    //   this.notificationContainer.appendChild(this.notification);
-    // }
+    this.clearTimeout(); // clear any existing timeouts
+    this.notification.classList.replace(`js-${props.oldId}`, `js-${props.newId}`); // update classes of Notification element
+    this.notification.classList.replace(`notification__${props.oldType}`, `notification__${props.newType}`); // update classes of Notification element
+    this.notificationContainer.appendChild(this.notification); // update DOM
   }
 
   clearTimeout = () => {
-    clearTimeout(window.timeout);
+    clearTimeout(window.timeout); // remove the timeout
   }
 
   removeNotification = () => {
+    // wait a second then remove notification
     window.timeout = setTimeout(() => {
       this.notificationContainer.removeChild(this.notification);
     }, 1750);
@@ -80,6 +81,10 @@ class Notification extends Component {
   render() {
     return (
       ReactDOM.createPortal(
+        /*
+         *  https://reactjs.org/docs/portals.html
+         *  Use a portal when you want to render an element outside the typical flow of the DOM; Modals, Notifications, etc
+        */
         this.props.children,
         this.notification,
       )

@@ -12,13 +12,7 @@ const mockStore = configureMockStore([thunk]);
 
 const initialState = {
   loading: false,
-  modal: null,
-  error: false,
-};
-
-const initialState2 = {
-  loading: false,
-  modal: { title: 'test' },
+  modal: false,
   error: false,
 };
 
@@ -31,36 +25,27 @@ describe('UI Reducers: Individual Action Creators update specified state', () =>
   it('setLoading Action Creator changes the loading property ', () => {
     const expectedState = {
       loading: true,
-      modal: null,
+      modal: false,
       error: false,
     };
 
     expect(reducer(initialState, actions.setLoading(true))).to.eql(expectedState);
   });
 
-  it('showModal Action Creator changes the modal property ', () => {
+  it('setModal Action Creator changes the modal property ', () => {
     const expectedState = {
       loading: false,
-      modal: { modal: 'test' },
+      modal: true,
       error: false,
     };
 
-    expect(reducer(initialState, actions.showModal({ modal: 'test' }))).to.eql(expectedState);
+    expect(reducer(initialState, actions.setModal(true))).to.eql(expectedState);
   });
 
-  it('hideModal Action Creator changes the modal property ', () => {
-    const expectedState = {
-      loading: false,
-      modal: null,
-      error: false,
-    };
-
-    expect(reducer(initialState2, actions.hideModal())).to.eql(expectedState);
-  });
   it('setError Action Creator changes the error property ', () => {
     const expectedState = {
       loading: false,
-      modal: null,
+      modal: false,
       error: true,
     };
 

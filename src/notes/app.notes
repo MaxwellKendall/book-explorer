@@ -1,6 +1,0 @@
-<Router> is a container for <Route> which specifies
-  (1) the path
-    (1a) whether or not it is exact
-  (2) the component which ought to match that path
-
-example: https://reacttraining.com/react-router/web/api/BrowserRouter

@@ -1,0 +1,28 @@
+This app is meant to be a reference for best practices within a React/Redux Application
+
+We are using the Container/Component design pattern. This pattern is explained by Redux's author here:
+
+https://medium.com/@learnreact/container-components-c0e67432e005
+
+Each portion of the app is divided into neat sections, each with its own corresponding notes.
+
+The basic organization of every Redux/React Application is as follows:
+
+(1) parent directory:
+  (a) src directory
+  (b) test directory*
+  (c) configuration files**
+    (i) Package.json
+    (ii) .babelrc
+    (iii) webpack.config.js
+    (iv) testSetUp.js
+    (v) index.html
+
+(a) src folder
+  The src folder contains all of the scripts that makeup the actual application itself.
+
+(b) test folder
+  The test folder will typically contain the exact same folders and files as does the src folder.
+
+*Not every component has a corresponding test file as of yet
+**Initial configuration of React is beyond the scope of this project. For help setting up the configuration files, please see the following repo: https://github.com/vasanthk/react-es6-webpack-boilerplate

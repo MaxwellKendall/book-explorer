@@ -1,0 +1,14 @@
+The main thing to understand about this page is ReactRouter. Documentation and helpful examples can be found here: https://reacttraining.com/react-router/web/guides/philosophy
+
+This application utilizes the ReduxRouter package published on NPM. This is referenced in the index.js file on line 6.
+
+The benefit of doing this is that our Location and routing information is all stored in our global state within the Redux store.
+
+You will see in the examples from the documentation above that this is a bit different than a normal App with ReactRouter. However, in each case, the <Route /> component is a child of the parent component <ConnectedRouter /> or, in the example @ reacttraining.com, <BrowserRouter />
+
+The <Route> component specifies
+  (1) the path
+    (1a) whether or not it is exact
+  (2) the component which ought to match that path
+
+  The parent most component that is referred to in our index.js file will typically be a component made up almost exclusively of Routes.

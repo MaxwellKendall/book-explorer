@@ -7,6 +7,13 @@ import * as actions from '../../src/actions/books';
 
 const mockStore = configureMockStore([thunk]);
 
+/*
+ * We only need to test actions that are async in order to confirm they successfully
+ * dispatch other actions.
+ * This typically refers exclusively to the API Requests that update Global
+ * State with the response of an API
+ */
+
 describe('getSearchedBooks Async Action Creator: ', () => {
   beforeEach(() => {
     moxios.install();
@@ -33,8 +40,7 @@ describe('getSearchedBooks Async Action Creator: ', () => {
 
     return store.dispatch(actions.getSearchedBooks())
       .then(() => {
-        expect(store.getActions().length).to.equal(4);
-        // perhaps its just returns one because .... it is only dispatching one books action?
+        expect(store.getActions().length).to.equal(5);
       });
   });
 });
