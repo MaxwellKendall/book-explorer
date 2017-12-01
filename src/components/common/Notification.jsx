@@ -40,7 +40,7 @@ class Notification extends Component {
      *     (2) <Notification /> is still unmounted
      *        (ii) update to show the right info
      */
-    if (this.props.id !== nextProps.id) {
+    if (this.props.id !== nextProps.id || this.props.type !== nextProps.type) {
       // updateNotifiaction deals with either (a) & (b) above
       this.updateNotification({
         oldId: this.props.id,

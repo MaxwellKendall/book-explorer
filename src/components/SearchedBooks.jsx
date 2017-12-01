@@ -35,11 +35,6 @@ export default class SearchedBooks extends Component {
     } else if (loading && !modal) {
       markup = <Loading />;
     } else if (error && !loading && !modal) {
-      // markup = notification.showNotification({
-      //   classes: 'error',
-      //   icon: 'exclamation-circle',
-      //   message: 'blabhalbalblablablablalbalba',
-      // });
       markup = (
         <div className="error">
           <Icon className="exclamation-circle" />
