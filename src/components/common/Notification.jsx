@@ -75,7 +75,7 @@ class Notification extends Component {
     // wait a second then remove notification
     window.timeout = setTimeout(() => {
       this.notificationContainer.removeChild(this.notification);
-    }, 1750);
+    }, 750);
   }
 
   render() {

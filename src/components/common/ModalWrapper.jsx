@@ -62,7 +62,7 @@ class ModalWrapper extends Component {
       markup = (
         <Modal
           modal={modal}
-          closeModal={closeModal}
+          closeModal={modal.closeModal}
           disableOnClickOutside={modal.disableOnClickOutside || false}
         />
       );

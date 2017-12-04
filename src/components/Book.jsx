@@ -51,12 +51,17 @@ export default class Book extends Component {
   }
 
   renderModal = (book = this.props.activeBook) => {
-    const { setModal, modal } = this.props;
+    const { setModal, modal, selectBook } = this.props;
+    const handleClose = () => {
+      Modal.closeModal();
+      selectBook('0');
+    };
     const Content = <BookImageContainer store={this.context.store} />;
     const config = {
       Content,
       title: book.title,
       disableOnClickOutside: true,
+      closeModal: handleClose,
     };
     Modal.showModal(config); // function that displays portal (See common/ModaWrapper.jsx)
     if (!modal) {

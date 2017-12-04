@@ -36,7 +36,7 @@ class Modal extends Component {
 
   handleClose = () => {
     document.body.classList.remove('modal--open');
-
+console.log('helllloooooo', this.props);
     this.props.closeModal();
   }
 

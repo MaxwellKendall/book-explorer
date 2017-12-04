@@ -15,7 +15,8 @@
   z-index: 1000000;
   justify-content: center;
   align-items: center;
-  height: auto;
+  // opacity: 0;
+  // transition: opacity 5s ease-in;
   .notification__message {
     margin: 0;
     padding: 0;
@@ -29,4 +30,7 @@
 .notification__deleted {
   background: #F2DEDE;
   color: #A74544;
+}
+.transition {
+  opacity: 1;
 }
