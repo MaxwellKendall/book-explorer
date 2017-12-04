@@ -93,11 +93,11 @@ export default class BookImage extends Component {
 
     return (
       <div className="modal-icons">
-        <span className="modal__button--right">
-          <Icon icon="chevron-right" onClick={!loading ? () => nextBook(activeBook, books, loading, this.closeModal) : null} />
-        </span>
         <span className="modal__button--left">
           <Icon icon="chevron-left" onClick={!loading ? () => previousBook(activeBook, books, loading, this.closeModal) : null} />
+        </span>
+        <span className="modal__button--right">
+          <Icon icon="chevron-right" onClick={!loading ? () => nextBook(activeBook, books, loading, this.closeModal) : null} />
         </span>
         <span className={`${library} modal__button--add`}>
           <Icon icon="plus-circle" onClick={!loading ? () => updateLibrary(activeBook, 'add') : null} />
@@ -115,6 +115,7 @@ export default class BookImage extends Component {
     const hidden = cx({ hidden: this.state.imageFailed }); // if true, hidden will be true
     return (
       <div className="book-image__container">
+        {this.renderModalIcons()}
         <div ref={(bookImage) => { this.bookImage = bookImage; }} className={`book-image ${hidden}`}>
           {loading && <Loading />}
         </div>
@@ -130,8 +131,7 @@ export default class BookImage extends Component {
           {!previewLink && !description && !subtitle && <p>No data available</p>}
         </div>}
         <div className="basic-details">
-          {activeBook.authors ? <p className="page-count">{`Author(s):${activeBook.authors.map(e => ` ${e}`)}`}</p> : null}
-          {this.renderModalIcons()}
+          {activeBook.authors ? <p className="basic-details__author">{`Author(s):${activeBook.authors.map(e => ` ${e}`)}`}</p> : null}
         </div>
       </div>
     );

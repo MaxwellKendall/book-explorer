@@ -15,31 +15,38 @@
       justify-content: center;
       align-items: center;
       background: white;
-      height: 90%;
-      width: 80%;
+      height: 38rem;
+      width: 18rem;
       border-radius: 1rem;
-      overflow-y: scroll;
-      @media @tablet {
-        height: 80%;
-        width: 80%;
+      @media (min-width: $tablet) {
+        height: 35rem;
+        width: 40rem;
+      }
+      @media (min-width: $desktop) {
+        height: 40rem;
+        width: 45rem;
+      }
+      @media (min-width: $monitor) {
+        height: 40rem;
+        width: 65rem;
       }
         .modal__header {
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           flex-direction: row;
-          padding: 1rem 0;
           width: 100%;
           margin: auto 0;
-          height: auto;
           border-bottom: .1rem solid #ccc;
           h1 {
             margin: 0;
-            margin-right: 2rem;
+            margin-right: auto;
             font-size: 1.2rem;
             margin-left: .25rem;
             text-overflow: ellipsis;
-            padding-bottom: 1rem;
-            @media @tablet {
+            padding: .5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            @media (min-width: $tablet) {
               margin: auto auto 1rem 2rem;
               margin-left: 2rem;
               font-size: 2rem;
@@ -50,11 +57,9 @@
             position: relative;
             color: black;
             font-size: 2rem;
-            top: 0;
-            right: .5rem;
-            @media @tablet {
-              top: -1rem;
-              right: .75rem;
+            top: 0rem;
+            right: 0.5rem;
+            @media (min-width: $tablet) {
               font-size: 2.5rem;
             }
           }
@@ -82,7 +87,7 @@
         .modal__content {
           height: 90%;
           width: 90%;
-          @media @tablet {
+          @media (min-width: $tablet) {
             height: 100%;
             width: 100%;
           }
@@ -90,51 +95,62 @@
         .book-image__container {
           height: 85%;
           .modal-icons {
-            text-align: center;
-            height: 0;
+            position: absolute;
+            width: 75%;
             .modal__button--add,
             .modal__button--delete {
               margin: auto 2rem 1rem auto;
-              font-size: 1.2rem;
+              font-size: 3rem;
               right: 0.25rem;
-              top: 3rem;
-              position: absolute;
-              @media @tablet {
-                right: 9rem;
-                font-size: 2rem;
-                top: 39.5rem;
+              position: relative;
+              z-index: 99999;
+              top: 29.75rem;
+              left: 10rem;
+              @media (min-width: $tablet) {
+                left: 30rem;
+                font-size: 3rem;
+                top: 24.5rem;
+              }
+              @media (min-width: $desktop) {
+                left: 35rem;
+                font-size: 3rem;
+                top: 29rem;
+              }
+              @media (min-width: $monitor) {
+                left: 55rem;
               }
             }
+          }
             .modal__button--right,
             .modal__button--left {
-              position: absolute;
-              top: 20rem;
+              position: relative;
               color: black;
               z-index: 11;
               font-size: 3rem;
-              @media @tablet {
+              top: 11rem;
+              @media (min-width: $tablet) {
                 font-size: 5rem;
               }
               &:hover {
                 cursor: pointer;
                 }
               }
-            .modal__button--right {
-              right: 0rem;
-              @media @tablet {
-                right: 5rem;
-              }
-              @media @desktop {
-                right: 9rem;
+            .modal__button--left {
+              right: 1.25rem;
+              @media (min-width: $tablet) {
+                right: 0.5rem;
               }
             }
-            .modal__button--left {
-              left: 0rem;
-              @media @tablet {
-                left: 5rem;
+            .modal__button--right {
+              left: 13.1rem;
+              @media (min-width: $tablet) {
+                left: 33.25rem;
               }
-              @media @desktop {
-                left: 9rem;
+              @media (min-width: $desktop) {
+                left: 38.25rem;
+              }
+              @media (min-width: $monitor) {
+                left: 58.25rem;
               }
             }
           }
@@ -142,19 +158,16 @@
             height: 100%;
           }
           .basic-details {
-            display: none;
-            @media @tablet {
-              display: flex;
-              flex-wrap: wrap;
-              width: 100%;
-              flex-direction: column;
-              align-items: center;
-              height: 18%;
-              justify-content: center;
-            }
-            p {
-              display: none;
-              @media @tablet {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            height: 4.5rem;
+            align-items: center;
+            .basic-details__author {
+              margin-right: 2rem;
+              @media (min-width: $tablet) {
                 padding: 0;
                 margin: 0;
                 width: 100%;
@@ -168,8 +181,10 @@
           .modal-details {
             display: flex;
             flex-direction: column;
+            max-height: 30rem;
             justify-content: center;
-            @media @tablet {
+            overflow-y: scroll;
+            @media (min-width: $tablet) {
               border-top: .25rem solid #ccc;
               padding-top: 1rem;
               padding: 0 5rem;
@@ -178,4 +193,3 @@
         }
       }
     }
-  }

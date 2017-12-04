@@ -10,19 +10,13 @@ import configureHistory from './history/configureHistory';
 
 import App from './components/App';
 
-require('./less/index.less');
+require('./scss/index.scss');
 
 const store = configureStore();
 const history = configureHistory();
 
 const render = (Component) => {
   ReactDOM.render(
-    /**
-     * Provider:
-     * Redux component that exposes children to store
-     * AppContainer:
-     * Used for enabling react-hot-loader
-     */
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <AppContainer>
@@ -39,3 +33,10 @@ render(App);
 if (module.hot) {
   module.hot.accept('./components/App', () => { render(App); });
 }
+
+/**
+ * I. Provider: Line 20
+ *  Redux component that exposes children to store
+ * II. AppContainer: Line 22
+ *   Used for enabling react-hot-loader
+ */
