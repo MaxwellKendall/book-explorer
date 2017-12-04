@@ -98,12 +98,12 @@ export const showNotification = (content) => {
 
     ReactDOM.render(<Notification id={content.id} type={content.type}>
       <Icon icon={content.icon} />
-      <h2>{content.message}</h2>
+      <h2 className="notification__message"><span className="notification__book">{`${content.book} `}</span>{content.message}</h2>
     </Notification>, $el);
   } else {
     ReactDOM.render(<Notification id={content.id} type={content.type}>
       <Icon icon={content.icon} />
-      <h2>{content.message}</h2>
+      <h2 className="notification__message"><span className="notification__book">{`${content.book} `}</span>{content.message}</h2>
     </Notification>, $el);
   }
 }

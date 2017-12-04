@@ -17,14 +17,16 @@ const showNotification = (book, type) => {
   if (type === 'add') {
     notification.showNotification({
       icon: 'check',
-      message: `${book.title} has been added to your library!`,
+      book: `${book.title}`,
+      message: 'has been added to your library!',
       id: `${book.id}`,
       type: 'added',
     });
   } else if (type === 'remove') {
     notification.showNotification({
       icon: 'trash',
-      message: `${book.title} has been deleted from your library!`,
+      book: `${book.title}`,
+      message: 'has been deleted from your library!',
       id: `${book.id}`,
       type: 'deleted',
     });

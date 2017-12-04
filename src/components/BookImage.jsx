@@ -62,8 +62,8 @@ export default class BookImage extends Component {
       this.closeModal();
     } else if (modal && books.length > 1) {
       this.goNext();
+      updateLibrary(book, 'remove'); // actionCreator
     }
-    updateLibrary(book, 'remove'); // actionCreator
   }
 
   imageFail = () => {
@@ -119,7 +119,7 @@ export default class BookImage extends Component {
         <div ref={(bookImage) => { this.bookImage = bookImage; }} className={`book-image ${hidden}`}>
           {loading && <Loading />}
         </div>
-        {this.state.imageFailed && <div className="modal-details">
+        {this.state.imageFailed && <div className="book-image__failed">
           {subtitle && <h3 className="subtitle">{`Subtitle: ${subtitle}`}</h3>}
           {pageCount && <h3 className="page-count">{`Page Count: ${pageCount}`}</h3>}
           {publisher && publishedDate && <h3 className="publishing-info">{`Published by ${publisher} on ${publishedDate}`}</h3>}
