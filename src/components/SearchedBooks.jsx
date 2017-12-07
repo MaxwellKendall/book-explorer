@@ -21,6 +21,12 @@ export default class SearchedBooks extends Component {
     totalSearched: 0,
   }
 
+  componentDidReceiveProps(nextProps) {
+    if (this.props.loading !== nextProps.loading || this.props.error !== nextProps.error) {
+      this.renderBooks();
+    }
+  }
+
   renderBooks = () => {
     const { loading, modal, searchedBooks, error } = this.props;
     let markup;
@@ -46,10 +52,10 @@ export default class SearchedBooks extends Component {
   }
 
   render() {
-    const { loading, searchedBooks, totalSearched } = this.props; // ES6 Object Destructuring
+    const { loading, totalSearched } = this.props; // ES6 Object Destructuring
     return (
       <div className="searched-books__container">
-        {searchedBooks ? this.renderBooks() : null}
+        {this.renderBooks()}
         {totalSearched > 40 && !loading && <FooterContainer />}
       </div>
     );
