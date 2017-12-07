@@ -22,6 +22,12 @@ export default class Header extends Component {
     setSearchTerm(this.state.searchTerm);
   }
 
+  handlePressEnter = (e) => {
+    if (e.key === 'Enter') {
+      this.makeAPICall();
+    }
+  }
+
   handleChange = (event) => {
     event.persist();
     this.setState(prevState => ({ ...prevState, searchTerm: event.target.value }));
@@ -40,6 +46,7 @@ export default class Header extends Component {
             onChange={this.handleChange}
             type="text"
             placeholder="Search by Title or Author"
+            onKeyPress={this.handlePressEnter}
           />
           <Link className="search" to="/book-explorer" onClick={this.makeAPICall}>Search</Link>
           <Link to="/book-explorer/library" className="library">
