@@ -55,6 +55,7 @@ export default class Book extends Component {
     const handleClose = () => {
       Modal.closeModal();
       selectBook('0');
+      setModal(false);
     };
     const Content = <BookImageContainer store={this.context.store} />;
     const config = {

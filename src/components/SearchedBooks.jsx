@@ -21,7 +21,7 @@ export default class SearchedBooks extends Component {
     totalSearched: 0,
   }
 
-  componentDidReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.loading !== nextProps.loading || this.props.error !== nextProps.error) {
       this.renderBooks();
     }
