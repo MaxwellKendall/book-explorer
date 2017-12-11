@@ -10,7 +10,8 @@ import configureHistory from './history/configureHistory';
 
 import App from './components/App';
 
-require('./scss/index.scss');
+// require('./scss/index.scss');
+require('./output.css');
 
 const store = configureStore();
 const history = configureHistory();
