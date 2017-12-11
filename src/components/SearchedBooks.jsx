@@ -17,7 +17,7 @@ export default class SearchedBooks extends Component {
   }
 
   static defaultProps = {
-    searchedBooks: [{}],
+    searchedBooks: [],
     totalSearched: 0,
   }
 

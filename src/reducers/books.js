@@ -16,7 +16,7 @@ const initialState = {
 
 export default handleActions({
   // make each action return the object you want state to be for the given property
-  [actions.searchBooks]: (state, action) => ({ ...state, searchedBooks: [...action.payload] }),
+  [actions.searchBooks]: (state, action) => ({ ...state, searchedBooks: action.payload }),
   [actions.setTotalSearched]: (state, action) => ({ ...state, totalSearched: action.payload }),
   [actions.setSearchTerm]: (state, action) => ({ ...state, searchTerm: action.payload }),
   [actions.selectBook]: (state, action) => ({ ...state, activeBookId: action.payload }),
