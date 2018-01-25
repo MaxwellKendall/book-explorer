@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const testApi = 'http://localhost:3000/test/';
-
 import Loading from './common/Loading';
 
 import Books from './Books';
 import FooterContainer from '../containers/FooterContainer';
+
+const testApi = 'http://localhost:3000/test/';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class LibraryBooks extends Component {
@@ -27,6 +27,7 @@ export default class LibraryBooks extends Component {
       .then(data => console.log(data))
       .catch(err => console.log(err));
   }
+
   render() {
     const { libraryBooks, modal, loading } = this.props;
     return (
