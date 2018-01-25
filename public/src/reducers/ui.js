@@ -9,6 +9,7 @@ const initialState = {
   loading: false,
   modal: false,
   error: false,
+  activeUser: null,
 };
 
 export default handleActions({
@@ -16,4 +17,6 @@ export default handleActions({
   [actions.setLoading]: (state, action) => ({ ...state, loading: action.payload }),
   [actions.setModal]: (state, action) => ({ ...state, modal: action.payload }),
   [actions.setError]: (state, action) => ({ ...state, error: action.payload }),
+  [actions.setActiveUser]: (state, action) => ({ ...state, activeUser: action.payload }),
 }, initialState);
+

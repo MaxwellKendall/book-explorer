@@ -1,4 +1,4 @@
-var Test = require('../models/model');
+var Test = require('../models');
 var bodyParser = require('body-parser');
 
 module.exports = (app) => {
