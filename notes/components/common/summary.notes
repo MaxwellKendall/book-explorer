@@ -1,0 +1,11 @@
+Two React-Portals exist in this application:
+
+  (1) ModalWrapper
+  (2) Notification
+
+The main use-case for Portals is for when you need some UI to display outside the normal flow of the markup
+In such a case, using a portal allows you to specify two things:
+  (1) The UI/Component you want to show
+  (2) The parent you want to contain it
+
+Please see documentation for portals here: https://reactjs.org/docs/portals.html

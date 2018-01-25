@@ -1,0 +1,29 @@
+.hidden {
+  display: none;
+}
+html {
+  min-height: 100vh;
+}
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+body {
+  margin: 0;
+}
+.container,
+.main {
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 10px;
+  width: 100%;
+  flex-wrap: wrap;
+  ul {
+    padding: 0;
+  }
+  li {
+    list-style: none;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

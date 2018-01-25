@@ -1,0 +1,35 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  .footer__container {
+    display: flex;
+    justify-content: center;
+    li {
+      width: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 .25rem;
+      height: 2rem;
+      border-radius: .25rem;
+      background: #3F51B5;
+      border: 1px solid #3F51B5;
+      color: white;
+      padding: .5rem 1.5rem;
+      &:first-of-type {
+        background: #C5CAE9;
+        border: 1px solid #C5CAE9;
+        a {
+          color: #757575;
+          text-decoration: none;
+        }
+      }
+      a {
+        color: white;
+        text-decoration: none;
+        padding: 1rem 2rem;
+      }
+    }
+  }
+}

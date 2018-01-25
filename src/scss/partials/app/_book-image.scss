@@ -1,0 +1,40 @@
+.book-image__container {
+  height: 85%;
+  .book-image {
+    height: 100%;
+  }
+  .basic-details {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    height: 4.5rem;
+    align-items: center;
+    .basic-details__author {
+      margin-right: 2rem;
+      @media (min-width: $tablet) {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        align-items: center;
+      }
+    }
+  }
+  .book-image__failed {
+    display: flex;
+    flex-direction: column;
+    max-height: 30rem;
+    justify-content: center;
+    overflow-y: scroll;
+    height: 100%;
+    @media (min-width: $tablet) {
+      border-top: .25rem solid #ccc;
+      padding-top: 1rem;
+      padding: 0 5rem;
+    }
+  }
+}
