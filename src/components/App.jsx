@@ -10,11 +10,11 @@ import SearchedBooksContainer from '../containers/SearchedBooksContainer';
 const App = () => (
   <div className="main">
     <HeaderContainer />
-    <Route exact path="/login" component={Login} />
-    <PrivateRouteContainer path="/book-explorer/library" component={LibraryBooksContainer} />
-    <PrivateRouteContainer path="/book-explorer" component={SearchedBooksContainer} />
-    {/* <Route exact path="/book-explorer/library" component={LibraryBooksContainer} /> */}
-    {/* <Route exact path="/book-explorer" component={SearchedBooksContainer} /> */}
+    {/* <Route exact path="/login" component={Login} /> */}
+    {/* <PrivateRouteContainer path="/book-explorer/library" component={LibraryBooksContainer} />
+    <PrivateRouteContainer path="/book-explorer" component={SearchedBooksContainer} /> */}
+    <Route exact path="/book-explorer/library" component={LibraryBooksContainer} />
+    <Route exact path="/book-explorer" component={SearchedBooksContainer} />
   </div>
 );
 

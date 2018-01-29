@@ -3,8 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   entry: {
     app: [
-      // 'babel-polyfill',
-      // 'react-hot-loader/patch',
+      'babel-polyfill',
+      'react-hot-loader/patch',
       './src/index.js',
     ],
   },

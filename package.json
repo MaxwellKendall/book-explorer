@@ -7,7 +7,7 @@
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
     "start": "webpack-dev-server --progress --inline --hot --open",
-    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --require ./testSetup.js --recursive ./test",
+    "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --require ./testSetup.js --recursive ./test"
   },
   "author": "",
   "license": "ISC",
