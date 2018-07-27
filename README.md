@@ -9,4 +9,5 @@ The intent of this project is to provide a prototype of a modern front end web a
 ## Setting up local DEV Environment
 To set up locally, clone this repo, cd into the root directory, and run yarn install, then yarn start.
 
-
+## Note to those reviewing this code
+I was making this a full stack project using Node, but backed off to focus on my 9-5. Please disregard the commits regarding separation of back/front end.
