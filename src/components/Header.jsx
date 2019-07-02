@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
   static propTypes = {
+    activeUser: PropTypes.object.isRequired,
     error: PropTypes.bool.isRequired,
     location: PropTypes.string.isRequired,
     setError: PropTypes.func.isRequired,

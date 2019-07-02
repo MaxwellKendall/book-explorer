@@ -5,6 +5,7 @@ import Header from '../components/Header';
 
 const mapStateToProps = state => ({
   error: state.ui.error,
+  activeUser: state.ui.activeUser,
   location: state.router.location.pathname,
 });
 
