@@ -9,7 +9,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "public"),
-    publicPath: "/",
+    publicPath: "",
     filename: "bundle.js"
   },
   devtool: "eval",
