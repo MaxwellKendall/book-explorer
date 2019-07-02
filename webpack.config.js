@@ -1,12 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: {
     app: ["babel-polyfill", "react-hot-loader/patch", "./src/index.js"]
   },
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, "public"),
     publicPath: "/",
     filename: "bundle.js"
   },
@@ -19,8 +21,17 @@ module.exports = {
         loader: "babel-loader",
         query: { presets: ["react-hmre"] }
       },
-      { test: /\.css$/, use: ["style-loader", "css-loader"] },
-      { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"] },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
+      },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"]
+      },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: "file-loader?name=images/[name].[ext]"
@@ -34,7 +45,15 @@ module.exports = {
   resolve: {
     extensions: ["*", ".js", ".jsx", ".json"]
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "index.html"),
+      filename: "index.html",
+      title: "Book Explorer | React/Redux"
+    }),
+    new ExtractTextPlugin("styles.css")
+  ],
   devServer: {
     hot: true,
     historyApiFallback: true
