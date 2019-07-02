@@ -8,6 +8,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --inline --hot --open",
     "build": "webpack -p --config ./webpack.config.js",
+    "deploy": "npm run build && git subtree push --prefix public/ origin gh-pages",
     "test": "BABEL_ENV=test mocha --compilers js:babel-core/register --require ./testSetup.js --recursive ./test"
   },
   "author": "",
