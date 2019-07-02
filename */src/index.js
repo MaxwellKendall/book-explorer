@@ -25,7 +25,7 @@ const render = (Component) => {
         </AppContainer>
       </ConnectedRouter>
     </Provider>,
-    document.getElementById('container'),
+    document.querySelector('.container'),
   );
 };
 

@@ -1,5 +1,4 @@
 /node_modules
-/public
 /target
 /build
 bundle.js
@@ -9,5 +8,3 @@ npm-debug.log
 # IntelliJ
 *.iml
 /.idea
-
-yarn-error.log
