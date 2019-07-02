@@ -1,0 +1,36 @@
+.notification__added,
+.notification__deleted,
+.notification {
+  position: fixed;
+  top: 0rem;
+  display: flex;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: .5rem;
+  width: 100%;
+  border: none;
+  border-radius: .5rem;
+  text-indent: 1rem;
+  z-index: 1000000;
+  justify-content: center;
+  align-items: center;
+  // opacity: 0;
+  // transition: opacity 5s ease-in;
+  .notification__message {
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+  }
+}
+.notification__added {
+  color: #3E753F;
+  background: #E0F0D9;
+}
+.notification__deleted {
+  background: #F2DEDE;
+  color: #A74544;
+}
+.transition {
+  opacity: 1;
+}

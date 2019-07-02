@@ -1,0 +1,19 @@
+This application uses the ReduxActions library. The benefit of using this tool is it provides a short-handed way for making both actions and reducers.
+
+Actions & Action Creators
+
+I. Action Creators:
+
+  Functions that return an Action
+
+II. Actions:
+
+  An Object with two properties:
+    (1) Type
+      i. The type property specifies the action that was taken by the user
+    (2) Payload
+      i. The payload property is where the data which will be added to global state is stored
+
+The actionCreator then passes the Action object -- by the redux 'dispatch' method -- to the reducers.
+
+documentation: https://redux.js.org/docs/basics/Actions.html

@@ -1,0 +1,44 @@
+Single Rule to React Components:
+  - All components must be pure with respect to their props & state
+
+(1) Stateless Functional Component (SFC)
+  If a component has no use for state, you can simply make it a function that returns some UI
+  rather than a JS Class
+
+  - App.jsx
+  - Books.jsx
+
+  reference: https://tylermcginnis.com/functional-components-vs-stateless-functional-components-vs-stateless-components/
+
+(2) Stateful components
+  A component with either local state or one that is connected via a container to the Redux store
+
+(3) React LifeCycle Methods:
+  All react components have a number of methods that execute at a specific time while displayed in the DOM.
+
+  Examples from this application:
+     (1) componentWillMount
+          - common/Notification.jsx
+
+     (2) componentDidMount
+          - common/Notification.jsx
+          - BookImage.jsx
+          - Loading.jsx
+
+     (3) componentWillReceiveProps
+          - Book.jsx
+          - common/Notification.jsx
+          - BookImage.jsx
+
+     (4) componentDidUpdate
+          - common/Notification.jsx
+
+     (5) componentWillUnmount
+          - common/Notification.jsx
+          - BookImage.jsx
+          - Loading.jsx
+
+  This article is very helpful in explaining each React LifeCycle Method:
+    - https://engineering.musefind.com/react-lifecycle-methods-how-and-when-to-use-them-2111a1b692b1
+  Here is the official React documentation:
+    - https://reactjs.org/docs/react-component.html

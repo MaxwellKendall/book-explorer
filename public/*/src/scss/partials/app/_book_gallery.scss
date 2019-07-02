@@ -1,0 +1,56 @@
+.searched-books__container,
+.library-container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    .books, .books__container {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .books__container {
+      li,
+      .book--no-image {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+        border-radius: 0 0 .25rem .25rem;
+        .book__no-image i,
+        .fa.fa-plus-circle,
+        .fa.fa-trash {
+          background: #C7CAE9;
+          padding: .25rem;
+          color: white;
+          text-align: center;
+          font-size: 1.5rem;
+          border-radius: 0 0 .25rem .25rem;
+          position: relative;
+          top: 0px;
+          width: auto;
+        }
+        a, .book__no-image {
+          height: 12.25rem;
+          width: 8rem;;
+          img {
+            width: auto;
+            height: auto;
+          }
+        }
+      }
+      .added {
+        -webkit-box-shadow: 4px 2px 13px 3px rgba(0,0,0,0.75);
+        -moz-box-shadow: 4px 2px 13px 3px rgba(0,0,0,0.75);
+        box-shadow: 4px 2px 13px 3px rgba(0,0,0,0.75);
+        // flex-grow: 2;
+      }
+    }
+    li .hidden,
+    li .hidden {
+      display: none;
+    }
+  }
+  

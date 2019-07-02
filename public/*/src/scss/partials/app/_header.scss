@@ -1,0 +1,88 @@
+.header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  flex-direction: column;
+  width: 100%;
+  @media (min-width: $tablet) {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .selected {
+    border: 1px solid red;
+  }
+  h1 {
+    text-align: center;
+    @media (min-width: $tablet) {
+      text-align: left;
+    }
+  }
+  .search_bar__container {
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+    width: 100%;
+    flex-wrap: wrap;
+    height: auto;
+    @media (min-width: $tablet) {
+      margin-left: auto;
+      flex-direction: row;
+      width: 70%;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+
+    }
+    #searchBar {
+      flex-direction: row;
+      border: .1rem solid #ccc;
+      display: flex;
+      width: 100%;
+      text-indent: .25rem;
+      height: 3rem;
+      outline: none;
+      border-radius: .25rem;
+      padding: 0;
+      font-size: 1.25rem;
+      @media (min-width: $tablet) {
+        padding-right: 1rem;
+      }
+      &:focus {
+        background: #C5CAE9;
+      }
+    }
+    .search, .library {
+      border-radius: .25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: bold;
+      outline: none;
+      text-align: center;
+      text-decoration: none;
+      width: 100%;
+      line-height: 2.5rem;
+    }
+    .search {
+      background: #3F51B5;
+      color: white;
+      margin: .1rem 0;
+      border: 1px solid #3F51B5;
+      @media (min-width: $tablet) {
+        margin: 0;
+        width: 14rem;
+        margin-left: -1rem;
+      }
+    }
+    .library {
+      background: #C5CAE9;
+      border: 1px solid #C5CAE9;
+      color: #757575;
+      @media (min-width: $tablet) {
+        width: 13rem;
+        margin-left: .25rem;
+      }
+    }
+  }
+}
