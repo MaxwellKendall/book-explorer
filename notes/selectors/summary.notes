@@ -1,9 +1,0 @@
-Selectors utilize the 'reselect' package published on npm.
-
-The benefit of using selectors is you can return computed state to your components in your container rather than adding an additional property on your state.
-
-A selector is a function that returns computed state.
-
-For example, in our state we have activeBookId along with an array of books. Rather than adding an additional property on state "ActiveBook", we make use of selectors to return the book with the id property that matches the value of activeBookId.
-
-source: https://redux.js.org/docs/recipes/ComputingDerivedData.html 
